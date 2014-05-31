@@ -56,7 +56,9 @@ var BackPicker = module.exports = React.createClass({
           type: null
         })
       }
-      this.setState({loading: false})
+      if (this.isMounted()) {
+        this.setState({loading: false})
+      }
       this.props.onReady(back, type)
     }.bind(this))
   },
