@@ -28,17 +28,38 @@
   }
 }
 
-.header_link {
+.m-header-btn {
   padding: 5px 10px;
   display: inline-block;
   text-decoration: none;
   color: #666;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 16px;
 
   &:hover {
     background-color: #eee;
     color: black;
+  }
+}
+
+.header_link {
+  &:extend(.m-header-btn);
+  &:hover {
+    &:extend(.m-header-btn:hover);
+  }
+}
+
+.header_logout {
+  &:extend(.m-header-btn);
+  background-color: white;
+  border: none;
+
+  &:hover {
+    &:extend(.m-header-btn:hover);
+  }
+  &:focus {
+    outline: none;
   }
 }
 

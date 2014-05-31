@@ -20,6 +20,11 @@ var NotableMind = module.exports = React.createClass({
   onChangeBack: function (back, backType) {
     this.setState({back: back, backType: backType})
   },
+  onLogout: function () {
+    this.setState({back: null, backType: null})
+    localStorage._notablemind_backend = null
+
+  },
   render: function () {
     if (!this.state.back) {
       return (
@@ -33,6 +38,7 @@ var NotableMind = module.exports = React.createClass({
         <Header back={this.state.back}
           backType={this.state.backType}
           backs={this.props.backs}
+          onLogout={this.onLogout}
           onChangeBack={this.onChangeBack}/>
         <MainApp db={this.state.back}/>
       </div>

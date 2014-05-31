@@ -9,29 +9,29 @@ body {
   margin: 0 5px;
 }
 
-.listless__item--parent > .listless__head {
-  .listless__collapser {
+.treed__item--parent > .treed__head {
+  .treed__collapser {
     display: none;
   }
 
-  &:hover .listless__collapser {
+  &:hover .treed__collapser {
     display: block;
   }
 }
 
-.listless__bullet::before {
+.treed__bullet::before {
   content: "\2022";
   cursor: pointer;
 }
 
-.listless__bullet:hover {
+.treed__bullet:hover {
   background-color: #aaa;
   border-radius: 10px;
   line-height: 10px;
   margin-top: 4px;
 }
 
-.listless__bullet {
+.treed__bullet {
   position: absolute;
   padding: 3px;
   left: 24px;
@@ -40,16 +40,16 @@ body {
   overflow: hidden;
 }
 
-.listless__collapser:before {
+.treed__collapser:before {
   left: 4px;
   width: 20px;
 }
 
-.listless__body {
+.treed__body {
   margin-left: 20px;
 }
 
-.listless__item--parent.collapsed > .listless__head .listless__bullet {
+.treed__item--parent.collapsed > .treed__head .treed__bullet {
   font-size: 40px;
   line-height: 14px;
   margin-top: 2px;
@@ -58,30 +58,30 @@ body {
   color: #777;
 }
 
-.listless__item.selected > .listless__head .listless__body {
+.treed__item.selected > .treed__head .treed__body {
   border-radius: 10px;
 }
 
-.listless > .listless__item.collapsed > .listless__children {
+.treed > .treed__item.collapsed > .treed__children {
   display: block;
 }
 
-.listless > .listless__item {
+.treed > .treed__item {
   padding-left: 0;
 
-  > .listless__children > li {
+  > .treed__children > li {
     padding-left: 0;
   }
 
-  > .listless__children > .listless__item > .listless__head > .listless__bullet {
+  > .treed__children > .treed__item > .treed__head > .treed__bullet {
     left: 25px;
   }
-  > .listless__children > .listless__item.collapsed > .listless__head > .listless__bullet {
+  > .treed__children > .treed__item.collapsed > .treed__head > .treed__bullet {
     left: 23px;
   }
 
-  > .listless__head {
-    .listless__body {
+  > .treed__head {
+    .treed__body {
       padding-left :0;
 
       input,
@@ -91,9 +91,9 @@ body {
         border-radius: 10px;
       }
     }
-    .listless__bullet,
-    .listless__mover,
-    .listless__collapser {
+    .treed__bullet,
+    .treed__mover,
+    .treed__collapser {
       display: none;
     }
   }
@@ -108,7 +108,7 @@ body {
   font-size: 14px;
 }
 
-.listless__bread {
+.treed__bread {
   display: inline-block;
   margin: 0 5px 0 0;
   padding: 5px 10px;

@@ -18,5 +18,19 @@
   "homepage": "https://github.com/notablemind/notablemind",
   "devDependencies": {
     "reactify": "^0.13.1"
+  },
+  "atomify": {
+    "js": {
+      "entry": "index.js",
+      "watch": true,
+      "output": "web/bundle/bundle.js",
+      "_transforms": ["reactify"],
+      "standalone": "Notablemind"
+    },
+    "css": {
+      "entry": "index.less",
+      "watch": true,
+      "output": "web/bundle/bundle.css"
+    }
   }
 }

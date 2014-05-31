@@ -5,6 +5,9 @@ var d = React.DOM
 
 var Header = module.exports = React.createClass({
   displayName: 'Header',
+  propTypes: {
+    onLogout: React.PropTypes.func.isRequired
+  },
   getDefaultProps: function () {
     return {
       links: [
@@ -48,10 +51,13 @@ var Header = module.exports = React.createClass({
           }
         </ul>
         <div className='header_spacer'/>
-        <BackendPicker currentBack={this.props.back}
+        <button className="header_logout" onClick={this.props.onLogout}>
+          Logout
+        </button>
+        {/*<BackendPicker currentBack={this.props.back}
           dropdown={true}
           backs={this.props.backs}
-          onReady={this.props.onChangeBack}/>
+          onReady={this.props.onChangeBack}/>*/}
       </div>
     )
   }
