@@ -17,22 +17,22 @@
   },
   "homepage": "https://github.com/notablemind/notablemind",
   "devDependencies": {
+    "eventemitter2": "^0.4.13",
     "lodash": "^2.4.1",
     "reactify": "^0.13.1"
   },
   "atomify": {
     "js": {
       "entry": "index.js",
-      "watch": true,
       "output": "web/bundle/bundle.js",
-      "_transforms": [
+      "watch": true,
+      "transform": [
         "reactify"
       ],
       "standalone": "Notablemind"
     },
     "css": {
       "entry": "index.less",
-      "watch": true,
       "output": "web/bundle/bundle.css"
     }
   }

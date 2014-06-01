@@ -17,5 +17,6 @@
   },
   "_style": {
     "display": "block"
-  }
+  },
+  "_log": ["onImport", "onLogout", "getDataDump"]
 }

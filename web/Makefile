@@ -3,7 +3,7 @@ mains:
 	browserify -d -t reactify setup.js -o bundle/bundle.js && echo "Done"
 
 dev:
-	browserify -d -t reactify -t fusion ../lib/index.jsx -o bundle/dev.js
+	browserify -d -t reactify -t fusionify ../lib/index.jsx -o bundle/dev.js
 
 tree:
 	modtree ../lib/index.jsx bundle/tree.js -p fusion.modtree && echo "Done"

@@ -36,6 +36,9 @@
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
+  border: none;
+  background-color: white;
+  margin: 0;
 
   &:hover {
     background-color: #eee;
@@ -47,6 +50,23 @@
   &:extend(.m-header-btn);
   &:hover {
     &:extend(.m-header-btn:hover);
+  }
+}
+
+.header_download {
+  &:extend(.m-header-btn);
+  &:hover {
+    &:extend(.m-header-btn:hover);
+  }
+}
+
+.header_import {
+  &:extend(.m-header-btn);
+  &:hover {
+    &:extend(.m-header-btn:hover);
+  }
+  &:focus {
+    outline: none;
   }
 }
 

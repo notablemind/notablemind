@@ -2,11 +2,17 @@
 
 var d = React.DOM
   , BackendPicker = require('./backend-picker.jsx')
+  , Importer = require('./importer.jsx')
 
 var Header = module.exports = React.createClass({
   displayName: 'Header',
   propTypes: {
-    onLogout: React.PropTypes.func.isRequired
+    back: React.PropTypes.object,
+    links: React.PropTypes.array,
+    backType: React.PropTypes.string,
+    onLogout: React.PropTypes.func.isRequired,
+    onImport: React.PropTypes.func.isRequired,
+    getDataDump: React.PropTypes.func.isRequired
   },
   getDefaultProps: function () {
     return {
@@ -32,6 +38,15 @@ var Header = module.exports = React.createClass({
       }
     }
   },
+  onClickDownload: function () {
+    var a = this.refs.download_link.getDOMNode()
+      , data = this.props.getDataDump()
+      , blob = new Blob([JSON.stringify(data, null, 2)],
+                        {type: 'application/json'})
+      , url = URL.createObjectURL(blob)
+    a.href = url
+    a.download = 'notablemind-export.json'
+  },
   render: function () {
     return (
       <div className='header'>
@@ -41,7 +56,9 @@ var Header = module.exports = React.createClass({
             this.props.links.map(function (link, i) {
               return (
                 <li key={i}>
-                  <a className='header_link' href={link.url} target='_blank' title={link.title}>
+                  <a className='header_link'
+                     href={link.url} target='_blank'
+                     title={link.title}>
                     {link.icon && d.i({className: 'fa fa-' + link.icon})}
                     {link.title}
                   </a>
@@ -51,6 +68,12 @@ var Header = module.exports = React.createClass({
           }
         </ul>
         <div className='header_spacer'/>
+        <Importer btnClassName="header_import" onLoad={this.props.onImport}/>
+        <a className="header_download"
+           ref="download_link"
+           onClick={this.onClickDownload}>
+            <i className='fa fa-download'/>
+        </a>
         <button className="header_logout" onClick={this.props.onLogout}>
           Logout
         </button>

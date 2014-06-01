@@ -1,0 +1,12 @@
+{
+  "simple": { },
+  "_wrapState": {
+    "prop": "file",
+    "callback": "onChange"
+  },
+  "_log": ["onLoad", "onClose"],
+  "_style": {
+    "display": "block"
+  }
+}
+
