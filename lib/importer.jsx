@@ -43,6 +43,9 @@ var Importer = module.exports = React.createClass({
     e.preventDefault()
     e.stopPropagation()
     var file = e.dataTransfer.files[0]
+    if (!file) {
+        file = e.dataTransfer.items[0]
+    }
     this.setState({file: file, dropping: false, showing: true})
     return false
   },
