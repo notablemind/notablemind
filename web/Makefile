@@ -1,6 +1,6 @@
 
 mains:
-	browserify -d -t reactify setup.js -o bundle/bundle.js && echo "Done"
+	browserify -d -t reactify ../index.js -s Notablemind -o bundle/bundle.js && echo "Done"
 
 dev:
 	browserify -d -t reactify -t fusionify ../lib/index.jsx -o bundle/dev.js

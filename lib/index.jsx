@@ -79,15 +79,15 @@ var NotableMind = module.exports = React.createClass({
   _onLoadImport: function (filename, data, options) {
 
     var now = new Date()
-      , name = 'Imported on ' + now.toLocaleDateString() +
+      , content = 'Imported on ' + now.toLocaleDateString() +
                ' at ' + now.toLocaleTimeString() +
                ' from ' + filename
 
     this.state.nm.importData({
-      data: {
-        name: name,
+      meta: {
         done: false
       },
+      content: content,
       collapsed: false,
       children: [data]
     })

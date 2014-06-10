@@ -13,7 +13,7 @@ var BackendDropdown = module.exports = React.createClass({
   },
   render: function () {
     var backs = this.props.backs
-      , names = Object.keys(backs)
+      , keys = Object.keys(backs)
       , current = this.props.current
       , cback = this.props.backs[current]
 
@@ -27,12 +27,13 @@ var BackendDropdown = module.exports = React.createClass({
         </div>
         <ul className='backend-dropdown_items'>
           {
-            names.map(function (name) {
-              if (name === current) return
-              var back = backs[name]
+            keys.map(function (key) {
+              if (key === current) return
+              var back = backs[key]
               return (
                 <li className='backend-dropdown_item'
-                  onClick={onChange.bind(null, name)}>
+                  key={key}
+                  onClick={onChange.bind(null, key)}>
                   <i className={'fa fa-' + back.icon}/>
                   {back.shortName}
                 </li>
