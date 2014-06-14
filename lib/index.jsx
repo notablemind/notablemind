@@ -7,6 +7,9 @@ var HelloPage = require('./hello.jsx')
 
   , Model = require('treed/skins/workflowy/model')
   , Controller = require('treed/skins/workflowy/controller')
+  , View = require('treed/skins/workflowy/view')
+  , ViewLayer = require('treed/skins/workflowy/vl')
+  , Node = require('treed/skins/workflowy/node')
 
   , loadModel = require('./load-model')
 
@@ -44,11 +47,16 @@ var NotableMind = module.exports = React.createClass({
       }
 
       var nm = window.controller = new Controller(model)
+      var view = window.view = nm.setView(View, {
+        ViewLayer: ViewLayer,
+        Node: Node
+      });
 
       this.setState({
         loadingModel: false,
         modelError: null,
         model: model,
+        view: view,
         nm: nm
       })
     }.bind(this))
@@ -119,6 +127,8 @@ var NotableMind = module.exports = React.createClass({
           getDataDump={this.getDataDump}/>
         <MainApp
             ref="app"
+            model={this.state.model}
+            view={this.state.view}
             nm={this.state.nm}/>
       </div>
     )

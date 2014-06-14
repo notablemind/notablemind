@@ -2,6 +2,9 @@
 mains:
 	browserify -d -t reactify ../index.js -s Notablemind -o bundle/bundle.js && echo "Done"
 
+watch:
+	watchify -v -d -t reactify ../index.js -s Notablemind -o bundle/bundle.js && echo "Done"
+
 dev:
 	browserify -d -t reactify -t fusionify ../lib/index.jsx -o bundle/dev.js
 

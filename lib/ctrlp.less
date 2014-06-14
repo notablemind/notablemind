@@ -1,0 +1,68 @@
+
+.ctrlp_back {
+  z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(100,100,100,.1);
+  cursor: pointer;
+}
+
+.ctrlp_pop {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  margin-left: -300px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 51;
+}
+
+.ctrlp_top {
+
+}
+
+.ctrlp_input {
+  font-size: 24px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.ctrlp_bottom {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.ctrlp_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+
+.ctrlp_item {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &.selected {
+    background-color: #ddd;
+  }
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
