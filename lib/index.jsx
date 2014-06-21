@@ -7,11 +7,9 @@ var HelloPage = require('./hello.jsx')
 
   , Model = require('treed/skins/workflowy/model')
   , Controller = require('treed/skins/workflowy/controller')
-  , View = require('treed/skins/workflowy/view')
-  , ViewLayer = require('treed/skins/workflowy/vl')
-  , Node = require('treed/skins/workflowy/node')
 
   , loadModel = require('./load-model')
+  , VIEW_TYPES = require('./view-types')
 
 var NotableMind = module.exports = React.createClass({
   displayName: 'NotableMind',
@@ -26,6 +24,7 @@ var NotableMind = module.exports = React.createClass({
       backType: null,
       loadingModel: false,
       model: null,
+      viewType: 'workflowy',
       nm: null
     }
   },
@@ -47,10 +46,10 @@ var NotableMind = module.exports = React.createClass({
       }
 
       var nm = window.controller = new Controller(model)
-      var view = window.view = nm.setView(View, {
-        ViewLayer: ViewLayer,
-        Node: Node
-      });
+      var view = window.view = nm.setView(
+        VIEW_TYPES[this.state.viewType].cls,
+        VIEW_TYPES[this.state.viewType].options
+      );
 
       this.setState({
         loadingModel: false,
@@ -64,6 +63,17 @@ var NotableMind = module.exports = React.createClass({
 
   getDataDump: function () {
     return this.state.nm.exportData()
+  },
+
+  _onChangeViewType: function (type) {
+    var view = window.view = this.state.nm.setView(
+      VIEW_TYPES[type].cls,
+      VIEW_TYPES[type].options
+    )
+    this.setState({
+      viewType: type,
+      view: view
+    });
   },
 
   _onLogout: function () {
@@ -118,12 +128,14 @@ var NotableMind = module.exports = React.createClass({
     }
 
     return (
-      <div className='notablemind'>
+      <div className={'notablemind notablemind--' + this.state.viewType}>
         <Header back={this.state.nm.model.db}
           backType={this.state.backType}
           backs={this.props.backs}
+          viewType={this.state.viewType}
           onLogout={this._onLogout}
           onImport={this._onLoadImport}
+          onChangeViewType={this._onChangeViewType}
           getDataDump={this.getDataDump}/>
         <MainApp
             ref="app"

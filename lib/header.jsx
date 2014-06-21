@@ -3,13 +3,16 @@
 var d = React.DOM
   , BackendPicker = require('./backend-picker.jsx')
   , Importer = require('./importer.jsx')
+  , ViewSelector = require('./view-selector.jsx')
 
 var Header = module.exports = React.createClass({
   displayName: 'Header',
   propTypes: {
     back: React.PropTypes.object,
     links: React.PropTypes.array,
-    backType: React.PropTypes.string,
+    // backType: React.PropTypes.string,
+    viewType: React.PropTypes.string.isRequired,
+    onChangeViewType: React.PropTypes.func.isRequired,
     onLogout: React.PropTypes.func.isRequired,
     onImport: React.PropTypes.func.isRequired,
     getDataDump: React.PropTypes.func.isRequired
@@ -68,6 +71,10 @@ var Header = module.exports = React.createClass({
           }
         </ul>
         <div className='header_spacer'/>
+        <ViewSelector
+            value={this.props.viewType}
+            onChange={this.props.onChangeViewType}
+        />
         <Importer btnClassName="header_import" onLoad={this.props.onImport}/>
         <a className="header_download"
            ref="download_link"

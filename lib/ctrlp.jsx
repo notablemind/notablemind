@@ -112,7 +112,7 @@ var CtrlP = module.exports = React.createClass({
 
   render: function () {
     if (!this.state.showing) {
-      return <div/>
+      return <div className='ctrlp ctrlp--hidden'/>
     }
     return <div className='ctrlp'>
       <div className='ctrlp_back' onClick={this._onHide}/>

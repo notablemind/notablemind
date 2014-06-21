@@ -1,12 +1,28 @@
 
 body {
   font-family: sans-serif;
+}
+
+.notablemind {
+}
+
+.notablemind--workflowy {
   margin: 5px auto;
   max-width: 700px;
 }
 
-#example {
-  margin: 0 5px;
+.notablemind--whiteboard {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+
+  .main {
+    flex: 1;
+  }
 }
 
 .treed__item--parent > .treed__head {
