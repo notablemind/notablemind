@@ -12,7 +12,7 @@ tree:
 	modtree ../lib/index.jsx bundle/tree.js -p fusion.modtree && echo "Done"
 
 css:
-	lessterfy ../lib/index.jsx bundle/bundle.css
+	atomify -c [ ../index.less -o bundle/bundle.css ]
 
 less: index.css
 	@echo -n
