@@ -3,7 +3,6 @@
 var HelloPage = require('./hello.jsx')
   , MainApp = require('./main')
   , Header = require('./header.jsx')
-  , Importer = require('./importer.jsx')
 
   , Model = require('treed/skins/workflowy/model')
   , Controller = require('treed/skins/workflowy/controller')
