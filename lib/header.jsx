@@ -81,9 +81,9 @@ var Header = module.exports = React.createClass({
            onClick={this.onClickDownload}>
             <i className='fa fa-download'/>
         </a>
-        <button className="header_logout" onClick={this.props.onLogout}>
+        {this.props.onLogout && <button className="header_logout" onClick={this.props.onLogout}>
           Logout
-        </button>
+        </button>}
         {/*<BackendPicker currentBack={this.props.back}
           dropdown={true}
           backs={this.props.backs}

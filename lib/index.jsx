@@ -14,7 +14,8 @@ var NotableMind = module.exports = React.createClass({
   displayName: 'NotableMind',
   getDefaultProps: function () {
     return {
-      backs: {}
+      initialBack: null,
+      backs: null
     }
   },
 
@@ -26,6 +27,14 @@ var NotableMind = module.exports = React.createClass({
       viewType: 'workflowy',
       nm: null
     }
+  },
+
+  componentDidMount: function () {
+    if (!this.props.initialBack) {
+      return
+    }
+    var b = this.props.initialBack
+    this.onChangeBack(b.back, b.type)
   },
 
   onChangeBack: function (back, backType) {
@@ -119,6 +128,9 @@ var NotableMind = module.exports = React.createClass({
       )
     }
     if (!this.state.nm) {
+      if (!this.props.backs) {
+        return <div/>
+      }
       return (
         <div className='notablemind'>
           <HelloPage onReady={this.onChangeBack} backs={this.props.backs}/>
@@ -132,7 +144,7 @@ var NotableMind = module.exports = React.createClass({
           backType={this.state.backType}
           backs={this.props.backs}
           viewType={this.state.viewType}
-          onLogout={this._onLogout}
+          onLogout={this.props.backs && this._onLogout}
           onImport={this._onLoadImport}
           onChangeViewType={this._onChangeViewType}
           getDataDump={this.getDataDump}/>

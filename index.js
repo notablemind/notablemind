@@ -1,5 +1,6 @@
 
 var NotableMind = require('./lib/index.jsx')
+  , MemPL = require('treed/lib/mem-pl')
 
 module.exports = function (node) {
   React.renderComponent(NotableMind({
@@ -33,5 +34,21 @@ module.exports = function (node) {
       }
     }
   }), node)
+}
+
+module.exports.demo = function (el, data) {
+  var db = new MemPL()
+  db.data.node = {}
+  db.data.root = {}
+  for (var name in data) {
+    var parts = name.split(':')
+    db.data[parts[0]][+parts[1]] = data[name]
+  }
+  React.renderComponent(NotableMind({
+    initialBack: {
+      type: 'mem',
+      back: db
+    }
+  }), el);
 }
 
