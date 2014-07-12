@@ -1,4 +1,6 @@
 
+all: mains css
+
 mains:
 	browserify -d -t reactify ../index.js -s Notablemind -o bundle/bundle.js && echo "Done"
 
