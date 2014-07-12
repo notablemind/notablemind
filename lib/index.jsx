@@ -7,6 +7,8 @@ var HelloPage = require('./hello.jsx')
   , Model = require('treed/skins/workflowy/model')
   , Controller = require('treed/skins/workflowy/controller')
 
+  , moveTween = require('./move-tween')
+
   , loadModel = require('./load-model')
   , VIEW_TYPES = require('./view-types')
 
@@ -33,6 +35,8 @@ var NotableMind = module.exports = React.createClass({
     if (!this.props.initialBack) {
       return
     }
+    this._sizeBox = this.getDOMNode().getBoundingClientRect()
+    console.log(this._sizeBox)
     var b = this.props.initialBack
     this.onChangeBack(b.back, b.type)
   },
@@ -78,6 +82,7 @@ var NotableMind = module.exports = React.createClass({
       VIEW_TYPES[type].cls,
       VIEW_TYPES[type].options
     )
+    this._sizeBox = this.getDOMNode().getBoundingClientRect()
     this.setState({
       viewType: type,
       view: view
@@ -117,6 +122,21 @@ var NotableMind = module.exports = React.createClass({
       collapsed: false,
       children: [data]
     })
+  },
+
+  componentDidUpdate: function (prevProps, prevState) {
+    var oldBox = this._sizeBox
+      , node = this.getDOMNode()
+    if (prevState.loadingModel && !this.state.loadingModel) {
+      this._sizeBox = node.getBoundingClientRect()
+    }
+    if (prevState.viewType === this.state.viewType) {
+      return
+    }
+    this._sizeBox = node.getBoundingClientRect()
+    moveTween(oldBox, this._sizeBox, node, function () {
+      this._sizeBox = node.getBoundingClientRect()
+    }.bind(this))
   },
 
   render: function () {
