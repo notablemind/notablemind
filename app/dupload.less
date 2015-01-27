@@ -1,0 +1,233 @@
+
+.m_icon {
+  &:extend(.icon all);
+  &:extend(.icon-small all);
+
+  color: rgb(102, 102, 102);
+  transition: color .2s ease;
+  cursor: pointer;
+  margin-right: 5px;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.Uploader_file {
+  margin: 20px 0 10px;
+}
+
+.Uploader_input {
+  margin: 20px;
+  font-size: 16px;
+}
+
+.Uploader_clear,
+.Uploader_submit {
+  border: 1px solid #999;
+  background-color: white;
+  padding: 3px 7px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.Uploader_clear {
+  margin-left: 15px;
+}
+
+.Uploader_submit {
+  padding: 7px 60px;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #555;
+}
+
+.Dupload_upload {
+  &:extend(.m_icon all);
+
+  > span {
+    &:extend(.icon-upload all);
+  }
+}
+
+.Dupload_download {
+  &:extend(.m_icon all);
+  // &:extend(.icon-small all);
+
+  > span {
+    &:extend(.icon-download all);
+  }
+}
+
+.Dropload {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  text-align: center;
+  background-color: rgb(35, 255, 48);
+  opacity: .7;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 100px 0;
+}
+
+.Dupload {
+  padding: 5px;
+  font-family: sans-serif;
+}
+
+// Downloader
+
+.Download_what {
+  margin: 20px 0;
+}
+
+.Download_name {
+  width: 250px;
+  padding: 5px 0 5px 5px;
+  text-align: right;
+  margin: 20px 5px 0 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.Download_ext {
+  color: #777;
+}
+
+.Download_link {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 5px 20px;
+  margin: 20px 0;
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+  box-shadow: 0px 0px 4px #aaa;
+}
+
+.Download_which {
+  border: 1px solid white;
+  padding: 5px 10px;
+  background-color: white;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  color: #888;
+
+  & + & {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    background-color: #efefef;
+  }
+
+  &-selected {
+    border-color: #ddd;
+    font-weight: bold;
+    color: black;
+  }
+}
+
+.FormatPicker {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  &_item {
+    padding: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+
+    &-selected {
+      border-color: #555;
+      background-color: #eee;
+    }
+  }
+}
+
+// modal!
+
+.Modal {
+  &_back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .7);
+    cursor: pointer;
+    z-index: 10000;
+  }
+
+  &_popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    border: 1px solid #555;
+
+    width: 600px;
+    margin-left: -300px;
+    margin-top: -200px;
+    z-index: 10000;
+  }
+
+  &_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 12px;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 22px;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    &:hover {
+      color: #c55;
+    }
+  }
+
+  &_title {
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  &_body {
+    padding: 10px;
+  }
+}
+
+.Modal-upload {
+  .Modal_popup {
+    padding-bottom: 20px;
+
+  }
+
+  .Modal_body {
+    text-align: center;
+  }
+}
+
+.Modal-download {
+  .Modal_body {
+    text-align: center;
+  }
+}
+

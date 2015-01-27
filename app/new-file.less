@@ -1,0 +1,52 @@
+
+.NewFile {
+  position: relative;
+  padding: 0 20px;
+
+  &-closed {
+    &:extend(.Browse_new_btn all);
+    padding: 10px;
+  }
+
+  &_cancel {
+    &:extend(.Browse_new_cancel all);
+  }
+
+
+  &_title {
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    width: 300px;
+  }
+
+  &_ReplTitle {
+    font-weight: bold;
+    padding: 10px 10px 10px 0;
+  }
+
+  &_submit {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  &_head {
+    margin: 0;
+    display: none;
+  }
+
+  &_repls {
+    &:extend(.Browse_config_repls);
+    display: inline-block;
+  }
+
+  &_repl {
+    &:extend(.Browse_config_repl all);
+  }
+}
+
+

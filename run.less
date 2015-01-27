@@ -1,0 +1,96 @@
+﻿@import (inline) "./charset.css";
+
+@import "node_modules/treed/rx/views/tree/index.less";
+@import "node_modules/treed/rx/views/body/simple.less";
+
+@import "node_modules/treed/rx/plugins/collapse/index.less";
+@import "node_modules/treed/rx/plugins/rebase/index.less";
+@import "node_modules/treed/rx/plugins/todo/index.less";
+@import "node_modules/treed/rx/plugins/lists/index.less";
+@import "node_modules/treed/rx/plugins/done/index.less";
+@import "node_modules/treed/rx/plugins/ijs/index.less";
+
+@import "node_modules/treed/rx/skins/regular/index.less";
+
+@import "node_modules/itreed/lib/plugin/index.less";
+
+@import (inline) "./node_modules/codemirror/lib/codemirror.css";
+@import (inline) "./node_modules/codemirror/addon/hint/show-hint.css";
+
+.CodeMirror {
+  background: transparent;
+  height: auto;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+@import (inline) "./node_modules/highlight.js/styles/docco.css";
+
+h1 {
+  font-family: sans-serif;
+}
+
+body {
+  padding: 10px 100px 100px;
+  margin: 10px auto;
+  max-width: 1000px;
+}
+
+.list_item_children {
+  border-left: 5px solid #eee;
+
+  .list_item-root > & {
+    border-left: none;
+  }
+}
+
+.treed_body_rendered {
+  min-height: 34px;
+  background-color: rgba(255,255,255,.7);
+  padding-top: 5px;
+
+  h1, h2, h3, h4 {
+    font-weight: normal;
+  }
+}
+
+.treed_body {
+  margin-bottom: 5px;
+}
+
+.treed_body-type-ipython {
+  margin-bottom: 5px;
+  word-wrap: break-word;
+
+  > * {
+    margin: 0 0 0 5px;
+    background-color: #dfe;
+    font-family: monospace;
+    font-size: 14px;
+  }
+  > .treed_body_rendered {
+    padding: 5px 10px;
+  }
+  > .textarea-grow {
+    padding: 2px 3px;
+  }
+  > .textarea-grow textarea,
+  > .textarea-grow .shadow {
+    min-height: 24px;
+    font-family: monospace;
+    font-size: 14px;
+    padding-top: 3px;
+  }
+}
+
+// katex
+// @import "node_modules/katex/static/katex.less";
+// @import "katex/fonts/fonts.css";
+
+// gorilla style
+@import "./gorilla.less";
+
+@import "./app/app.less";
+

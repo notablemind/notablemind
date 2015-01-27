@@ -1,0 +1,406 @@
+/* ************** gorilla style! **************** */
+
+.m_IPython-empty {
+  min-height: 0;
+}
+
+.m_IPythonKernel {
+  top: -5px;
+  right: -5px;
+}
+
+.m_IPythonKernel button {
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  transition: background-color .2s ease;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.treed_body_rendered {
+  background-color: transparent;
+
+  p > code {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+}
+
+.treed_body-type-ipython {
+  margin-bottom: 0;
+
+  > * {
+    margin: 0 0 0 5px;
+    background-color: transparent;
+  }
+  > .treed_body_rendered {
+    padding: 5px 0;
+  }
+  > .textarea-grow {
+    padding: 2px 0px;
+  }
+  > .textarea-grow textarea,
+  > .textarea-grow .shadow {
+    padding-left: 0;
+  }
+}
+
+.list_item_head:hover .treed_body {
+  background-color: transparent;
+}
+
+.list_item-active > .list_item_head .treed_body {
+  background-color: transparent;
+}
+
+.list_item_head {
+  padding-bottom: 5px;
+  position: relative;
+  cursor: pointer;
+
+  &:hover > .list_item_body {
+    background-color: #eee;
+  }
+}
+
+.m_Collapser {
+  bottom: 5px;
+}
+
+.list_item_body {
+  border: 1px solid transparent;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.m_Collapser {
+  display: block;
+  opacity: 0;
+  background-color: #ddd;
+
+  &:after {
+    content: " ";
+    width: 5px;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    left: 100%;
+    top: 0px;
+  }
+
+  height: auto;
+  width: 10px;
+  margin-right: 5px;
+
+  .list_item-parent:not(.list_item-root) > .list_item_head:hover & {
+    opacity: 1;
+  }
+
+  &-collapsed {
+    opacity: 1;
+  }
+}
+
+/** Taking a different approach
+.list_item-ipython-disabled {
+  opacity: .5;
+  font-style: italic;
+}
+*/
+
+.m_IPython {
+  position: static;
+  margin: 5px;
+}
+
+.m_IPython_outputs {
+  max-height: 800px;
+  overflow: auto;
+}
+
+.m_IPython_output {
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  display: inline-block;
+  overflow: auto;
+
+  &-text-json,
+  &-text-plain {
+    display: block;
+  }
+
+  &_plain {
+    font-family: 'monospace';
+    white-space: pre;
+  }
+
+  &-error {
+    border-color: red;
+    color: red;
+  }
+}
+
+.m_IPython_output-list-like {
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    border: 1px solid #999;
+  }
+
+  div.vega {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.m_IPython_loading {
+  display: none;
+}
+
+.m_IPython_time {
+  top: 4px;
+  background-color: transparent;
+  color: #009F09;
+  opacity: 1;
+
+  &-loading {
+    right: 3px;
+  }
+
+  &-stale {
+    color: rgb(255, 10, 10);
+  }
+
+  .list_item_body:hover & {
+    opacity: 1;
+  }
+}
+
+.list_item-type-todo,
+.list_item-type-ordered_list,
+.list_item-type-list {
+  > .list_item_children {
+    padding-left: 34px;
+  }
+}
+
+.list_item-type-ipython > .list_item_head > .list_item_body {
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.list_item-active > .list_item_head > .list_item_body {
+  outline: 5px solid #ccc;
+}
+
+.list-active .list_item-active > .list_item_head > .list_item_body {
+  outline: 5px solid magenta;
+}
+
+.list_item-ipython-collapsed > .list_item_head > .list_item_body {
+  max-height: 100px;
+  overflow: hidden;
+  border-bottom: 10px solid #BBB;
+}
+
+.m_IPython-hiding {
+  border: none;
+}
+
+.list_item-ipython-dirty {
+  > .list_item_head > .list_item_body {
+    background-color: #FFE4FD;
+  }
+}
+
+.list_item-ipython-running {
+  > .list_item_head > .list_item_body {
+    background-color: rgb(210, 255, 210);
+  }
+}
+
+.list_item-ipython-stale {
+  > .list_item_head > .list_item_body {
+    background-color: #FFE4E4;
+  }
+}
+
+.treed_body_rendered code {
+  background-color: #C4F7D2;
+  padding: 5px;
+}
+
+.list_item-ipython {
+  > .list_item_head > .list_item_body {
+    background-color: #CBFFC6;
+  }
+}
+
+.list_item-ipython-waiting {
+  > .list_item_head > .list_item_body {
+    background-color: rgb(255, 246, 144);
+  }
+}
+
+.list-active .list_item-editing > .list_item_head > .list_item_body {
+  outline: 5px solid rgb(0, 184, 0);
+  background-color: white;
+}
+
+.list-active .list_item-selected > .list_item_head > .list_item_body {
+  background-color: #D5FFFC;
+  outline-color: cyan;
+}
+
+// overriding default styles
+.list_item-selected > .list_item_head .treed_body {
+  background-color: transparent;
+}
+
+.list_item-selected > .list_item_children {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.list_item-root > .list_item_head .treed_body {
+  margin-left: 20px;
+  padding-left: 0;
+  font-weight: bold;
+}
+
+.treed_body {
+  padding-left: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.list_item_children {
+  border-left: 5px solid #eee;
+  padding-left: 20px;
+  margin-left: 0;
+}
+
+.m_Collapser {
+  position: absolute;
+  top: 0;
+  bottom: 5px;
+  left: -15px;
+}
+
+.m_RebaseDot {
+  top: 0;
+  left: -15px;
+  width: 4px;
+  height: 5px;
+  z-index: 1;
+  opacity: 0;
+  background-color: #bbb;
+
+  &:hover {
+    background-color: #aaa;
+    border-radius: 0;
+    line-height: 1;
+    margin-top: 0;
+  }
+
+  &::before {
+    content: " ";
+  }
+
+  .list_item-parent > .list_item_head:hover & {
+    opacity: 1;
+  }
+
+  .n_Collapse > .list_item_head & {
+    opacity: 1;
+  }
+}
+
+.n_Collapse > .list_item_head .m_RebaseDot {
+  margin-top: 0;
+  left: -15px;
+}
+
+/** PDF STUFF **/
+
+.pdf_item .m_IPython_time {
+  display: none;
+}
+
+.pdf_item .list_item-ipython-stale > .list_item_head > .list_item_body {
+  background-color: white;
+}
+
+.pdf_item .list_item_children {
+  margin: 0;
+  padding: 0;
+  border-left: 0;
+}
+
+.pdf_item .m_IPython-hiding {
+  height: auto;
+}
+
+.pdf_item .list_item-ipython-collapsed > .list_item_head > .list_item_body {
+  border-bottom: 1px solid #ccc;
+  max-height: none;
+}
+
+.pdf_export {
+
+  .list_item-parent {
+
+    > .list_item_head .treed_body_rendered {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .list_item-parent {
+
+      > .list_item_head .treed_body_rendered {
+        font-size: 26px;
+
+        &:before {
+          content: '>';
+          float: left;
+          padding-right: 10px;
+        }
+      }
+
+      .list_item-parent {
+        > .list_item_head .treed_body_rendered {
+          font-size: 22px;
+
+          &:before {
+            content: '>>';
+          }
+        }
+
+
+        .list_item-parent {
+          > .list_item_head .treed_body_rendered {
+            font-size: 18px;
+
+            &:before {
+              content: '>>>';
+            }
+          }
+
+          .list_item-parent > .list_item_head .treed_body_rendered:before {
+            content: '>>>>';
+          }
+        }
+      }
+    }
+  }
+}

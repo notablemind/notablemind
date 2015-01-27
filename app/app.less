@@ -1,0 +1,144 @@
+
+@import "./browse.less";
+
+/* latin-ext */
+@font-face {
+  font-family: 'Monda';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Monda Regular'), local('Monda-Regular'), url(vendor/Monda-Regular.ttf);
+}
+/* latin */
+@font-face {
+  font-family: 'Monda';
+  font-style: bold;
+  font-weight: 700;
+  src: local('Monda Bold'), local('Monda-Bold'), url(vendor/Monda-Bold.ttf);
+}
+
+.App {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.App_panes {
+  flex: 1;
+  display: flex;
+  padding: 0;
+  justify-content: center;
+}
+
+.App_pane_top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: white;
+  box-shadow: 5px 3px 5px #ccc;
+  padding: 0 15px;
+  z-index: 10;
+}
+
+.App_pane_scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 50px 150px;
+  position: relative;
+}
+
+.App_pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+
+  &:first-child .App_pane_scroll {
+    padding-left: 50px;
+  }
+
+  &:last-child .App_pane_scroll {
+    padding-right: 50px;
+  }
+}
+
+/** focus stuff. TODO move it? **/
+
+.App_pane-focus {
+  max-width: none;
+
+  .App_pane_scroll {
+    flex: 1;
+    display: flex;
+    overflow: visible;
+    padding: 10px;
+
+    .flex-panes {
+      width: 100%;
+      display: flex;
+    }
+
+    .flex-main {
+      flex: 1;
+      display: flex;
+    }
+
+    .flex-bar {
+      background-color: #888;
+      min-width: 10px;
+      min-height: 10px;
+      display: flex;
+      cursor: ns-resize;
+    }
+
+    .flex-switch {
+      display: block;
+      width: 10px;
+      height: 10px;
+      background-color: #333;
+      cursor: ew-resize;
+    }
+
+    .flex-panes-vert {
+      .flex-bar {
+        cursor: ew-resize;
+      }
+
+      .flex-switch {
+        cursor: ns-resize;
+      }
+    }
+
+    .focus {
+      display: flex;
+      flex: 1;
+    }
+
+    // maybe move this stuff
+    .focus_item_body {
+      overflow: auto;
+      flex: 1;
+    }
+  }
+}
+
+@import "./dupload.less";
+@import "./header.less";
+@import "./type-switcher.less";
+@import "./importer.less";
+@import "./new-file.less";
+
+.treed_body_rendered {
+  font-family: 'Monda';
+  min-height: 34px;
+  word-break: break-word;
+}
+
+.list_item {
+  font-family: 'Monda', sans-serif;
+}
+

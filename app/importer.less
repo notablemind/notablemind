@@ -1,0 +1,48 @@
+
+.Importer {
+  position: relative;
+
+  &-closed {
+    &:extend(.Browse_new_btn all);
+  }
+
+  &_title {
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: 10px 0 0;
+    border: 1px solid #ccc;
+    display: none;
+  }
+
+  &_cancel {
+    &:extend(.Browse_new_cancel all);
+  }
+
+  &_list {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      background-color: white;
+      border: 1px solid white;
+      padding: 10px 20px;
+      text-align: center;
+      cursor: pointer;
+      color: #555;
+      transition: color .2s ease, border-color .2s ease;
+
+      &:hover {
+        border-color: #ccc;
+        color: black;
+      }
+    }
+  }
+}
+

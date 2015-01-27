@@ -1,0 +1,53 @@
+
+.Tabular {
+  position: relative;
+
+  th {
+    text-align: left;
+    padding: 5px 20px;
+    color: #aaa;
+  }
+
+  &_header {
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 2px #aaa;
+    z-index: 100;
+  }
+
+  &_container {
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &_table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr.selected td {
+      background-color: #ddd;
+    }
+
+    tr:hover td {
+      background-color: #efefff;
+    }
+
+    th {
+      padding-bottom: 15px;
+    }
+
+    td {
+      cursor: pointer;
+      padding: 10px 20px;
+    }
+  }
+}
+

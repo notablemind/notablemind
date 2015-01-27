@@ -2,3 +2,9 @@ node_modules
 web/vendor
 web/bundle
 /pages
+/www/build.*
+www/gorilla-demo.js
+www/ipython-demo.js
+/www/vendor.js
+/www/vendor/
+/www/examples/
