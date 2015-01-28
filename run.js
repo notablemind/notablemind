@@ -2,8 +2,8 @@
  * bootstrap the app into document.body
  */
 
-var React = require('treed/node_modules/react')
-var treed = require('treed/rx')
+var React = require('react')
+var treed = require('treed')
 
 var files = require('./app/files')
 

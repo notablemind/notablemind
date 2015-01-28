@@ -1,6 +1,6 @@
 
-var React = require('treed/node_modules/react')
-  , treed = require('treed/rx')
+var React = require('react')
+  , treed = require('treed')
 
 var TypeSwitcher = React.createClass({
   propTypes: {

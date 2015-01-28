@@ -1,6 +1,6 @@
 
 var SOURCES = require('./sources')
-  , treesToMap = require('treed/rx/util/trees-to-map')
+  , treesToMap = require('treed/util/trees-to-map')
 
 module.exports = {
   just_save: just_save,

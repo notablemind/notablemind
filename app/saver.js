@@ -1,5 +1,5 @@
 
-var React = require('treed/node_modules/react')
+var React = require('react')
   , cx = React.addons.classSet
   , PT = React.PropTypes
   , sources = require('./sources')

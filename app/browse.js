@@ -1,12 +1,12 @@
 
-var React = require('treed/node_modules/react')
+var React = require('react')
   , NewFile = require('./new-file')
   , Dropload = require('./dropload')
   , Importer = require('./importer')
   , Tabular = require('./tabular')
   , Dumper = require('./dumper')
   , readFile = require('./read-file')
-  , treed = require('treed/rx')
+  , treed = require('treed')
   , cx = React.addons.classSet
   , PT = React.PropTypes
   , history = require('./history')

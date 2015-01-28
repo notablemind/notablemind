@@ -1,5 +1,5 @@
 
-var React = require('treed/node_modules/react/addons')
+var React = require('react/addons')
   , PT = React.PropTypes
   , cx = React.addons.classSet
   , Modal = require('./modal')

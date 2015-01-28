@@ -57,5 +57,3 @@ launch-chrome:
 	google-chrome --load-and-launch-app=`pwd`/chromeapp
 
 .PHONY: css watch js all start-ipython pages vendor vendorlib
-
-

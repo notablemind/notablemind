@@ -1,5 +1,5 @@
 
-var React = require('treed/node_modules/react')
+var React = require('react')
   , PT = React.PropTypes
   , Modal = require('./modal')
   , FormatPicker = require('./format-picker')

@@ -1,6 +1,6 @@
 /* @flow */
 
-var React = require('treed/node_modules/react')
+var React = require('react')
   , Modal = require('./modal')
 
 module.exports = showModal

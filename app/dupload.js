@@ -1,5 +1,5 @@
 
-var React = require('treed/node_modules/react')
+var React = require('react')
   , PT = React.PropTypes
   , Downloader = require('./downloader')
   , Uploader = require('./uploader')

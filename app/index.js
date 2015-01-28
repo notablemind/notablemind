@@ -1,6 +1,6 @@
 
-var React = require('treed/node_modules/react')
-  , treed = require('treed/rx')
+var React = require('react')
+  , treed = require('treed')
 
 // just uses localStorage to index files, and indexeddb to store them
 var localFiles = require('./files')
@@ -10,7 +10,7 @@ var localFiles = require('./files')
   , SOURCES = require('./sources')
   , history = require('./history')
   , TypeSwitcher = require('./type-switcher')
-  , KeyManager = require('treed/rx/key-manager')
+  , KeyManager = require('treed/key-manager')
   , keys = require('treed/lib/keys')
   , sync = require('./sync')
 
@@ -22,10 +22,10 @@ var App = React.createClass({
       noHome: false,
       loaded: false,
       types: {
-        // pdf: require('treed/rx/views/pdf'),
-        tree: require('treed/rx/views/tree'),
-        paper: require('treed/rx/views/paper'),
-        focus: require('treed/rx/views/focus'),
+        // pdf: require('treed/views/pdf'),
+        tree: require('treed/views/tree'),
+        paper: require('treed/views/paper'),
+        focus: require('treed/views/focus'),
       }
     }
   },

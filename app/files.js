@@ -1,8 +1,8 @@
-var IxPL = require('treed/rx/pl/ixdb')
-  , QueuePL = require('treed/rx/pl/queuedb')
-  , treed = require('treed/rx')
+var IxPL = require('treed/pl/ixdb')
+  , QueuePL = require('treed/pl/queuedb')
+  , treed = require('treed')
   , kernelConfig = require('./kernels')
-  , Db = require('treed/rx/db')
+  , Db = require('treed/db')
 
 var uuid = require('../lib/uuid')
 
@@ -130,16 +130,16 @@ function init(file, pl, defaultData, done) {
   }
   var config = kernelConfig[file.repl]
   var plugins = [
-    require('treed/rx/plugins/undo'),
-    require('treed/rx/plugins/todo'),
-    require('treed/rx/plugins/image'),
-    require('treed/rx/plugins/types'),
-    require('treed/rx/plugins/collapse'),
-    require('treed/rx/plugins/clipboard'),
-    require('treed/rx/plugins/lists'),
-    require('treed/rx/plugins/window-switch'),
+    require('treed/plugins/undo'),
+    require('treed/plugins/todo'),
+    require('treed/plugins/image'),
+    require('treed/plugins/types'),
+    require('treed/plugins/collapse'),
+    require('treed/plugins/clipboard'),
+    require('treed/plugins/lists'),
+    require('treed/plugins/window-switch'),
 
-    require('treed/rx/plugins/rebase'),
+    require('treed/plugins/rebase'),
   ]
   if (config && config.kernel) {
     // repl
