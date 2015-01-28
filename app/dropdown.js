@@ -26,8 +26,8 @@ var DropDown = React.createClass({
       this.props.onSelect(this.props.items[i])
     }
   },
-  _onOpen: function () {
-    this.setState({open: true})
+  _onToggle: function () {
+    this.setState({open: !this.state.open})
   },
   _onClose: function () {
     this.setState({open: false})
@@ -35,7 +35,7 @@ var DropDown = React.createClass({
   render: function () {
     var cls = this.props.className || ''
     return <div className={cls + ' DropDown'} onMouseDown={e => e.stopPropagation()}>
-      <div onClick={this._onOpen} className='DropDown_title'>
+      <div onClick={this._onToggle} className='DropDown_title'>
         {this.props.title}
       </div>
       {this.state.open && <ul className='DropDown_list'>

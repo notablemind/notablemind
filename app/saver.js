@@ -64,7 +64,7 @@ var Saver = React.createClass({
 
     return <div style={{display: 'flex'}}>
       <DropDown
-        title={<i className='fa fa-cog'/>}
+        title={<i className='fa fa-cog' style={{margin: '5px 10px'}}/>}
         items={[
           {title: 'Configure', action: this._showSettings},
           sources[source.type].link && {title: 'Open ' + source.type, action: this._showSource},
