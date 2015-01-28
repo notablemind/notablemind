@@ -7,6 +7,18 @@ module.exports = {
   sync: sync,
 }
 
+class Gist {
+  constructor(config) {
+    this.config = config
+  }
+
+  head(done) {
+  }
+
+  commit(text, done) {
+  }
+}
+
 function just_save(title, text, source, done) {
   source.dirty = false // TODO is this in the right place?
   SOURCES[source.type].save(title, text, source.config, (err, config, time) => {

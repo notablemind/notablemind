@@ -23,11 +23,23 @@ module.exports = {
     })
   },
 
+  head: function (config, done) {
+    headGist(config.gist_id, (err, result) => {
+      if (err) return done(err)
+      if (!result.files['Document.nm']) {
+        return done('Gist has become corrupted')
+      }
+      var content = result.files['Document.nm'].truncated ? null :
+        result.files['Document.nm'].content
+      done(null, new Date(result.updated_at).getTime(), content)
+    })
+  },
+
   load: function (config, done) {
     loadGist(config.gist_id, done)
   },
 
-  save: function (title, text, config, done) {
+  save: function (config, title, text, done) {
     authorize((err, token) => {
       if (err) return done(err)
       var files = {}
@@ -39,7 +51,7 @@ module.exports = {
           clearAuth() // TODO maybe don't do this every time
           return done(err)
         }
-        done(null, {gist_id: result.id}, Date.now())
+        done(null, {gist_id: result.id}, new Date(result.updated_at).getTime())
       })
     })
   },
@@ -68,6 +80,14 @@ var CONFIG = {
   proxy: 'https://auth-server.herokuapp.com/proxy',
   redirect_uri: parent.location.origin + '/connect.html',
   client_id: 'a15ba5cf761a832d0b25',
+  api: 'https://api.github.com/gists/',
+}
+
+function headGist(id, done) {
+  if (id.indexOf('/') !== -1) {
+    id = id.split('/').slice(-1)[0]
+  }
+  ajax.get(CONFIG.api + id, done)
 }
 
 function loadGist(id, done) {
@@ -95,7 +115,7 @@ function authorize(done) {
 
 // create a gist out of the current document :D
 function newGist(access_token, description, files, done) {
-  ajax.post('https://api.github.com/gists', {
+  ajax.post(CONFIG.api, {
     'Authorization': 'token ' + access_token,
   }, {
     description: description,
@@ -106,7 +126,7 @@ function newGist(access_token, description, files, done) {
 
 // update a gist out of the current document :D
 function upGist(access_token, id, description, files, done) {
-  ajax.post('https://api.github.com/gists/' + id, {
+  ajax.post(CONFIG.api + id, {
     'Authorization': 'token ' + access_token,
   }, {
     description: description,

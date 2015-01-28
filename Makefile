@@ -45,7 +45,13 @@ start-ipython:
 dumb-server:
 	cd www; python -mSimpleHTTPServer
 
-vendor: www/vendor/d3.js www/vendor/vega.js
+vendor: www/vendor/d3.js www/vendor/vega.js www/vendor/font-awesome-4.3.0
+
+www/vendor/font-awesome-4.3.0:
+	cd www/vendor && \
+	  wget http://fontawesome.io/assets/font-awesome-4.3.0.zip &&\
+	  unzip font-awesome-4.3.0.zip &&\
+	  rm font-awesome-4.3.0.zip
 
 www/vendor/d3.js:
 	wget http://trifacta.github.io/vega/lib/d3.v3.min.js -O www/vendor/d3.js

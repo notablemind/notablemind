@@ -1,11 +1,8 @@
-/* @flow */
-
-                                               
 
 module.exports = {
   post: send.bind(null, 'POST'),
   patch: send.bind(null, 'PATCH'),
-  get: function get   (url        , headers     , done                                   ) {
+  get: function get (url, headers, done) {
     if (arguments.length === 2) {
       done = headers
       headers = {}
@@ -14,7 +11,7 @@ module.exports = {
   },
 }
 
-function send   (method        , url        , headers     , data     , done                                   ) {
+function send (method, url, headers, data, done) {
   var x = new XMLHttpRequest()
   x.open(method, url)
   for (var name in headers) {
@@ -23,10 +20,14 @@ function send   (method        , url        , headers     , data     , done     
   x.onreadystatechange = function () {
     if (this.readyState !== 4) return
     var data
-    try {
-      data = JSON.parse(this.responseText)
-    } catch (e) {
-      return done(new Error('Unexpected server response'))
+    if (this.getResponseHeader('content-type').indexOf('json') !== -1) {
+      try {
+        data = JSON.parse(this.responseText)
+      } catch (e) {
+        return done(new Error('Unexpected server response'))
+      }
+    } else {
+      data = this.responseText
     }
     done(null, data)
   }

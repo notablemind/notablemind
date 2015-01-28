@@ -12,7 +12,6 @@ var localFiles = require('./files')
   , TypeSwitcher = require('./type-switcher')
   , KeyManager = require('treed/key-manager')
   , keys = require('treed/lib/keys')
-  , sync = require('./sync')
 
 var App = React.createClass({
 
@@ -249,7 +248,7 @@ var App = React.createClass({
 
   _setSource: function (type, done) {
     var store = this.state.store
-      , text = JSON.stringify(store.db.exportTree(), null, 2)
+      , text = JSON.stringify(store.db.exportTree(null, true), null, 2)
       , title = store.db.nodes[store.db.root].content
     SOURCES[type].saveAs(title, text, (err, config, time) => {
       if (err) return done(new Error('Failed to set source'))
@@ -269,6 +268,62 @@ var App = React.createClass({
 
   _onSync: function (done) {
 
+    var source = this.state.file.source
+      , localModified = this.state.file.modified
+      , src = SOURCES[source.type]
+
+    var commit = () => {
+      var store = this.state.store
+        , text = JSON.stringify(store.db.exportTree(null, true), null, 2)
+        , title = store.db.nodes[store.db.root].content
+      return src.save(source.config, title, text, (err, config, time) => {
+        if (err) {
+          return done(err)
+        }
+        source.config = config
+        source.synced = time
+        localFiles.update(this.state.file.id, {
+          source: source
+        }, file => {
+          this.setState({file: file})
+          done()
+        })
+      })
+    }
+
+    var apply = (content) => {
+      // TODO apply
+      done()
+    }
+
+    var get_and_apply = (content) => {
+      if (content) {
+        return apply(content)
+      }
+      src.load(source.config, result => {
+        apply(content)
+      })
+    }
+
+    src.head(source.config, (err, lastModified, content) => {
+      if (err) {
+        return done(err)
+      }
+      if (lastModified < source.synced || !source.synced) {
+        return commit()
+      } else if (lastModified > source.synced) {
+        fail
+        if (!source.dirty && localModified <= lastModified) {
+          return get_and_apply(content)
+        } else {
+          return get_merge_and_commit(content)
+        }
+      } else {
+        done()
+      }
+    })
+
+    /*
     var source = this.state.file.source
       , local_modified = this.state.file.modified
 
@@ -301,6 +356,7 @@ var App = React.createClass({
         reconcile()
       }
     })
+   **/
 
   },
 

@@ -25,7 +25,7 @@ var Header = React.createClass({
       <span className='Header_name'>
         <a target="_blank" href="http://notablemind.github.io">Notablemind</a>
         <a target="_blank" href="http://github.com/notablemind/notablemind">
-          GH
+          <i className='fa fa-github-alt'/>
         </a>
       </span>
       <button className='Header_home' onClick={this.props.onClose}>
@@ -54,12 +54,6 @@ var Header = React.createClass({
         plugin.view && plugin.view.global && plugin.view.global(headStore)
       )}
       {this.props.saver}
-      {/*
-      <SourceSelector
-        file={this.props.file}
-        onSave={this.props.onSave}
-        setSource={this.props.setSource} />
-        */}
     </div>
   }
 })

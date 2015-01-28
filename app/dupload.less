@@ -1,8 +1,18 @@
 
-.m_icon {
-  &:extend(.icon all);
-  &:extend(.icon-small all);
+@import "../www/vendor/font-awesome-4.3.0/less/variables.less";
+@import "../www/vendor/font-awesome-4.3.0/less/core.less";
 
+.m_icon {
+  &:extend(.fa all);
+
+  display: inline-block;
+  font: normal normal normal @fa-font-size-base/1 FontAwesome; // shortening font declaration
+  font-size: inherit; // can't have font-size inherit on line above, so need to override
+  text-rendering: auto; // optimizelegibility throws things off #1094
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transform: translate(0, 0); // ensures no half-pixel rendering in firefox
   color: rgb(102, 102, 102);
   transition: color .2s ease;
   cursor: pointer;
@@ -50,17 +60,16 @@
 .Dupload_upload {
   &:extend(.m_icon all);
 
-  > span {
-    &:extend(.icon-upload all);
+  &:before {
+    content: @fa-var-upload;
   }
 }
 
 .Dupload_download {
   &:extend(.m_icon all);
-  // &:extend(.icon-small all);
 
-  > span {
-    &:extend(.icon-download all);
+  &:before {
+    content: @fa-var-download;
   }
 }
 
