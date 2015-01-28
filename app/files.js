@@ -45,7 +45,7 @@ function dump(file, done) {
       for (var name in file) {
         data[name] = file[name]
       }
-      data.main = store.db.exportTree()
+      data.root = store.db.exportTree(null, true)
       done(null, data)
     })
   })
@@ -68,7 +68,7 @@ function updateFile(id, data, done) {
 
 function convertToFile(data) {
   if (!Array.isArray(data)) {
-    if (data.main && data.title) {
+    if (data.root && data.title) {
       return data
     }
     data = [data]
@@ -76,13 +76,13 @@ function convertToFile(data) {
   if (data.length === 1) {
     return {
       title: data[0].content,
-      main: data[0],
+      root: data[0],
       repl: 'none',
     }
   }
   return {
     title: 'Imported...',
-    main: {
+    root: {
       content: 'Imported...',
       children: data,
     },
@@ -107,7 +107,7 @@ function importOne(data, done) {
     return done(new Error("Invalid file format"))
   }
   newImport(fileData, (file, pl) => {
-    populateFile(pl, fileData.main, (err) => {
+    populateFile(pl, fileData.root, (err) => {
       done(err, file)
     })
   })
@@ -209,7 +209,7 @@ function newImport(fileData, done) {
     id: uuid(),
   }
   for (var name in fileData) {
-    if (name === 'main') continue;
+    if (name === 'root') continue;
     file[name] = fileData[name]
   }
   listFiles(files =>

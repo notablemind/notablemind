@@ -1,10 +1,7 @@
-/* @flow */
 
 var showModal = require('./show-modal')
 
-                                           
-
-module.exports = function (tryImport                                                              , done    ) {
+module.exports = function (tryImport, done) {
   showModal('Import a Gist', function (state, set, done) {
     if (state.loading) {
       return React.createElement("div", null, "Loading...")
@@ -23,6 +20,7 @@ module.exports = function (tryImport                                            
       "Enter the username and gist id to import:", 
       React.createElement("input", {placeholder: "username/gistid", 
         value: state.gist_id, 
+        autoFocus: true,
         onChange: set('gist_id', true)}), 
       React.createElement("button", {onClick: importit}, "Import")
     )

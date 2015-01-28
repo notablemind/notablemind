@@ -78,6 +78,7 @@ function waitForWindow(window, initial, step, done) {
     } catch (e) {
       return false
     }
+    if (window.location.href === 'about:blank') return false
     done()
     return true
   })

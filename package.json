@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/notablemind/notablemind",
   "dependencies": {
+    "deep-equal": "^0.2.1",
     "react": "^0.12.1"
   },
   "devDependencies": {

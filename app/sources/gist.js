@@ -24,19 +24,23 @@ module.exports = {
   },
 
   head: function (config, done) {
-    headGist(config.gist_id, (err, result) => {
-      if (err) return done(err)
-      if (!result.files['Document.nm']) {
-        return done('Gist has become corrupted')
-      }
-      var content = result.files['Document.nm'].truncated ? null :
-        result.files['Document.nm'].content
-      done(null, new Date(result.updated_at).getTime(), content)
+    authorize((err, token) => {
+      headGist(token, config.gist_id, (err, result) => {
+        if (err) return done(err)
+        if (!result.files['Document.nm']) {
+          return done('Gist has become corrupted')
+        }
+        var content = result.files['Document.nm'].truncated ? null :
+          result.files['Document.nm'].content
+        done(null, new Date(result.updated_at).getTime(), content)
+      })
     })
   },
 
   load: function (config, done) {
-    loadGist(config.gist_id, done)
+    authorize((err, token) => {
+      loadGist(token, config.gist_id, done)
+    })
   },
 
   save: function (config, title, text, done) {
@@ -83,18 +87,22 @@ var CONFIG = {
   api: 'https://api.github.com/gists/',
 }
 
-function headGist(id, done) {
+function headGist(access_token, id, done) {
   if (id.indexOf('/') !== -1) {
     id = id.split('/').slice(-1)[0]
   }
-  ajax.get(CONFIG.api + id, done)
+  ajax.get(CONFIG.api + id, {
+    'Authorization': 'token ' + access_token,
+  }, done)
 }
 
-function loadGist(id, done) {
+function loadGist(access_token, id, done) {
   if (id.indexOf('/') !== -1) {
     id = id.split('/').slice(-1)[0]
   }
-  ajax.get('https://gist.githubusercontent.com/raw/' + id, done)
+  ajax.get('https://gist.githubusercontent.com/raw/' + id, {
+    'Authorization': 'token ' + access_token,
+  }, done)
 }
 
 function clearAuth() {
