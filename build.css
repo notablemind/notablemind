@@ -368,14 +368,6 @@
   visibility: visible;
 }
 .m_IPython {
-  /*
-  border: 1px solid rgb(219, 219, 219);
-  border-radius: 5px;
-  padding: 5px 10px;
-  box-shadow: 1px 1px 4px rgb(218, 218, 218) inset;
-  position: relative;
-  min-height: 20px;
-  */
   position: relative;
   margin: 5px 0 10px 50px;
   min-height: 20px;
@@ -471,6 +463,34 @@
 .m_IPythonKernel_changer_btn:hover {
   opacity: 1;
   outline: 1px solid #ccc;
+}
+.m_IPython_outputs {
+  position: relative;
+}
+.m_IPython_popout-button {
+  position: absolute;
+  top: 8px;
+  right: 5px;
+  opacity: 0;
+  transition: opacity .3s ease;
+  cursor: pointer;
+}
+.m_IPython_outputs:hover .m_IPython_popout-button {
+  opacity: 1;
+}
+.m_IPython_popout-body {
+  margin: 10px;
+  max-width: none;
+  padding: 0;
+}
+.m_IPython_popout-wrapper {
+  margin: 0;
+}
+.m_IPython_popped-message {
+  font-style: italic;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-align: center;
 }
 .m_IPython_output:only-child {
   display: block;
@@ -2062,15 +2082,7 @@ body {
   border: 1px solid #ccc;
   display: none;
 }
-.Importer_list {
-  list-style: none;
-  margin: 10px 0;
-  padding: 0;
-}
-.Importer_list li {
-  display: inline-block;
-}
-.Importer_list button {
+.Importer_source {
   display: block;
   width: 100%;
   background-color: white;
@@ -2081,9 +2093,18 @@ body {
   color: #555;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
-.Importer_list button:hover {
+.Importer_source-selected,
+.Importer_source:hover {
   border-color: #ccc;
   color: black;
+}
+.Importer_list {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+}
+.Importer_list li {
+  display: inline-block;
 }
 .NewFile {
   position: relative;
@@ -2116,6 +2137,41 @@ body {
 }
 .NewFile_repls {
   display: inline-block;
+}
+.DropDown {
+  position: relative;
+}
+.DropDown_title {
+  cursor: pointer;
+}
+.DropDown_list {
+  background-color: white;
+  box-shadow: 0 4px 5px #aaa;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10000;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.DropDown-right .DropDown_list {
+  left: auto;
+  right: 0;
+}
+.DropDown_item {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.DropDown_item-selected,
+.DropDown_item:hover {
+  background-color: #e0e0e0;
+}
+.Saver {
+  margin-left: 10px;
+}
+.Saver_message {
+  padding: 5px 10px;
 }
 .treed_body_rendered,
 .textarea-grow textarea,
