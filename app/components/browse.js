@@ -22,84 +22,29 @@ function strcmp(a, b) {
 var Browse = React.createClass({
 
   propTypes: {
+    onUpdated: PT.func.isRequired,
     onOpen: PT.func.isRequired,
-    files: PT.object.isRequired,
-    keys: PT.object.isRequired,
+    files: PT.array.isRequired,
+    keys: PT.func.isRequired,
   },
 
   getInitialState: function () {
     return {
       configuring: false,
-      loading: true,
-      error: null,
-      files: null,
-      newing: null,
+      menu: null,
     }
   },
 
-  componentDidUpdate: function (prevProps) {
-    if (!prevProps.loadId && this.props.loadId) {
-      this.state.files.some(file => {
-        if (file.id !== this.props.loadId) return false
-        this.setState({
-          error: null,
-          loading: true
-        })
-        this.loadFile(file, true)
-        return true
-      })
+  componentDidUpdate: function (prevProps, prevState) {
+    if (prevState.menu && !this.state.menu) {
+      window.removeEventListener('mousedown', this._windowMouseDown)
+    } else if (this.state.menu && !prevState.menu) {
+      window.addEventListener('mousedown', this._windowMouseDown)
     }
-  },
-
-  loadFiles: function () {
-    this.props.files.list(files => {
-      if (this.props.loadId) {
-        var found = files.some(file => {
-          if (file.id !== this.props.loadId) return false
-          this.setState({
-            error: null,
-            files: files,
-            loading: true
-          })
-          this.loadFile(file, true)
-          return true
-        })
-        if (found) {
-          return
-        }
-      }
-      // sort by title
-      files = files.sort((a, b) => strcmp(a.title, b.title))
-      this.setState({files, loading: false})
-    })
-  },
-
-  componentDidMount: function () {
-    if (this.state.file) return
-    this.loadFiles()
-    window.addEventListener('mousedown', this._windowMouseDown)
   },
 
   componentWillUnmount: function () {
     window.removeEventListener('mousedown', this._windowMouseDown)
-  },
-
-  loadFile: function (file, autoload) {
-    if (!autoload) {
-      history.set(file.id)
-    }
-    this.setState({error: null, loading: true})
-
-    this.props.files.get(file.id, pl =>
-      this.props.files.init(file, pl, (err, store, plugins) => {
-        if (err) {
-          return this._onError(err)
-        }
-        this.props.files.update(file.id, {opened: Date.now()}, file => {
-          this.props.onLoad(file, store, plugins)
-        })
-      })
-    )
   },
 
   _windowMouseDown: function() {
@@ -113,8 +58,8 @@ var Browse = React.createClass({
   _onNewFile: function (title, repl) {
     this.setState({newing: null, error: null, loading: true})
 
-    this.props.files.create(title, repl, (file, pl) =>
-      this.props.files.init(file, pl, (err, store, plugins) => {
+    this.props.fileslib.create(title, repl, (file, pl) =>
+      this.props.fileslib.init(file, pl, (err, store, plugins) => {
         if (err) {
           return this._onError(err)
         }
@@ -129,8 +74,8 @@ var Browse = React.createClass({
   },
 
   _setRepl: function (file, repl) {
-    this.props.files.update(file.id, {repl: repl === 'null' ? null: repl}, () => {
-      this.loadFiles()
+    this.props.fileslib.update(file.id, {repl: repl === 'null' ? null: repl}, () => {
+      this.props.onUpdated()
     })
   },
 
@@ -147,11 +92,11 @@ var Browse = React.createClass({
   _deleteFile: function () {
     var id = this.state.menu.file.id
     this.setState({menu: null})
-    this.props.files.remove(id, this.loadFiles)
+    this.props.fileslib.remove(id, this.props.onUpdated)
   },
 
   _onRemoveFile: function (file) {
-    this.props.files.remove(file.id, this.loadFiles)
+    this.props.fileslib.remove(file.id, this.props.onUpdated)
   },
 
   _onDoneConfig: function () {
@@ -208,12 +153,11 @@ var Browse = React.createClass({
       </div>
     }
     return <div className='Browse'>
-      <BrowseHeader />
-
       <Tabular
         keys={this.props.keys}
-        items={this.state.files}
-        onSelect={this.loadFile}
+        items={this.props.files}
+        onSelect={this.props.onOpen}
+        emptyText="No documents"
         extraKeys={{
           'ctrl+return': item => window.open('?' + item.id)
         }}

@@ -1,5 +1,5 @@
 
-@import "./browse.less";
+@import "./components/browse.less";
 
 /* latin-ext */
 @font-face {
@@ -16,7 +16,7 @@
   src: local('Monda Bold'), local('Monda-Bold'), url(vendor/Monda-Bold.ttf);
 }
 
-.App {
+body {
   position: absolute;
   top: 0;
   left: 0;
@@ -24,6 +24,21 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
+}
+
+.Page {
+  flex: 1;
+}
+
+.BrowsePage {
+  &:extend(.Page);
+
+  flex-direction: column;
+  display: flex;
+}
+
+.Browse {
+  flex: 1;
 }
 
 .App_panes {
@@ -126,13 +141,13 @@
   }
 }
 
-@import "./dupload.less";
-@import "./header.less";
-@import "./type-switcher.less";
-@import "./importer.less";
-@import "./new-file.less";
-@import "./dropdown.less";
-@import "./saver.less";
+@import "./components/dupload.less";
+@import "./components/header.less";
+@import "./components/type-switcher.less";
+@import "./components/importer.less";
+@import "./components/new-file.less";
+@import "./components/dropdown.less";
+@import "./components/saver.less";
 
 .treed_body_rendered {
   font-family: 'Monda';

@@ -5,15 +5,17 @@ var React = require('react')
   , Dropload = require('./dropload')
   , Importer = require('./importer')
   , NewFile = require('./new-file')
+  , Morph = require('../helpers/morph')
 
 var BrowseHeader = React.createClass({
-  mixins: [KeysMixin],
+  mixins: [KeysMixin, Morph],
 
   propTypes: {
+    onUpdated: PT.func,
     store: PT.object,
-    file: PT.object,
+    fileslib: PT.object,
     plugins: PT.object,
-    keys: PT.object,
+    keys: PT.func,
   },
 
   statics: {
@@ -43,9 +45,9 @@ var BrowseHeader = React.createClass({
         return console.warn('failed to import file')
       }
     }
-    this.props.files.importRaw(data, (err, file) => {
-      this.props.files.update(file.id, {source: source}, (err) => {
-        this.loadFiles()
+    this.props.fileslib.importRaw(data, (err, file) => {
+      this.props.fileslib.update(file.id, {source: source}, (err) => {
+        this.props.onUpdated()
       })
     })
   },
@@ -62,7 +64,7 @@ var BrowseHeader = React.createClass({
         })
       }
       this.setState({importError: null, importing: false})
-      this.props.files.importRaw(text, err => {
+      this.props.fileslib.importRaw(text, err => {
         if (err) {
           return this.setState({
             open: null,
@@ -70,7 +72,7 @@ var BrowseHeader = React.createClass({
             importing: false,
           })
         }
-        this.loadFiles()
+        this.props.onUpdated()
       })
     })
     this.setState({
@@ -94,10 +96,12 @@ var BrowseHeader = React.createClass({
     } else {
       opener = [
         <div
+          key={1}
           onClick={this._onNewOpen.bind(null, 'new', true)}
           className='NewFile NewFile-closed'>Create</div>,
-        <h1 className='Browse_title'>Notablemind</h1>,
+        <h1 key={2} className='Browse_title'>Notablemind</h1>,
         <div
+          key={3}
           onClick={this._onNewOpen.bind(null, 'import')}
           className='Importer Importer-closed'>Import</div>
       ]
@@ -105,7 +109,7 @@ var BrowseHeader = React.createClass({
 
     return <div className='BrowseHeader'>
       <div className={
-        'Browse_opener' + (this.state.open ? 'Browse_opener-open' : '')
+        'BrowseHeader_opener' + (this.state.open ? ' BrowseHeader_opener-open' : '')
       }>
         {opener}
       </div>

@@ -58,7 +58,7 @@ var NewFile = React.createClass({
 
   render: function () {
     return <form className="NewFile" onSubmit={this._onSubmit}>
-      <div className='NewFile_cancel' onClick={this._onHide}>Cancel</div>
+      <button className='NewFile_cancel' onClick={this._onHide}>Cancel</button>
       <div>
         <h3 className="NewFile_head">New Document</h3>
         <input

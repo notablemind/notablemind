@@ -11,6 +11,7 @@ var Tabular = React.createClass({
     headers: PT.object,
     onSelect: PT.func,
     keys: PT.func,
+    emptyText: PT.node,
     extraKeys: PT.object,
   },
 
@@ -114,7 +115,7 @@ var Tabular = React.createClass({
         <thead>
           <tr>
             {
-              heads.map(name => <th>{name}</th>)
+              heads.map(name => <th key={name}>{name}</th>)
             }
           </tr>
         </thead>
@@ -125,7 +126,7 @@ var Tabular = React.createClass({
           <thead>
             <tr>
               {
-                heads.map(name => <th>{name}</th>)
+                heads.map(name => <th key={name}>{name}</th>)
               }
             </tr>
           </thead>
@@ -137,9 +138,16 @@ var Tabular = React.createClass({
                   className={i === this.state.selected ? 'selected' : ''}
                   onContextMenu={this._onMenu.bind(null, item, i)}
                   onClick={this.props.onSelect.bind(null, item)}>
-                {heads.map(name => <td>{this.props.headers[name](item)}</td>)}
+                {heads.map(name =>
+                  <td key={name}>
+                    {this.props.headers[name](item)}
+                  </td>)}
               </tr>)
             }
+            {!this.props.items.length &&
+              <tr className='Tabular_empty'>
+                <td colSpan={3}>{this.props.emptyText}</td>
+              </tr>}
           </tbody>
         </table>
       </div>

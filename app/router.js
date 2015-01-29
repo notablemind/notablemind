@@ -8,7 +8,7 @@ var BrowsePage = require('./pages/browse')
 
 var App = React.createClass({
   render: function () {
-    return <RouteHandler/>
+    return <RouteHandler className='App'/>
   },
 })
 
