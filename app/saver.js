@@ -71,7 +71,7 @@ var Saver = React.createClass({
         ]}
         />
       <button onClick={this._onSync}>Sync</button>
-      {!this.props.value.dirty && ' Local changes saved'}
+      <span className='Saver_message'> {this.props.value.dirty ? 'Unsaved local changes' : 'Local changes saved'}</span>
       {this.state.error}
     </div>
   },
