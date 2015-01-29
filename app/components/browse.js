@@ -10,7 +10,7 @@ var React = require('react')
   , cx = React.addons.classSet
   , PT = React.PropTypes
   , history = require('./history')
-  , kernels = require('./kernels')
+  , kernels = require('../kernels')
   , async = require('async')
 
 function strcmp(a, b) {
@@ -20,10 +20,11 @@ function strcmp(a, b) {
 }
 
 var Browse = React.createClass({
+
   propTypes: {
-    loadId: PT.string,
+    onOpen: PT.func.isRequired,
     files: PT.object.isRequired,
-    onLoad: PT.func.isRequired,
+    keys: PT.object.isRequired,
   },
 
   getInitialState: function () {
@@ -52,7 +53,6 @@ var Browse = React.createClass({
 
   loadFiles: function () {
     this.props.files.list(files => {
-      // var id = history.get()
       if (this.props.loadId) {
         var found = files.some(file => {
           if (file.id !== this.props.loadId) return false
@@ -78,12 +78,6 @@ var Browse = React.createClass({
     if (this.state.file) return
     this.loadFiles()
     window.addEventListener('mousedown', this._windowMouseDown)
-    if (this.props.keys) {
-      this.props.keys.add({
-        'n': () => this.setState({newing: 'new'}),
-        'i': () => this.setState({newing: 'import'}),
-      })
-    }
   },
 
   componentWillUnmount: function () {
@@ -143,7 +137,7 @@ var Browse = React.createClass({
   _openNewTab: function () {
     var id = this.state.menu.file.id
     this.setState({menu: null})
-    window.open('?' + id)
+    window.open('?doc/' + id)
   },
 
   _exportFile: function () {
@@ -162,51 +156,6 @@ var Browse = React.createClass({
 
   _onDoneConfig: function () {
     this.setState({configuring: false})
-  },
-
-  _onImport: function (files) {
-    if (!files.length) return console.warn('no files');
-    // TODO what about multiple files?
-    var reader = readFile(files[0], (err, text) => {
-      if (err) {
-        return this.setState({
-          newing: null,
-          importError: err.message,
-          importing: false,
-        })
-      }
-      this.setState({importError: null, importing: false})
-      this.props.files.importRaw(text, err => {
-        if (err) {
-          return this.setState({
-            newing: null,
-            importError: err.message,
-            importing: false,
-          })
-        }
-        this.loadFiles()
-      })
-    })
-    this.setState({
-      newing: null,
-      importing: reader,
-      importError: false,
-    })
-  },
-
-  _onSourced: function (data, source) {
-    if ('string' === typeof data) {
-      try {
-        data = JSON.parse(data)
-      } catch (e) {
-        return console.warn('failed to import file')
-      }
-    }
-    this.props.files.importRaw(data, (err, file) => {
-      this.props.files.update(file.id, {source: source}, (err) => {
-        this.loadFiles()
-      })
-    })
   },
 
   // TODO: WORK HERE -- get this all awesome. Also remove file
@@ -230,10 +179,6 @@ var Browse = React.createClass({
         onClick={this._onDoneConfig.bind(null, file)}>Done Config</button>
       {/* TODO: download button */}
     </div>;
-  },
-
-  _onNewOpen: function (what, open) {
-    this.setState({newing: open ? what : null})
   },
 
   _renderMenu: function () {
@@ -263,28 +208,7 @@ var Browse = React.createClass({
       </div>
     }
     return <div className='Browse'>
-      {this.state.error && 'Error loading file!'}
-      <div className={
-        'Browse_news' + (this.state.newing ? 'Browse_news-open' : '')
-      }>
-        {this.state.newing !== 'import' &&
-          (this.state.newing !== 'new' ?
-            <div onClick={this._onNewOpen.bind(null, 'new', true)} className='NewFile NewFile-closed'>Create</div> :
-            <NewFile onSubmit={this._onNewFile}
-              keys={this.props.keys}
-              open={this.state.newing == 'new'}
-              onClose={this._onNewOpen.bind(null, 'new', false)}/>)}
-        {!this.state.newing &&
-          <h1 className='Browse_title'>Notablemind</h1>}
-        {this.state.newing !== 'new' &&
-          (this.state.newing !== 'import' ?
-            <div onClick={this._onNewOpen.bind(null, 'import')} className='Importer Importer-closed'>Import</div> :
-            <Importer onSourced={this._onSourced}
-              onClose={this._onNewOpen.bind(null, 'import', false)}
-              keys={this.props.keys} />)}
-      </div>
-      <Dropload onDrop={this._onImport} message="Drop anywhere to import"/>
-      {this.state.importError && 'Import Error: ' + this.state.importError}
+      <BrowseHeader />
 
       <Tabular
         keys={this.props.keys}

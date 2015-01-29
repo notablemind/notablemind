@@ -7,7 +7,7 @@ var treed = require('treed')
 
 var files = require('./app/files')
 
-var App = require('./app')
+// var App = require('./app')
 
 window.run_require = require
 window.React = React
@@ -37,6 +37,11 @@ formatters.map(plugin => {
 })
 
 window.onload = function () {
-  React.renderComponent(App({}), document.body)
+  // React.renderComponent(App({}), document.body)
+  var router = require('./app/router')
+
+  require('react-router').run(router, function (Handler) {
+    React.render(<Handler/>, document.body)
+  });
 }
 

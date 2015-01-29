@@ -8,7 +8,7 @@ MODS=' react react/addons codemirror majax marked moment async ansi-to-html even
 all: js css
 
 pages:
-	rsync www/* pages/demo -rLu
+	rsync www/* pages/ -rLu
 	lessc -x run.less pages/demo/build.css
 	browserify ${ARGS} -d run.js | uglifyjs --screw-ie8 > pages/demo/build.js
 

@@ -3,7 +3,7 @@ var React = require('react/addons')
   , ensureInView = require('treed/util/ensure-in-view')
   , cx = React.addons.classSet
   , PT = React.PropTypes
-  , KeysMixin = require('./keys-mixin')
+  , KeysMixin = require('../keys-mixin')
 
 var Tabular = React.createClass({
   propTypes: {

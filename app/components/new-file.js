@@ -1,8 +1,8 @@
 
 var React = require('react/addons')
   , cx = React.addons.classSet
-  , kernels = require('./kernels')
-  , KeysMixin = require('./keys-mixin')
+  , kernels = require('../kernels')
+  , KeysMixin = require('../keys-mixin')
 
 var NewFile = React.createClass({
   getInitialState: function () {

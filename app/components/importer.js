@@ -1,8 +1,8 @@
 
 var React = require('react/addons')
   , cx = React.addons.classSet
-  , sources = require('./sources')
-  , KeysMixin = require('./keys-mixin')
+  , sources = require('../sources')
+  , KeysMixin = require('../keys-mixin')
 
 var Importer = React.createClass({
   _importFrom: function (name) {
