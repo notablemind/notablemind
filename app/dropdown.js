@@ -32,6 +32,7 @@ var DropDown = React.createClass({
   _onClose: function () {
     this.setState({open: false})
   },
+
   render: function () {
     var cls = this.props.className || ''
     return <div className={cls + ' DropDown'} onMouseDown={e => e.stopPropagation()}>

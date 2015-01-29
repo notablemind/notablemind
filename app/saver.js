@@ -62,7 +62,7 @@ var Saver = React.createClass({
 
     var source = this.props.value
 
-    return <div style={{display: 'flex'}}>
+    return <div className='Saver' style={{display: 'flex'}}>
       <DropDown
         title={<i className='fa fa-cog' style={{margin: '5px 10px'}}/>}
         items={[

@@ -81,6 +81,7 @@ var Browse = React.createClass({
     if (this.props.keys) {
       this.props.keys.add({
         'n': () => this.setState({newing: 'new'}),
+        'i': () => this.setState({newing: 'import'}),
       })
     }
   },
@@ -267,15 +268,20 @@ var Browse = React.createClass({
         'Browse_news' + (this.state.newing ? 'Browse_news-open' : '')
       }>
         {this.state.newing !== 'import' &&
-          <NewFile onSubmit={this._onNewFile}
-            open={this.state.newing == 'new'}
-            onOpen={this._onNewOpen.bind(null, 'new')}/>}
+          (this.state.newing !== 'new' ?
+            <div onClick={this._onNewOpen.bind(null, 'new', true)} className='NewFile NewFile-closed'>Create</div> :
+            <NewFile onSubmit={this._onNewFile}
+              keys={this.props.keys}
+              open={this.state.newing == 'new'}
+              onClose={this._onNewOpen.bind(null, 'new', false)}/>)}
         {!this.state.newing &&
           <h1 className='Browse_title'>Notablemind</h1>}
         {this.state.newing !== 'new' &&
-          <Importer onSourced={this._onSourced}
-            open={this.state.newing == 'import'}
-            onOpen={this._onNewOpen.bind(null, 'import')}/>}
+          (this.state.newing !== 'import' ?
+            <div onClick={this._onNewOpen.bind(null, 'import')} className='Importer Importer-closed'>Import</div> :
+            <Importer onSourced={this._onSourced}
+              onClose={this._onNewOpen.bind(null, 'import', false)}
+              keys={this.props.keys} />)}
       </div>
       <Dropload onDrop={this._onImport} message="Drop anywhere to import"/>
       {this.state.importError && 'Import Error: ' + this.state.importError}

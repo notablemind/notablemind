@@ -18,6 +18,24 @@
     &:extend(.Browse_new_cancel all);
   }
 
+  &_source {
+    display: block;
+    width: 100%;
+    background-color: white;
+    border: 1px solid white;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    color: #555;
+    transition: color .2s ease, border-color .2s ease;
+
+    &-selected,
+    &:hover {
+      border-color: #ccc;
+      color: black;
+    }
+  }
+
   &_list {
     list-style: none;
     margin: 10px 0;
@@ -25,23 +43,6 @@
 
     li {
       display: inline-block;
-    }
-
-    button {
-      display: block;
-      width: 100%;
-      background-color: white;
-      border: 1px solid white;
-      padding: 10px 20px;
-      text-align: center;
-      cursor: pointer;
-      color: #555;
-      transition: color .2s ease, border-color .2s ease;
-
-      &:hover {
-        border-color: #ccc;
-        color: black;
-      }
     }
   }
 }

@@ -1,0 +1,44 @@
+
+.DropDown {
+  position: relative;
+
+  &_title {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  &_list {
+    background-color: white;
+    box-shadow: 0 4px 5px #aaa;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10000;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .DropDown-right & {
+      left: auto;
+      right: 0;
+    }
+  }
+
+  &_item {
+    padding: 10px 15px;;
+    cursor: pointer;
+
+    &-selected,
+    &:hover {
+      background-color: #e0e0e0;
+    }
+
+    &:not(:last-child) {
+      // border-bottom: 1px solid #ccc;
+    }
+  }
+}
+

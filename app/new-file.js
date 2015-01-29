@@ -2,6 +2,7 @@
 var React = require('react/addons')
   , cx = React.addons.classSet
   , kernels = require('./kernels')
+  , KeysMixin = require('./keys-mixin')
 
 var NewFile = React.createClass({
   getInitialState: function () {
@@ -10,6 +11,7 @@ var NewFile = React.createClass({
       repl: 'null',
     }
   },
+
   _onChange: function (e) {
     this.setState({title: e.target.value})
   },
@@ -20,6 +22,11 @@ var NewFile = React.createClass({
     e.preventDefault()
     e.stopPropagation()
     this.props.onSubmit(this.state.title, this.state.repl)
+  },
+  _onKeyDown: function (e) {
+    if (e.key === 'Return') {
+      return this._onSubmit(e)
+    }
   },
 
   repls: function () {
@@ -36,13 +43,9 @@ var NewFile = React.createClass({
     </ul>
   },
 
-  _onShow: function () {
-    this.props.onOpen(true)
-  },
-
   _onHide: function (e) {
     e.preventDefault()
-    this.props.onOpen(false)
+    this.props.onClose()
   },
 
   componentDidUpdate: function (prevProps) {
@@ -54,16 +57,19 @@ var NewFile = React.createClass({
   },
 
   render: function () {
-    if (!this.props.open) {
-      return <div onClick={this._onShow} className='NewFile NewFile-closed'>Create</div>
-    }
     return <form className="NewFile" onSubmit={this._onSubmit}>
       <div className='NewFile_cancel' onClick={this._onHide}>Cancel</div>
       <div>
-      <h3 className="NewFile_head">New Document</h3>
-      <input ref="input" className='NewFile_title' type="text" value={this.state.title}
-        onChange={this._onChange} />
-      <button className='NewFile_submit' onClick={this._onSubmit}>Create Document</button>
+        <h3 className="NewFile_head">New Document</h3>
+        <input
+          autoFocus={true}
+          type="text"
+          ref="input"
+          onKeyDown={this._onKeyDown}
+          className='NewFile_title'
+          value={this.state.title}
+          onChange={this._onChange} />
+        <button className='NewFile_submit' onClick={this._onSubmit}>Create Document</button>
       </div>
       <span className='NewFile_ReplTitle'>Repl</span>
       {this.repls()}

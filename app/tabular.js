@@ -3,6 +3,7 @@ var React = require('react/addons')
   , ensureInView = require('treed/util/ensure-in-view')
   , cx = React.addons.classSet
   , PT = React.PropTypes
+  , KeysMixin = require('./keys-mixin')
 
 var Tabular = React.createClass({
   propTypes: {
@@ -13,19 +14,33 @@ var Tabular = React.createClass({
     extraKeys: PT.object,
   },
 
-  componentDidMount: function () {
-    this.resizeHead()
-    if (this.props.keys) {
-      this.props.keys.add({
+  mixins: [KeysMixin],
+
+  statics: {
+    keys: function () {
+      return {
         'j, down': this.goDown,
         'k, up': this.goUp,
-        'return, i': this.keySelect,
-      })
+        'return': this.keySelect,
+      }
+    },
+  },
+
+  componentDidMount: function () {
+    this.resizeHead()
+    if (this.props.extraKeys) {
       var k = {}
       for (var name in this.props.extraKeys) {
         k[name] = this._extraKeys.bind(null, this.props.extraKeys[name])
       }
-      this.props.keys.add(k)
+      this._extra_keys = this.props.keys.add(k)
+    }
+  },
+
+  componentWillUnmount: function () {
+    if (this._extra_keys) {
+      this.props.keys.remove(this._extra_keys)
+      delete this._extra_keys
     }
   },
 
@@ -33,6 +48,20 @@ var Tabular = React.createClass({
     this.resizeHead()
     if (this.state.selected !== prevState.selected) {
       ensureInView(this.refs.selected.getDOMNode())
+    }
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (this._extra_keys && nextProps.keys) {
+      nextProps.keys.remove(this._extra_keys)
+      delete this._extra_keys
+    }
+    if (nextProps.extraKeys) {
+      var k = {}
+      for (var name in nextProps.extraKeys) {
+        k[name] = this._extraKeys.bind(null, nextProps.extraKeys[name])
+      }
+      this._extra_keys = nextProps.keys.add(k)
     }
   },
 

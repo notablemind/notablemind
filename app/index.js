@@ -276,41 +276,6 @@ var App = React.createClass({
       done()
     })
 
-    /*
-    var source = this.state.file.source
-      , local_modified = this.state.file.modified
-
-    var just_save = () => {
-      var store = this.state.store
-        , text = JSON.stringify(store.db.exportTree(), null, 2)
-        , title = store.db.nodes[store.db.root].content
-
-      sync.just_save(title, text, source, source => {
-        localFiles.update(this.state.file.id, {
-          source: source
-        }, file => {
-          this.setState({file: file})
-          done()
-        })
-      })
-    }
-
-    var just_update = () => {
-    }
-
-    var ss = SOURCES[source.type]
-
-    ss.head(source.config, (last_modified, content) => {
-      if (source.synced >= last_modified) {
-        just_save()
-      } else if (!source.dirty && local_modified <= last_modified) {
-        just_update()
-      } else {
-        reconcile()
-      }
-    })
-   **/
-
   },
 
   render: function () {
