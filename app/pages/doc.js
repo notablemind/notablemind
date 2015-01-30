@@ -66,7 +66,7 @@ var DocPage = React.createClass({
 
   render: function () {
     if (this.state.loading) {
-      return <em>Loading</em>
+      return <div className='DocPage DocPage-loading'>Loading</div>
     }
     if (this.state.error) {
       return <em>Error loading file {this.state.error + ''}</em>
@@ -76,7 +76,7 @@ var DocPage = React.createClass({
     }
     var {store, file, plugins} = this.state
 
-    return <div className='App'>
+    return <div className='DocPage'>
       <DocHeader
         file={file}
         store={store}
@@ -85,7 +85,7 @@ var DocPage = React.createClass({
 
         setPanes={this._setPanes}
         changeTitle={this._changeTitle}
-        onClose={!this.props.noHome && this._onClose}
+        onClose={!this.props.noHome && (() => this.transitionTo('home'))}
       />
       <DocViewer
         query={this.getQuery()}

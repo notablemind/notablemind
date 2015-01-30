@@ -26,18 +26,33 @@ body {
   flex-direction: column;
 }
 
-.App {
+.Page {
+  flex: 1;
+}
+
+.DocPage {
+  &:extend(.Page);
   display: flex;
   flex-direction: column;
+
+  &-loading {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    font-style: italic;
+    font-family: sans-serif;
+    text-shadow: 0 0 10px black;
+    color: white;
+    padding: 30px;
+  }
 }
 
 .DocViewer {
   flex: 1;
   display: flex;
-}
-
-.Page {
-  flex: 1;
+  padding: 10px 100px 0;
+  margin: 10px auto;
+  max-width: 1000px;
 }
 
 .BrowsePage {
