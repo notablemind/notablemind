@@ -26,7 +26,7 @@ function hydrateWindows(windows, store, plugins, keys, windowMap) {
     hydrateWindows(windows.first.value, store, plugins, keys, windowMap)
   }
   if (windows.second.leaf) {
-    windows.second.value.config = makePaneConfig(store, plugins, keys, windows.first.value.root)
+    windows.second.value.config = makePaneConfig(store, plugins, keys, windows.second.value.root)
     id = uuid()
     windows.second.value.id = id
     windowMap[id] = windows.second.value
@@ -113,6 +113,12 @@ var DocViewer = React.createClass({
   _changeWindowConfig: function (windowConfig) {
     this.props.saveWindowConfig(windowConfig, () =>
       this.setState({windowConfig: windowConfig}))
+  },
+
+  _rebaseView: function (wid, root) {
+    var wmap = this.state.windowMap
+    wmap[wid].root = root
+    this.props.saveWindowConfig(this.state.windowConfig)
   },
 
   _changeViewType: function (wid, type) {
@@ -224,6 +230,7 @@ var DocViewer = React.createClass({
         cprops={{
           viewTypes: this.props.viewTypes,
           changeViewType: this._changeViewType,
+          onRebase: this._rebaseView,
         }}
         comp={Pane}
         config={this.state.windowConfig}
@@ -238,6 +245,18 @@ var Pane = React.createClass({
     type: PT.string,
     viewTypes: PT.object,
     value: PT.object,
+  },
+  _onRebase: function () {
+    var view = this.props.value.config.view
+    this.props.onRebase(this.props.value.id, view.view.root)
+  },
+  componentDidMount: function () {
+    var view = this.props.value.config.view
+    view.on(view.events.rootChanged(), this._onRebase)
+  },
+  componentWillUnmount: function () {
+    var view = this.props.value.config.view
+    view.on(view.events.rootChanged(), this._onRebase)
   },
   render: function () {
     var config = this.props.value.config

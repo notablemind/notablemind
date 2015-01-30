@@ -5,7 +5,7 @@ var React = require('react/addons')
 
 var Splitter = React.createClass({
   getInitialState: function () {
-    return {ratio: .5, moving: null}
+    return {ratio: this.props.config.value.ratio || .5, moving: null}
   },
   getDefaultProps: function () {
     return {pos: []}

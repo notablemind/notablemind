@@ -74,7 +74,7 @@ function updateFile(id, data, done) {
           file[name] = data[name]
         }
         return file
-      }), () => done(f))
+      }), () => done && done(f))
   })
 }
 
