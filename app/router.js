@@ -15,8 +15,8 @@ var App = React.createClass({
 module.exports = (
   <Route handler={App}>
     <DefaultRoute name="browse" handler={BrowsePage}/>
+    <Route name="doc" path="doc/:id" handler={DocPage}/>
   </Route>
 )
-// <Route name="doc" path="doc/:id" handler={DocPage}/>
 // <Route name="gist" path="gist/:id" handler={GistPage}/>
 

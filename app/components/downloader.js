@@ -2,10 +2,10 @@
 var React = require('react/addons')
   , PT = React.PropTypes
   , cx = React.addons.classSet
-  , Modal = require('./modal')
+  , Modal = require('../modal')
   , FormatPicker = require('./format-picker')
-  , convert = require('./convert')
-  , saveAs = require('../lib/save-as')
+  , convert = require('../convert')
+  , saveAs = require('../../lib/save-as')
 
 var Downloader = React.createClass({
   propTypes: {

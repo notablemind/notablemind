@@ -23,6 +23,7 @@ module.exports = {
 
   // returns a loaded PL
   get: getFile,
+  find: findFile,
 
   // initialize files
   init: init,
@@ -48,6 +49,17 @@ function dump(file, done) {
       data.root = store.db.exportTree(null, true)
       done(null, data)
     })
+  })
+}
+
+function findFile(id, done) {
+  listFiles(files => {
+    var f
+    files.forEach(file => {
+      if (file.id !== id) return file
+      f = file
+    })
+    done(f)
   })
 }
 

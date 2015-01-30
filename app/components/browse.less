@@ -1,6 +1,26 @@
 
 @import "tabular.less";
 
+.BrowsePage {
+  max-width: 600px;
+  margin: 25px auto 50px;
+  padding: 20px 0 0;
+  width: 600px;
+  font-family: sans-serif;
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+  box-shadow: 0px 0 20px #999;
+
+  .Tabular {
+    flex: 1;
+  }
+}
+
+.Browse {
+  display: flex;
+}
+
 .Browse_new_btn {
   padding: 10px;
   text-align: center;
@@ -38,23 +58,6 @@
     border-color: black;
     color: black;
   }
-}
-
-.BrowsePage {
-  max-width: 600px;
-  margin: 25px auto 50px;
-  padding: 20px 0 30px;
-  width: 600px;
-  font-family: sans-serif;
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-  box-shadow: 0px 0 20px #999;
-
-  .Tabular {
-    flex: 1;
-  }
-
 }
 
 .BrowseHeader {

@@ -7,9 +7,8 @@ var React = require('react')
 
 var Saver = React.createClass({
   propTypes: {
-    onSync: PT.func.isRequired,
-    onSetup: PT.func.isRequired,
-    onClear: PT.func.isRequired,
+    store: PT.object,
+    value: PT.source,
   },
   getInitialState: function () {
     return {
@@ -20,7 +19,7 @@ var Saver = React.createClass({
 
   _onSetup: function (type) {
     this.setState({loading: true})
-    this.props.onSetup(type, (err) => {
+    this._realSetup(type, (err) => {
       this.setState({
         error: err,
         loading: false,
@@ -30,12 +29,44 @@ var Saver = React.createClass({
 
   _onSync: function () {
     this.setState({loading: true})
-    this.props.onSync((err) => {
+    this._realSync((err) => {
       this.setState({
         error: err,
         loading: false,
       })
     })
+  },
+
+  _realSync: function (done) {
+    sync.doSync(this.state.file, this.state.store, (err, file) => {
+      if (err) return done(err)
+      if (file) this.props.onFileUpdate(file)
+      done()
+    })
+  },
+
+  _realSetup: function (type, done) {
+    var store = this.state.store
+      , text = JSON.stringify(store.db.exportTree(null, true), null, 2)
+      , title = store.db.nodes[store.db.root].content
+    SOURCES[type].saveAs(title, text, (err, config, time) => {
+      if (err) return done(new Error('Failed to set source'))
+      localFiles.update(this.state.file.id, {
+        source: {
+          type: type,
+          config: config,
+          synced: time,
+          dirty: false,
+        }
+      }, file => {
+        this.props.onFileUpdate(file)
+        done()
+      })
+    })
+  },
+
+  _clearSource: function (done) {
+    localFiles.update(this.state.file.id, {source: null}, done)
   },
 
   _showSettings: function () {

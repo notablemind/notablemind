@@ -13,12 +13,6 @@ var React = require('react')
   , kernels = require('../kernels')
   , async = require('async')
 
-function strcmp(a, b) {
-  if (a === b) return 0
-  if (a > b) return 1
-  return -1
-}
-
 var Browse = React.createClass({
 
   propTypes: {
@@ -159,7 +153,7 @@ var Browse = React.createClass({
         onSelect={this.props.onOpen}
         emptyText="No documents"
         extraKeys={{
-          'ctrl+return': item => window.open('?' + item.id)
+          'ctrl+return': item => window.open('#/doc/' + item.id)
         }}
         onMenu={this._onMenu}
         headers={{

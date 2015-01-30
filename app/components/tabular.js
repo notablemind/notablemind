@@ -20,6 +20,8 @@ var Tabular = React.createClass({
   statics: {
     keys: function () {
       return {
+        'g g': this.toTop,
+        'shift+g': this.toBottom,
         'j, down': this.goDown,
         'k, up': this.goUp,
         'return': this.keySelect,
@@ -80,6 +82,14 @@ var Tabular = React.createClass({
     this.props.onSelect(this.props.items[this.state.selected])
   },
 
+  toTop: function () {
+    this.setState({selected: 0})
+  },
+
+  toBottom: function () {
+    this.setState({selected: this.props.items.length - 1})
+  },
+
   goUp: function () {
     if (this.state.selected > 0) {
       this.setState({selected: this.state.selected - 1})
@@ -121,6 +131,7 @@ var Tabular = React.createClass({
         </thead>
         <tbody/>
       </table>
+
       <div className='Tabular_container'>
         <table className='Tabular_table' ref='table'>
           <thead>
@@ -130,6 +141,7 @@ var Tabular = React.createClass({
               }
             </tr>
           </thead>
+
           <tbody>
             {
               this.props.items.map((item, i) => <tr

@@ -1,111 +1,59 @@
 var React = require('react')
   , {Navigation, State} = require('react-router')
   , PT = React.PropTypes
+  , Dupload = require('./dupload')
 
-var BrowseHeader = React.createClass({
-  mixins: [KeysMixin],
-
+var DocHeader = React.createClass({
   propTypes: {
-    store: PT.object,
-    file: PT.object,
-    plugins: PT.object,
-    keys: PT.object,
+    file: PT.object.isRequired,
+    store: PT.object.isRequired,
+    saver: PT.renderable,
+    onClose: PT.func.isRequired,
+    setPanes: PT.func.isRequired,
+    savingEnabled: PT.bool,
   },
 
-  statics: {
-    keys: function () {
-      return {
-        'n': () => this.setState({newing: 'new'}),
-        'i': () => this.setState({newing: 'import'}),
-      }
-    },
-  },
-
-  _onNewOpen: function (what, open) {
-    this.setState({newing: open ? what : null})
-  },
-
-  _onSourced: function (data, source) {
-    if ('string' === typeof data) {
-      try {
-        data = JSON.parse(data)
-      } catch (e) {
-        return console.warn('failed to import file')
-      }
+  getDefaultProps: function () {
+    return {
+      savingEnabled: false,
     }
-    this.props.files.importRaw(data, (err, file) => {
-      this.props.files.update(file.id, {source: source}, (err) => {
-        this.loadFiles()
-      })
-    })
   },
 
-  _onImport: function (files) {
-    if (!files.length) return console.warn('no files');
-    // TODO what about multiple files?
-    var reader = readFile(files[0], (err, text) => {
-      if (err) {
-        return this.setState({
-          newing: null,
-          importError: err.message,
-          importing: false,
-        })
-      }
-      this.setState({importError: null, importing: false})
-      this.props.files.importRaw(text, err => {
-        if (err) {
-          return this.setState({
-            newing: null,
-            importError: err.message,
-            importing: false,
-          })
-        }
-        this.loadFiles()
-      })
-    })
-    this.setState({
-      newing: null,
-      importing: reader,
-      importError: false,
-    })
+  _keyDown: function (e) {
+    if (e.key === 'Enter' || e.key === 'Escape') {
+      e.preventDefault()
+      return this._doneEditing()
+    }
   },
 
   render: function () {
-    var opener
-    if (this.state.open === 'import') {
-      opener = <Importer onSourced={this._onSourced}
-        onClose={this._onNewOpen.bind(null, 'import', false)}
-        keys={this.props.keys} />
-    } else if (this.state.open === 'new') {
-      opener = <NewFile
-        onSubmit={this._onNewFile}
-        keys={this.props.keys}
-        onClose={this._onNewOpen.bind(null, 'new', false)}/>
-    } else {
-      opener = [
-        <div
-          onClick={this._onNewOpen.bind(null, 'new', true)}
-          className='NewFile NewFile-closed'>Create</div>,
-        <h1 className='Browse_title'>Notablemind</h1>,
-        <div
-          onClick={this._onNewOpen.bind(null, 'import')}
-          className='Importer Importer-closed'>Import</div>
-      ]
-    }
-
-    return <div className='BrowseHeader'>
-      <div className={
-        'Browse_opener' + (this.state.open ? 'Browse_opener-open' : '')
-      }>
-        {opener}
-      </div>
-      <Dropload
-        onDrop={this._onImport}
-        message="Drop anywhere to import"/>
-      {this.state.importError &&
-        'Import Error: ' + this.state.importError}
+    var headStore = this.props.store.headerView()
+    return <div className='DocHeader'>
+      <span className='DocHeader_name'>
+        <a target="_blank" href="http://notablemind.github.io">Notablemind</a>
+        <a target="_blank" href="http://github.com/notablemind/notablemind">
+          <i className='fa fa-github-alt'/>
+        </a>
+      </span>
+      <button className='DocHeader_home' onClick={this.props.onClose}>
+        Home
+      </button>
+      <span className='DocHeader_title'>
+        {this.props.file.title}
+      </span>
+      <Dupload store={this.props.store}/>
+      {this.props.plugins.map(plugin =>
+        plugin.view && plugin.view.global && plugin.view.global(headStore)
+      )}
+      {/*this.props.savingEnabled ?
+        <Saver
+          onFileUpdate={this.props.onFileUpdate}
+          store={this.props.store}
+          value={this.props.file.source}/>
+      */}
     </div>
   }
 })
 
 module.exports = DocHeader
+

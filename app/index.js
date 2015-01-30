@@ -101,100 +101,10 @@ var App = React.createClass({
     this._changeTitle(title)
   },
 
-
-  makePaneConfig: function (store, keys, plugins, num, panings, prev) {
-    if (prev.length >= num) {
-      for (var i=num; i<prev.length; i++) {
-        store.unregisterView(prev[i].config.view.id)
-      }
-      delete prev[num-1].config.view.view.windowRight
-      return prev.slice(0, num)
-    }
-    var configs = prev.slice()
-    for (var i=prev.length; i<num; i++) {
-      var pane = treed.viewConfig(store, plugins, null)
-      configs.push({
-        type: this.props.defaultType,
-        config: pane,
-      })
-      pane.view.on(pane.view.events.rootChanged(), this._onRebased)
-      if (panings && panings.length > i) {
-        pane.view.view.root = panings[i]
-        pane.view.view.active = panings[i]
-      }
-      keys.addView(pane.view.id, pane.keys)
-    }
-    for (var i=0; i<configs.length; i++) {
-      if (i > 0) {
-        configs[i - 1].config.view.view.windowRight = configs[i].config.view.id
-      }
-      if (i < configs.length - 1) {
-        configs[i + 1].config.view.view.windowLeft = configs[i].config.view.id
-      }
-    }
-    return configs
-  },
-
-  _popState: function () {
-    if (this.state.store) {
-      this.state.store.teardown()
-      this._unlistenToStore(this.state.store)
-    }
-    var id = history.get()
-    this.setState({
-      loadId: id,
-      file: null,
-      store: null,
-      plugins: null,
-    })
-  },
-
   _changePaneType: function (i, type) {
     var panes = this.state.panes.slice()
     panes[i].type = type
     this.setState({panes: panes})
-  },
-
-  makePanes: function () {
-    var plugins = []
-    var panes = this.state.panes.map((pane, i) => {
-      var statusbar = []
-      pane.config.props.plugins.map(plugin => {
-        if (!plugin.statusbar) return
-        statusbar.push(plugin.statusbar(pane.config.props.store))
-      })
-      pane.config.props.skipMix = ['top']
-      return <div className={'App_pane App_pane-' + pane.type}>
-        {/* todo add filename here once we go multi-file */}
-        <div className='App_pane_top'>
-          {statusbar}
-          <TypeSwitcher
-            types={this.props.types}
-            type={pane.type}
-            onChange={this._changePaneType.bind(null, i)}/>
-        </div>
-        <div className='App_pane_scroll'>
-          {this.props.types[pane.type](pane.config.props)}
-        </div>
-      </div>})
-    var ids = []
-    // TODO: this.state.store.setViewPositions(ids or something)
-    return <div className='App_panes'>
-      {panes}
-    </div>
-  },
-
-  _setPanes: function (num) {
-    var panings = this.state.file.panings ? this.state.file.panings.slice(0, num) : []
-    for (var i=panings.length; i<num; i++) {
-      panings.push(this.state.store.db.root)
-    }
-    localFiles.update(this.state.file.id, {panings: panings}, file => {
-      this.setState({
-        file: file,
-        panes: this.makePaneConfig(this.state.store, this.state.keys, this.state.plugins, num, panings, this.state.panes),
-      })
-    })
   },
 
   _onRebased: function () {
@@ -244,67 +154,7 @@ var App = React.createClass({
     localFiles.update(this.state.file.id, {title: title}, file => this.setState({file: file}))
   },
 
-  _clearSource: function (done) {
-    localFiles.update(this.state.file.id, {source: null}, done)
-  },
-
-  _setSource: function (type, done) {
-    var store = this.state.store
-      , text = JSON.stringify(store.db.exportTree(null, true), null, 2)
-      , title = store.db.nodes[store.db.root].content
-    SOURCES[type].saveAs(title, text, (err, config, time) => {
-      if (err) return done(new Error('Failed to set source'))
-      localFiles.update(this.state.file.id, {
-        source: {
-          type: type,
-          config: config,
-          synced: time,
-          dirty: false,
-        }
-      }, file => {
-        this.setState({file: file})
-        done()
-      })
-    })
-  },
-
-  _onSync: function (done) {
-
-    sync.doSync(this.state.file, this.state.store, (err, file) => {
-      if (err) return done(err)
-      if (file) this.setState({file: file})
-      done()
-    })
-
-  },
-
   render: function () {
-    if (!this.state.store) {
-      return <div className='App App-browse'>
-        <Browse
-          keys={this.homeKeys}
-          onLoad={this._onLoad}
-          loadId={this.state.loadId}
-          files={localFiles}/>
-      </div>
-    }
-    return <div className='App'>
-      <Header
-        setPanes={this._setPanes}
-        changeTitle={this._changeTitle}
-        plugins={this.state.plugins}
-        onClose={!this.props.noHome && this._onClose}
-        file={this.state.file}
-        store={this.state.store}
-        saver={<Saver
-          onSync={this._onSync}
-          onSetup={this._setSource}
-          onClear={this._clearSource}
-          value={this.state.file.source}
-          />}
-      />
-      {this.makePanes()}
-    </div>
   }
 })
 

@@ -6,6 +6,12 @@ var React = require('react')
   , Browse = require('../components/browse')
   , BrowseHeader = require('../components/browse-header')
 
+function strcmp(a, b) {
+  if (a === b) return 0
+  if (a > b) return 1
+  return -1
+}
+
 var BrowsePage = React.createClass({
   mixins: [Navigation],
 

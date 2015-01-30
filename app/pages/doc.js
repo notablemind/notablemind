@@ -17,6 +17,7 @@ var DocPage = React.createClass({
     this.setState({
       keys: kh
     })
+    this.loadFile()
     window.addEventListener('keydown', kh)
   },
 
@@ -35,25 +36,32 @@ var DocPage = React.createClass({
     this.setState({loading: false, error: err})
   },
 
+  onFileUpdate: function (file) {
+    this.setState({file: file})
+  },
+
   loadFile: function () {
     this.setState({error: null, loading: true})
     var id = this.getParams().id
 
-    files.get(id, (err, pl) => {
-      if (err) return this._onError(err)
-      files.init(file, pl, (err, store, plugins) => {
-        if (err) {
-          return this._onError(err)
-        }
-        files.update(file.id, {opened: Date.now()}, file => {
-          this.setState({
-            file,
-            store,
-            plugins,
+    files.find(id, file =>
+      files.get(id, pl => {
+        // if (err) return this._onError(err)
+        files.init(file, pl, (err, store, plugins) => {
+          if (err) {
+            return this._onError(err)
+          }
+          files.update(file.id, {opened: Date.now()}, file => {
+            this.setState({
+              file,
+              store,
+              plugins,
+              loading: false,
+            })
           })
         })
       })
-    })
+    )
   },
 
   render: function () {
@@ -61,18 +69,24 @@ var DocPage = React.createClass({
       return <em>Loading</em>
     }
     if (this.state.error) {
-      return <em>Error loading file</em>
+      return <em>Error loading file {this.state.error + ''}</em>
     }
     if (!this.state.store) {
       return <em>Loading</em>
     }
     var {store, file, plugins} = this.state
-    return <div className='DocViewer'>
+
+    return <div className='App'>
       <DocHeader
-        store={store}
         file={file}
+        store={store}
         plugins={plugins}
-        keys={this.state.keys}/>
+        onFileUpdate={this.onFileUpdate}
+
+        setPanes={this._setPanes}
+        changeTitle={this._changeTitle}
+        onClose={!this.props.noHome && this._onClose}
+      />
       <DocViewer
         query={this.getQuery()}
         store={store}

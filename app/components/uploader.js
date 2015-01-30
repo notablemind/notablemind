@@ -1,10 +1,10 @@
 
 var React = require('react')
   , PT = React.PropTypes
-  , Modal = require('./modal')
+  , Modal = require('../modal')
   , FormatPicker = require('./format-picker')
   , readFile = require('./read-file')
-  , convert = require('./convert')
+  , convert = require('../convert')
 
 var Uploader = React.createClass({
   propTypes: {
