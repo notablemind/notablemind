@@ -16,6 +16,19 @@ function cloneShallow(s) {
   return o
 }
 
+function r(){
+  for (var a = ''; a.length < 5; a += 'abcdefg'[parseInt(Math.random() * 7)]);
+  return a;
+}
+
+function cloneShallow(s) {
+  var o = {}
+  for (var a in s) {
+    o[a] = s[a]
+  }
+  return o
+}
+
 var SplitManager = React.createClass({
   propTypes: {
     config: PT.object,
@@ -29,6 +42,16 @@ var SplitManager = React.createClass({
     return {
       getNew: function (old) {return r()}
     }
+  },
+
+  changeRatio: function (pos, ratio, done) {
+    var config = this.props.config
+    var line = pos.reduce(function (config, i) {
+      return config[i].value = cloneShallow(config[i].value)
+    }, config.value)
+    line.ratio = ratio
+    this.props.onChange(config)
+    done()
   },
 
   split: function (pos, orient) {
@@ -50,6 +73,7 @@ var SplitManager = React.createClass({
     }, config.value)
     line[last] = {
       leaf: false,
+      ratio: .5,
       value: {
         orient,
         first: {leaf: true, value: line[last].value},
@@ -81,9 +105,11 @@ var SplitManager = React.createClass({
     var cprops = cloneShallow(this.props.cprops)
     cprops.onSplit = this.split
     cprops.onRemove = this.remove
+    cprops.onChangeRatio = this.changeRatio
     return <Splitter 
       config={this.props.config}
       comp={this.props.comp}
+      onChangeRatio={this.changeRatio}
       cprops={cprops}/>
   }
 });

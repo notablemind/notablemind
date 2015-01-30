@@ -9,8 +9,8 @@ var React = require('react')
   , uuid = require('../../lib/uuid')
   , PT = React.PropTypes
 
-function makePaneConfig(store, plugins, keys) {
-  var config = treed.viewConfig(store, plugins, null)
+function makePaneConfig(store, plugins, keys, root) {
+  var config = treed.viewConfig(store, plugins, {root: root})
   keys.addView(config.view.id, config.keys)
   return config
 }
@@ -18,7 +18,7 @@ function makePaneConfig(store, plugins, keys) {
 function hydrateWindows(windows, store, plugins, keys, windowMap) {
   var id
   if (windows.first.leaf) {
-    windows.first.value.config = makePaneConfig(store, plugins, keys)
+    windows.first.value.config = makePaneConfig(store, plugins, keys, windows.first.value.root)
     id = uuid()
     windows.first.value.id = id
     windowMap[id] = windows.first.value
@@ -26,7 +26,7 @@ function hydrateWindows(windows, store, plugins, keys, windowMap) {
     hydrateWindows(windows.first.value, store, plugins, keys, windowMap)
   }
   if (windows.second.leaf) {
-    windows.second.value.config = makePaneConfig(store, plugins, keys)
+    windows.second.value.config = makePaneConfig(store, plugins, keys, windows.first.value.root)
     id = uuid()
     windows.second.value.id = id
     windowMap[id] = windows.second.value
@@ -39,12 +39,12 @@ function hydrateInitialWindows(windows, store, plugins, keys) {
   var windowMap = {}
   if (windows.leaf) {
     var id = uuid()
-    windows.value.config = makePaneConfig(store, plugins, keys)
+    windows.value.config = makePaneConfig(store, plugins, keys, windows.value.root)
     windows.value.id = id
     windowMap[id] = windows.value
     return windowMap
   }
-  hydrateWindows(windows, store, plugins, keys, windowMap)
+  hydrateWindows(windows.value, store, plugins, keys, windowMap)
   return windowMap
 }
 
@@ -57,6 +57,7 @@ var DocViewer = React.createClass({
     plugins: PT.object,
     keys: PT.object,
     viewTypes: PT.object,
+    saveWindowConfig: PT.func,
   },
 
   _onError: function (err) {
@@ -69,7 +70,14 @@ var DocViewer = React.createClass({
     keys.addKeys({
       'g q': this._onClose
     })
-    var windowConfig = this.props.initialWindows
+    var windowConfig = this.props.file.windows || {
+      leaf: true,
+      ratio: .5,
+      value: {
+        root: null,
+        type: 'tree',
+      },
+    }
     var windowMap = hydrateInitialWindows(windowConfig, this.props.store, this.props.plugins, keys)
     return {
       windowConfig: windowConfig,
@@ -80,13 +88,6 @@ var DocViewer = React.createClass({
 
   getDefaultProps: function () {
     return {
-      initialWindows: {
-        leaf: true,
-        value: {
-          root: null,
-          type: 'tree',
-        },
-      },
       viewTypes: {
         // pdf: require('treed/views/pdf'),
         tree: require('treed/views/tree'),
@@ -110,7 +111,8 @@ var DocViewer = React.createClass({
   },
 
   _changeWindowConfig: function (windowConfig) {
-    this.setState({windowConfig: windowConfig})
+    this.props.saveWindowConfig(windowConfig, () =>
+      this.setState({windowConfig: windowConfig}))
   },
 
   _changeViewType: function (wid, type) {

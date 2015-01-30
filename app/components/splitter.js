@@ -1,10 +1,14 @@
 
-var React = require('react')
+var React = require('react/addons')
+  , cx = React.addons.classSet
   , PT = React.PropTypes
 
 var Splitter = React.createClass({
   getInitialState: function () {
-    return {size: [1,1], moving: null}
+    return {ratio: .5, moving: null}
+  },
+  getDefaultProps: function () {
+    return {pos: []}
   },
   _onMouseDown: function (e) {
     e.preventDefault()
@@ -28,10 +32,11 @@ var Splitter = React.createClass({
     if (Math.abs(perc - .67) < dist) perc = .67
     if (Math.abs(perc - .5) < dist) perc = .5
 
-    this.setState({size: [perc, 1-perc]})
+    this.setState({ratio: perc})
   },
   _mouseUp: function () {
-    this.setState({moving: false})
+    this.props.onChangeRatio(this.props.pos, this.state.ratio, () =>
+      this.setState({moving: false}))
   },
   componentDidUpdate: function (prevProps, prevState) {
     var doc = this.getDOMNode().ownerDocument
@@ -56,8 +61,9 @@ var Splitter = React.createClass({
           value={config.value}/>
         </div>
     } else {
+      var ratio = this.state.moving ? this.state.ratio : (config.value.ratio || .5)
       children = [
-        <div className='Splitter_first' style={{flex: this.state.size[0]}}>
+        <div className='Splitter_first' style={{flex: ratio}}>
           {!config.value.first.leaf ?
             <Splitter {...this.props}
               pos={pos.concat(['first'])}
@@ -67,7 +73,7 @@ var Splitter = React.createClass({
               value={config.value.first.value}/>}
         </div>,
         <div className='Splitter_div' onMouseDown={this._onMouseDown}/>,
-        <div className='Splitter_second' style={{flex: this.state.size[1]}}>
+        <div className='Splitter_second' style={{flex: 1 - ratio}}>
           {!config.value.second.leaf ?
             <Splitter {...this.props}
               pos={pos.concat(['second'])}
@@ -78,7 +84,10 @@ var Splitter = React.createClass({
         </div>
       ]
     }
-    return <div className={'Splitter Splitter-' + config.value.orient}>
+    return <div className={cx({
+      'Splitter': true,
+      'Splitter-moving': this.state.moving,
+    }) + ' Splitter-' + config.value.orient}>
       {children}
     </div>
   }

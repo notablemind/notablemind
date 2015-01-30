@@ -7,6 +7,27 @@ var React = require('react')
   , DocHeader = require('../components/doc-header')
   , DocViewer = require('../components/doc-viewer')
 
+function dehydrateWindows(config) {
+  if (config.leaf) {
+    return {
+      leaf: true,
+      value: {
+        root: config.value.root,
+        type: config.value.type,
+      },
+    }
+  }
+  return {
+    leaf: false,
+    value: {
+      first: dehydrateWindows(config.value.first),
+      second: dehydrateWindows(config.value.second),
+      ratio: config.value.ratio,
+      orient: config.value.orient,
+    },
+  }
+}
+
 var DocPage = React.createClass({
   mixins: [Navigation, State],
 
@@ -38,6 +59,11 @@ var DocPage = React.createClass({
 
   onFileUpdate: function (file) {
     this.setState({file: file})
+  },
+
+  saveWindowConfig: function (windows, done) {
+    var id = this.getParams().id
+    files.update(id, {windows: dehydrateWindows(windows)}, done)
   },
 
   loadFile: function () {
@@ -88,10 +114,11 @@ var DocPage = React.createClass({
         onClose={!this.props.noHome && (() => this.transitionTo('browse'))}
       />
       <DocViewer
-        query={this.getQuery()}
-        store={store}
         file={file}
+        store={store}
         plugins={plugins}
+        query={this.getQuery()}
+        saveWindowConfig={this.saveWindowConfig}
         keys={this.state.keys}/>
     </div>
   },
