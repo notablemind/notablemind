@@ -30,37 +30,6 @@ body {
   flex: 1;
 }
 
-.Splitter {
-  display: flex;
-  align-items: stretch;
-  flex: 1;
-  padding: 0px;
-}
-
-.Splitter_div {
-  min-width: 10px;
-  min-height: 10px;
-  background-color: green;
-  cursor: pointer;
-}
-
-.Splitter_pane {
-  display: flex;
-  justify-content: center;
-}
-
-.Splitter_first,
-.Splitter_second {
-  &:extend(.Splitter_pane);
-}
-
-.Splitter_second {
-  flex: 1;
-}
-
-.Splitter-vert {
-  flex-direction: column;
-}
 
 .sandbox > div > .Splitter {
   height: 300px;
@@ -117,6 +86,7 @@ body {
   overflow-x: hidden;
   padding: 20px 50px 150px;
   position: relative;
+  background-color: white;
 }
 
 .App_pane {
@@ -200,6 +170,7 @@ body {
 @import "./components/new-file.less";
 @import "./components/dropdown.less";
 @import "./components/saver.less";
+@import "./components/splitter.less";
 
 .treed_body_rendered {
   font-family: 'Monda';

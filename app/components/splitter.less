@@ -1,0 +1,42 @@
+
+.Splitter {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  padding: 0px;
+}
+
+.Splitter_div {
+  min-width: 10px;
+  min-height: 10px;
+  background-color: #aaa;
+  cursor: pointer;
+  z-index: 10;
+
+  .Splitter-horiz > & {
+    cursor: ew-resize;
+  }
+  .Splitter-vert > & {
+    cursor: ns-resize;
+  }
+}
+
+.Splitter_pane {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.Splitter_first,
+.Splitter_second {
+  &:extend(.Splitter_pane);
+}
+
+.Splitter_second {
+  flex: 1;
+}
+
+.Splitter-vert {
+  flex-direction: column;
+}
+
