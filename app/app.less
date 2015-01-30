@@ -30,6 +30,42 @@ body {
   flex: 1;
 }
 
+.Splitter {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  padding: 0px;
+}
+
+.Splitter_div {
+  min-width: 10px;
+  min-height: 10px;
+  background-color: green;
+  cursor: pointer;
+}
+
+.Splitter_pane {
+  display: flex;
+  justify-content: center;
+}
+
+.Splitter_first,
+.Splitter_second {
+  &:extend(.Splitter_pane);
+}
+
+.Splitter_second {
+  flex: 1;
+}
+
+.Splitter-vert {
+  flex-direction: column;
+}
+
+.sandbox > div > .Splitter {
+  height: 300px;
+}
+
 .DocPage {
   &:extend(.Page);
   display: flex;
@@ -50,9 +86,8 @@ body {
 .DocViewer {
   flex: 1;
   display: flex;
-  padding: 10px 100px 0;
-  margin: 10px auto;
-  max-width: 1000px;
+  padding: 0;
+  justify-content: center;
 }
 
 .BrowsePage {
@@ -64,13 +99,6 @@ body {
 
 .Browse {
   flex: 1;
-}
-
-.App_panes {
-  flex: 1;
-  display: flex;
-  padding: 0;
-  justify-content: center;
 }
 
 .App_pane_top {
@@ -95,7 +123,6 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: 1000px;
 
   &:first-child .App_pane_scroll {
     padding-left: 50px;
@@ -180,7 +207,16 @@ body {
   word-break: break-word;
 }
 
-.list_item {
+.TreeView {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.TreeItem {
   font-family: 'Monda', sans-serif;
+}
+
+.TreeItem-root.TreeItem-type-ipython > .TreeItem_head .treed_body {
+  margin-left: 0;
 }
 

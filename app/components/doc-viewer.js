@@ -5,7 +5,48 @@ var React = require('react')
   , KeyManager = require('treed/key-manager')
   , TypeSwitcher = require('./type-switcher')
   , Tree = require('treed/views/tree')
+  , SplitManager = require('./split-manager')
+  , uuid = require('../../lib/uuid')
   , PT = React.PropTypes
+
+function makePaneConfig(store, plugins, keys) {
+  var config = treed.viewConfig(store, plugins, null)
+  keys.addView(config.view.id, config.keys)
+  return config
+}
+
+function hydrateWindows(windows, store, plugins, keys, windowMap) {
+  var id
+  if (windows.first.leaf) {
+    windows.first.value.config = makePaneConfig(store, plugins, keys)
+    id = uuid()
+    windows.first.value.id = id
+    windowMap[id] = windows.first.value
+  } else {
+    hydrateWindows(windows.first.value, store, plugins, keys, windowMap)
+  }
+  if (windows.second.leaf) {
+    windows.second.value.config = makePaneConfig(store, plugins, keys)
+    id = uuid()
+    windows.second.value.id = id
+    windowMap[id] = windows.second.value
+  } else {
+    hydrateWindows(windows.second.value, store, plugins, keys, windowMap)
+  }
+}
+
+function hydrateInitialWindows(windows, store, plugins, keys) {
+  var windowMap = {}
+  if (windows.leaf) {
+    var id = uuid()
+    windows.value.config = makePaneConfig(store, plugins, keys)
+    windows.value.id = id
+    windowMap[id] = windows.value
+    return windowMap
+  }
+  hydrateWindows(windows, store, plugins, keys, windowMap)
+  return windowMap
+}
 
 var DocViewer = React.createClass({
   mixins: [KeysMixin],
@@ -15,11 +56,7 @@ var DocViewer = React.createClass({
     file: PT.object,
     plugins: PT.object,
     keys: PT.object,
-  },
-
-  propTypes: {
-    keys: PT.object.isRequired,
-    // files: PT.object.isRequired,
+    viewTypes: PT.object,
   },
 
   _onError: function (err) {
@@ -27,24 +64,59 @@ var DocViewer = React.createClass({
   },
 
   getInitialState: function () {
-      var pane = treed.viewConfig(this.props.store, this.props.plugins, null)
-      var keys = new KeyManager()
-      keys.attach(this.props.store)
-      keys.addKeys({
-        'g q': this._onClose
-      })
-      // pane.view.on(pane.view.events.rootChanged(), this._onRebased)
-      /*
-      if (panings && panings.length > i) {
-        pane.view.view.root = panings[i]
-        pane.view.view.active = panings[i]
+    var keys = new KeyManager()
+    keys.attach(this.props.store)
+    keys.addKeys({
+      'g q': this._onClose
+    })
+    var windowConfig = this.props.initialWindows
+    var windowMap = hydrateInitialWindows(windowConfig, this.props.store, this.props.plugins, keys)
+    return {
+      windowConfig: windowConfig,
+      windowMap: windowMap,
+      keys: keys,
+    }
+  },
+
+  getDefaultProps: function () {
+    return {
+      initialWindows: {
+        leaf: true,
+        value: {
+          root: null,
+          type: 'tree',
+        },
+      },
+      viewTypes: {
+        // pdf: require('treed/views/pdf'),
+        tree: require('treed/views/tree'),
+        paper: require('treed/views/paper'),
+        focus: require('treed/views/focus'),
       }
-      */
-      keys.addView(pane.view.id, pane.keys)
-      return {
-        pane: pane,
-        keys: keys,
-      }
+    }
+  },
+
+  getNewWindowConfig: function (currentConfig) {
+    var config = makePaneConfig(this.props.store, this.props.plugins, this.state.keys)
+      , id = uuid()
+      , value = {
+          config: config,
+          type: currentConfig.type,
+          id: id,
+          root: currentConfig.root
+        }
+    this.state.windowMap[id] = value
+    return value
+  },
+
+  _changeWindowConfig: function (windowConfig) {
+    this.setState({windowConfig: windowConfig})
+  },
+
+  _changeViewType: function (wid, type) {
+    var wmap = this.state.windowMap
+    wmap[wid].type = type
+    this.setState({windowMap: wmap})
   },
 
   _keyDown: function (e) {
@@ -58,6 +130,7 @@ var DocViewer = React.createClass({
 
   componentDidMount: function () {
     // TODO: need to abstract out the logic from browse.js
+    // not sure what this means now...
     window.addEventListener('keydown', this._keyDown)
   },
 
@@ -144,26 +217,48 @@ var DocViewer = React.createClass({
   render: function () {
     var {store, file, plugins} = this.props
 
-    var pane = this.state.pane
-    var statusbar = []
-    pane.props.plugins.map(plugin => {
-      if (!plugin.statusbar) return
-      statusbar.push(plugin.statusbar(pane.props.store))
-    })
-    pane.props.skipMix = ['top']
-
     return <div className='DocViewer'>
-      <div className={'App_pane App_pane-' + pane.type}>
-        <div className='App_pane_top'>
-          {statusbar}
-          <TypeSwitcher
-            types={{} || this.props.types}
-            type={pane.type}
-            onChange={null && this._changePaneType.bind(null, i)}/>
-        </div>
-        <div className='App_pane_scroll'>
-          <Tree {...pane.props}/>
-        </div>
+      <SplitManager
+        cprops={{
+          viewTypes: this.props.viewTypes,
+          changeViewType: this._changeViewType,
+        }}
+        comp={Pane}
+        config={this.state.windowConfig}
+        getNew={this.getNewWindowConfig}
+        onChange={this._changeWindowConfig}/>
+    </div>
+  }
+})
+
+var Pane = React.createClass({
+  propTypes: {
+    type: PT.string,
+    viewTypes: PT.object,
+    value: PT.object,
+  },
+  render: function () {
+    var config = this.props.value.config
+    var statusbar = []
+    config.props.plugins.map(plugin => {
+      if (!plugin.statusbar) return
+      statusbar.push(plugin.statusbar(config.props.store))
+    })
+    config.props.skipMix = ['top']
+    var View = this.props.viewTypes[this.props.value.type]
+    return <div className={'App_pane App_pane-' + this.props.value.type}>
+      <div className='App_pane_top'>
+        {statusbar}
+        <button onClick={this.props.onSplit.bind(null, this.props.pos, 'horiz')}>||</button>
+        <button onClick={this.props.onSplit.bind(null, this.props.pos, 'vert')}> = </button>
+        <button onClick={this.props.onRemove.bind(null, this.props.pos)}>x</button>
+        <TypeSwitcher
+          types={this.props.viewTypes}
+          type={this.props.value.type}
+          onChange={this.props.changeViewType.bind(null, this.props.value.id)}/>
+      </div>
+      <div className='App_pane_scroll'>
+        <View {...config.props}/>
       </div>
     </div>
   }

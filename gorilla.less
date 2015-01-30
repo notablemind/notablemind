@@ -52,20 +52,20 @@
   }
 }
 
-.list_item_head:hover .treed_body {
+.TreeItem_head:hover .treed_body {
   background-color: transparent;
 }
 
-.list_item-active > .list_item_head .treed_body {
+.TreeItem-active > .TreeItem_head .treed_body {
   background-color: transparent;
 }
 
-.list_item_head {
+.TreeItem_head {
   padding-bottom: 5px;
   position: relative;
   cursor: pointer;
 
-  &:hover > .list_item_body {
+  &:hover > .TreeItem_body {
     background-color: #eee;
   }
 }
@@ -74,7 +74,7 @@
   bottom: 5px;
 }
 
-.list_item_body {
+.TreeItem_body {
   border: 1px solid transparent;
   position: relative;
   margin-bottom: 0;
@@ -99,7 +99,7 @@
   width: 10px;
   margin-right: 5px;
 
-  .list_item-parent:not(.list_item-root) > .list_item_head:hover & {
+  .TreeItem-parent:not(.TreeItem-root) > .TreeItem_head:hover & {
     opacity: 1;
   }
 
@@ -109,7 +109,7 @@
 }
 
 /** Taking a different approach
-.list_item-ipython-disabled {
+.TreeItem-ipython-disabled {
   opacity: .5;
   font-style: italic;
 }
@@ -181,33 +181,33 @@
     color: rgb(255, 10, 10);
   }
 
-  .list_item_body:hover & {
+  .TreeItem_body:hover & {
     opacity: 1;
   }
 }
 
-.list_item-type-todo,
-.list_item-type-ordered_list,
-.list_item-type-list {
-  > .list_item_children {
+.TreeItem-type-todo,
+.TreeItem-type-ordered_list,
+.TreeItem-type-list {
+  > .TreeItem_children {
     padding-left: 34px;
   }
 }
 
-.list_item-type-ipython > .list_item_head > .list_item_body {
+.TreeItem-type-ipython > .TreeItem_head > .TreeItem_body {
   border: 1px solid #ccc;
   background-color: white;
 }
 
-.list_item-active > .list_item_head > .list_item_body {
+.TreeItem-active > .TreeItem_head > .TreeItem_body {
   outline: 5px solid #ccc;
 }
 
-.list-active .list_item-active > .list_item_head > .list_item_body {
+.TreeView-active .TreeItem-active > .TreeItem_head > .TreeItem_body {
   outline: 5px solid magenta;
 }
 
-.list_item-ipython-collapsed > .list_item_head > .list_item_body {
+.TreeItem-ipython-collapsed > .TreeItem_head > .TreeItem_body {
   max-height: 100px;
   overflow: hidden;
   border-bottom: 10px solid #BBB;
@@ -217,20 +217,20 @@
   border: none;
 }
 
-.list_item-ipython-dirty {
-  > .list_item_head > .list_item_body {
+.TreeItem-ipython-dirty {
+  > .TreeItem_head > .TreeItem_body {
     background-color: #FFE4FD;
   }
 }
 
-.list_item-ipython-running {
-  > .list_item_head > .list_item_body {
+.TreeItem-ipython-running {
+  > .TreeItem_head > .TreeItem_body {
     background-color: rgb(210, 255, 210);
   }
 }
 
-.list_item-ipython-stale {
-  > .list_item_head > .list_item_body {
+.TreeItem-ipython-stale {
+  > .TreeItem_head > .TreeItem_body {
     background-color: #FFE4E4;
   }
 }
@@ -240,39 +240,39 @@
   padding: 5px;
 }
 
-.list_item-ipython {
-  > .list_item_head > .list_item_body {
+.TreeItem-ipython {
+  > .TreeItem_head > .TreeItem_body {
     background-color: #CBFFC6;
   }
 }
 
-.list_item-ipython-waiting {
-  > .list_item_head > .list_item_body {
+.TreeItem-ipython-waiting {
+  > .TreeItem_head > .TreeItem_body {
     background-color: rgb(255, 246, 144);
   }
 }
 
-.list-active .list_item-editing > .list_item_head > .list_item_body {
+.TreeView-active .TreeItem-editing > .TreeItem_head > .TreeItem_body {
   outline: 5px solid rgb(0, 184, 0);
   background-color: white;
 }
 
-.list-active .list_item-selected > .list_item_head > .list_item_body {
+.TreeView-active .TreeItem-selected > .TreeItem_head > .TreeItem_body {
   background-color: #D5FFFC;
   outline-color: cyan;
 }
 
 // overriding default styles
-.list_item-selected > .list_item_head .treed_body {
+.TreeItem-selected > .TreeItem_head .treed_body {
   background-color: transparent;
 }
 
-.list_item-selected > .list_item_children {
+.TreeItem-selected > .TreeItem_children {
   background-color: transparent;
   border-radius: 0;
 }
 
-.list_item-root > .list_item_head .treed_body {
+.TreeItem-root:not(.TreeItem-type-ipython) > .TreeItem_head .treed_body {
   margin-left: 20px;
   padding-left: 0;
   font-weight: bold;
@@ -284,7 +284,7 @@
   margin-bottom: 0;
 }
 
-.list_item_children {
+.TreeItem_children {
   border-left: 5px solid #eee;
   padding-left: 20px;
   margin-left: 0;
@@ -317,16 +317,16 @@
     content: " ";
   }
 
-  .list_item-parent > .list_item_head:hover & {
+  .TreeItem-parent > .TreeItem_head:hover & {
     opacity: 1;
   }
 
-  .n_Collapse > .list_item_head & {
+  .n_Collapse > .TreeItem_head & {
     opacity: 1;
   }
 }
 
-.n_Collapse > .list_item_head .m_RebaseDot {
+.n_Collapse > .TreeItem_head .m_RebaseDot {
   margin-top: 0;
   left: -15px;
 }
@@ -337,11 +337,11 @@
   display: none;
 }
 
-.pdf_item .list_item-ipython-stale > .list_item_head > .list_item_body {
+.pdf_item .TreeItem-ipython-stale > .TreeItem_head > .TreeItem_body {
   background-color: white;
 }
 
-.pdf_item .list_item_children {
+.pdf_item .TreeItem_children {
   margin: 0;
   padding: 0;
   border-left: 0;
@@ -351,23 +351,23 @@
   height: auto;
 }
 
-.pdf_item .list_item-ipython-collapsed > .list_item_head > .list_item_body {
+.pdf_item .TreeItem-ipython-collapsed > .TreeItem_head > .TreeItem_body {
   border-bottom: 1px solid #ccc;
   max-height: none;
 }
 
 .pdf_export {
 
-  .list_item-parent {
+  .TreeItem-parent {
 
-    > .list_item_head .treed_body_rendered {
+    > .TreeItem_head .treed_body_rendered {
       font-size: 30px;
       font-weight: bold;
     }
 
-    .list_item-parent {
+    .TreeItem-parent {
 
-      > .list_item_head .treed_body_rendered {
+      > .TreeItem_head .treed_body_rendered {
         font-size: 26px;
 
         &:before {
@@ -377,8 +377,8 @@
         }
       }
 
-      .list_item-parent {
-        > .list_item_head .treed_body_rendered {
+      .TreeItem-parent {
+        > .TreeItem_head .treed_body_rendered {
           font-size: 22px;
 
           &:before {
@@ -387,8 +387,8 @@
         }
 
 
-        .list_item-parent {
-          > .list_item_head .treed_body_rendered {
+        .TreeItem-parent {
+          > .TreeItem_head .treed_body_rendered {
             font-size: 18px;
 
             &:before {
@@ -396,7 +396,7 @@
             }
           }
 
-          .list_item-parent > .list_item_head .treed_body_rendered:before {
+          .TreeItem-parent > .TreeItem_head .treed_body_rendered:before {
             content: '>>>>';
           }
         }

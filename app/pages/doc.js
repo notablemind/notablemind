@@ -85,7 +85,7 @@ var DocPage = React.createClass({
 
         setPanes={this._setPanes}
         changeTitle={this._changeTitle}
-        onClose={!this.props.noHome && (() => this.transitionTo('home'))}
+        onClose={!this.props.noHome && (() => this.transitionTo('browse'))}
       />
       <DocViewer
         query={this.getQuery()}
