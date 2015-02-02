@@ -50,7 +50,6 @@ var DocPage = React.createClass({
 
   _keyDown: function (e) {
     if (!this.state.keys) return
-    console.log('keydown', e.keyCode)
     if (this.state.store.views[this.state.store.activeView].mode !== 'insert' &&
         ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
       return

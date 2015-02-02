@@ -34,7 +34,7 @@ watch:
 	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d run.js -o www/build.js
 
 css:
-	lessc run.less www/build.css
+	lessc --source-map --source-map-basepath=www/ run.less www/build.css
 
 start-ijulia:
 	ipython notebook --NotebookApp.allow_origin='*' --profile=julia

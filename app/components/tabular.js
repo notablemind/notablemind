@@ -25,6 +25,7 @@ var Tabular = React.createClass({
         'j, down': this.goDown,
         'k, up': this.goUp,
         'return': this.keySelect,
+        '/': this.startSearch,
       }
     },
   },
@@ -70,7 +71,10 @@ var Tabular = React.createClass({
 
   getInitialState: function () {
     return {
-      selected: 0
+      selected: 0,
+      searching: false,
+      searchtext: '',
+      searchitems: [],
     }
   },
 
@@ -79,7 +83,7 @@ var Tabular = React.createClass({
   },
 
   keySelect: function () {
-    this.props.onSelect(this.props.items[this.state.selected])
+    this.props.onSelect((this.state.searching ? this.state.searchitems : this.props.items)[this.state.selected])
   },
 
   toTop: function () {
@@ -118,6 +122,51 @@ var Tabular = React.createClass({
     this.props.onMenu(item, e)
   },
 
+  startSearch: function () {
+    this.setState({searching: true, searchitems: this.props.items})
+  },
+
+  _onChangeSearch: function (e) {
+    var text = e.target.value.toLowerCase()
+      , heads = Object.keys(this.props.headers)
+      , items = text.trim() ? this.props.items.filter(item => {
+          return heads.some(name => {
+            var res = this.props.headers[name](item)
+            return res && res.toLowerCase().indexOf(text) !== -1
+          })
+        }) : this.props.items
+    this.setState({
+      searchtext: text,
+      searchitems: items,
+      selected: 0,
+    })
+  },
+
+  _onSearchKey: function (e) {
+    e.stopPropagation()
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      if (this.state.selected > this.state.searchitems.length) return
+      return this.props.onSelect(this.state.searchitems[this.state.selected])
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      return this.setState({searching: false})
+    }
+    if (e.key === 'ArrowDown') {
+      if (this.state.selected < this.state.searchitems.length - 1) {
+        this.setState({selected: this.state.selected + 1})
+      }
+      return e.preventDefault()
+    }
+    if (e.key === 'ArrowUp') {
+      if (this.state.selected > 0) {
+        this.setState({selected: this.state.selected - 1})
+      }
+      return e.preventDefault()
+    }
+  },
+
   render: function () {
     var heads = Object.keys(this.props.headers)
     return <div className='Tabular'>
@@ -144,7 +193,20 @@ var Tabular = React.createClass({
 
           <tbody>
             {
-              this.props.items.map((item, i) => <tr
+              this.state.searching ?
+                <tr>
+                  <td colSpan={3}>
+                    Search: <input
+                      value={this.state.searchtext}
+                      autoFocus={true}
+                      onChange={this._onChangeSearch}
+                      onKeyDown={this._onSearchKey}/>
+                  </td>
+                </tr> : null
+            }
+            {
+              (this.state.searching ? this.state.searchitems : this.props.items)
+                .map((item, i) => <tr
                   key={i}
                   ref={i === this.state.selected ? 'selected' : undefined}
                   className={i === this.state.selected ? 'selected' : ''}
