@@ -9,8 +9,8 @@ all: js css
 
 pages:
 	rsync www/* pages/ -rLu
-	lessc -x run.less pages/demo/build.css
-	browserify ${ARGS} -d run.js | uglifyjs --screw-ie8 > pages/demo/build.js
+	lessc -x run.less pages/build.css
+	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js | uglifyjs --screw-ie8 > pages/build.js
 
 vendorlib:
 	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
