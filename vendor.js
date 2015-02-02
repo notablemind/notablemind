@@ -29702,7 +29702,7 @@ if (
     Mount: ReactMount,
     MultiChild: ReactMultiChild,
     TextComponent: ReactTextComponent
-  });
+  }, React);
 }
 
 if ("production" !== process.env.NODE_ENV) {
