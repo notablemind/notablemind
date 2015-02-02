@@ -3,8 +3,8 @@ var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
 var BrowsePage = require('./pages/browse')
-  // , GistPage = require('./pages/gist')
   , DocPage = require('./pages/doc')
+  , GistPage = require('./pages/gist')
 
 var App = React.createClass({
   render: function () {
@@ -16,7 +16,10 @@ module.exports = (
   <Route handler={App}>
     <DefaultRoute name="browse" handler={BrowsePage}/>
     <Route name="doc" path="doc/:id" handler={DocPage}/>
+    <Route name='gist' path='gist/:uid/:id' handler={GistPage}/>
+    {/** TODO make a route gist/:id that finds out the username and redirects **/}
+    <Route name='gist-browse' path='gist' handler={GistPage}/>
   </Route>
 )
-// <Route name="gist" path="gist/:id" handler={GistPage}/>
+// <Route name='gist' path'gist/:id' handler={GistPage}/>
 

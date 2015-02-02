@@ -2,7 +2,6 @@ var React = require('react')
   , {Link, State, Navigation} = require('react-router')
   , treed = require('treed')
   , KeysMixin = require('../keys-mixin')
-  , KeyManager = require('treed/key-manager')
   , TypeSwitcher = require('./type-switcher')
   , Tree = require('treed/views/tree')
   , SplitManager = require('./split-manager')
@@ -126,13 +125,13 @@ var DocViewer = React.createClass({
   _split: function (orient) {
     var config = SplitManager.split(this.findCurrentPane(), orient, this.state.windowConfig, this.getNewWindowConfig)
     this._changeWindowConfig(config)
-    // this.setState({windowConfig: config})
   },
 
   _remove: function () {
     var result = SplitManager.remove(this.findCurrentPane(), this.state.windowConfig)
+    if (!result) return
     this._onRemovedWindow(result.removed)
-    this.setState({windowConfig: result.config})
+    this._changeWindowConfig(result.config)
   },
 
   _windowJump: function (direction) {

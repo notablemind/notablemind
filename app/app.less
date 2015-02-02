@@ -52,6 +52,10 @@ body {
   }
 }
 
+.GistPage {
+  &:extend(.DocPage all);
+}
+
 .DocViewer {
   flex: 1;
   display: flex;
@@ -171,6 +175,7 @@ body {
 @import "./components/dropdown.less";
 @import "./components/saver.less";
 @import "./components/splitter.less";
+@import "./components/gist-form.less";
 
 .treed_body_rendered {
   font-family: 'Monda';

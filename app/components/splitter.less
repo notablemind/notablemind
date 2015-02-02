@@ -12,6 +12,7 @@
   background-color: #aaa;
   cursor: pointer;
   z-index: 10;
+  border: 2px solid white;
 
   .Splitter-moving > & {
     background-color: green;
@@ -19,9 +20,11 @@
 
   .Splitter-horiz > & {
     cursor: ew-resize;
+    border-width: 4px 0;
   }
   .Splitter-vert > & {
     cursor: ns-resize;
+    border-width: 0 4px;
   }
 }
 

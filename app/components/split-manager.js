@@ -116,7 +116,7 @@ var SplitManager = React.createClass({
     var result = SplitManager.remove(pos, this.props.config)
     if (!result) return
     this.props.onRemove(result.removed)
-    this.props.onChagne(result.config)
+    this.props.onChange(result.config)
   },
 
   render: function () {
