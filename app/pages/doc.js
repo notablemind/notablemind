@@ -1,6 +1,7 @@
 var React = require('react')
   , {Navigation, State} = require('react-router')
 
+  , KeyManager = require('treed/key-manager')
   , keys = require('treed/lib/keys')
   , files = require('../files')
 
@@ -32,18 +33,12 @@ var DocPage = React.createClass({
   mixins: [Navigation, State],
 
   componentDidMount: function () {
-    var kh = keys({
-      'g q': () => this.transitionTo('browse'),
-    })
-    this.setState({
-      keys: kh
-    })
     this.loadFile()
-    window.addEventListener('keydown', kh)
+    window.addEventListener('keydown', this._keyDown)
   },
 
   componentWillUnmount: function () {
-    window.removeEventListener('keydown', this.state.keys)
+    window.removeEventListener('keydown', this._keyDown)
   },
 
   getInitialState: function () {
@@ -51,6 +46,16 @@ var DocPage = React.createClass({
       loading: false,
       error: null,
     }
+  },
+
+  _keyDown: function (e) {
+    if (!this.state.keys) return
+    console.log('keydown', e.keyCode)
+    if (this.state.store.views[this.state.store.activeView].mode !== 'insert' &&
+        ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
+      return
+    }
+    return this.state.keys.keyDown(e)
   },
 
   _onError: function (err) {
@@ -77,8 +82,18 @@ var DocPage = React.createClass({
           if (err) {
             return this._onError(err)
           }
+          window.store = store
+          window.docPage = this
+
+          var keys = new KeyManager()
+          keys.attach(store)
+          keys.addKeys({
+            'g q': () => this.transitionTo('browse'),
+          })
+
           files.update(file.id, {opened: Date.now()}, file => {
             this.setState({
+              keys,
               file,
               store,
               plugins,

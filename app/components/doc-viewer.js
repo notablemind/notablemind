@@ -8,6 +8,19 @@ var React = require('react')
   , SplitManager = require('./split-manager')
   , uuid = require('../../lib/uuid')
   , PT = React.PropTypes
+  , windowJump = require('./window-jump')
+
+function windowPos(windows, fn, pos) {
+  pos = pos || []
+  if (windows.leaf) {
+    if (fn(windows.value)) return pos
+    return
+  }
+  var first = windowPos(windows.value.first, fn, pos.concat(['first']))
+  if (first) return first
+  var second = windowPos(windows.value.second, fn, pos.concat(['second']))
+  if (second) return second
+}
 
 function makePaneConfig(store, plugins, keys, root) {
   var config = treed.viewConfig(store, plugins, {root: root})
@@ -51,6 +64,20 @@ function hydrateInitialWindows(windows, store, plugins, keys) {
 var DocViewer = React.createClass({
   mixins: [KeysMixin],
 
+  statics: {
+    keys: function () {
+      return {
+        'w l': this._windowJump.bind(null, 'right'),
+        'w j': this._windowJump.bind(null, 'down'),
+        'w k': this._windowJump.bind(null, 'up'),
+        'w h': this._windowJump.bind(null, 'left'),
+        'shift+; v s': this._split.bind(null, 'horiz'),
+        'shift+; s p': this._split.bind(null, 'vert'),
+        'shift+; q': this._remove,
+      }
+    },
+  },
+
   propTypes: {
     store: PT.object,
     file: PT.object,
@@ -65,11 +92,6 @@ var DocViewer = React.createClass({
   },
 
   getInitialState: function () {
-    var keys = new KeyManager()
-    keys.attach(this.props.store)
-    keys.addKeys({
-      'g q': this._onClose
-    })
     var windowConfig = this.props.file.windows || {
       leaf: true,
       ratio: .5,
@@ -78,11 +100,10 @@ var DocViewer = React.createClass({
         type: 'tree',
       },
     }
-    var windowMap = hydrateInitialWindows(windowConfig, this.props.store, this.props.plugins, keys)
+    var windowMap = hydrateInitialWindows(windowConfig, this.props.store, this.props.plugins, this.props.keys)
     return {
       windowConfig: windowConfig,
       windowMap: windowMap,
-      keys: keys,
     }
   },
 
@@ -97,8 +118,33 @@ var DocViewer = React.createClass({
     }
   },
 
+  findCurrentPane: function () {
+    var vid = this.props.store.activeView
+    return windowPos(this.state.windowConfig, (value) => value.config.view.view.id === vid)
+  },
+
+  _split: function (orient) {
+    var config = SplitManager.split(this.findCurrentPane(), orient, this.state.windowConfig, this.getNewWindowConfig)
+    this._changeWindowConfig(config)
+    // this.setState({windowConfig: config})
+  },
+
+  _remove: function () {
+    var result = SplitManager.remove(this.findCurrentPane(), this.state.windowConfig)
+    this._onRemovedWindow(result.removed)
+    this.setState({windowConfig: result.config})
+  },
+
+  _windowJump: function (direction) {
+    var currentView = this.props.store.activeView
+      , nextId = windowJump(this.state.windowConfig, currentView, direction)
+    if (false === nextId) return
+    this.props.store.activeView = nextId
+    this.props.store.changed(this.props.store.events.activeViewChanged())
+  },
+
   getNewWindowConfig: function (currentConfig) {
-    var config = makePaneConfig(this.props.store, this.props.plugins, this.state.keys)
+    var config = makePaneConfig(this.props.store, this.props.plugins, this.props.keys)
       , id = uuid()
       , value = {
           config: config,
@@ -108,6 +154,11 @@ var DocViewer = React.createClass({
         }
     this.state.windowMap[id] = value
     return value
+  },
+
+  _onRemovedWindow: function (window) {
+    var id = window.config.view.view.id
+    this.props.store.unregisterView(id)
   },
 
   _changeWindowConfig: function (windowConfig) {
@@ -125,14 +176,6 @@ var DocViewer = React.createClass({
     var wmap = this.state.windowMap
     wmap[wid].type = type
     this.setState({windowMap: wmap})
-  },
-
-  _keyDown: function (e) {
-    if (this.props.store.views[this.props.store.activeView].mode !== 'insert' &&
-        ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
-      return
-    }
-    return this.state.keys.keyDown(e)
   },
 
 
@@ -235,6 +278,7 @@ var DocViewer = React.createClass({
         comp={Pane}
         config={this.state.windowConfig}
         getNew={this.getNewWindowConfig}
+        onRemove={this._onRemovedWindow}
         onChange={this._changeWindowConfig}/>
     </div>
   }

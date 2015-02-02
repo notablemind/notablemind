@@ -99,11 +99,11 @@
   width: 10px;
   margin-right: 5px;
 
-  .TreeItem-parent:not(.TreeItem-root) > .TreeItem_head:hover & {
+  .TreeItem-parent:not(.TreeItem-root) > .TreeItem_head:hover > & {
     opacity: 1;
   }
 
-  &-collapsed {
+  .TreeItem-parent:not(.TreeItem-root) > .TreeItem_head > &-collapsed {
     opacity: 1;
   }
 }
@@ -321,12 +321,12 @@
     opacity: 1;
   }
 
-  .n_Collapse > .TreeItem_head & {
+  .TreeItem-parent.n_Collapse > .TreeItem_head & {
     opacity: 1;
   }
 }
 
-.n_Collapse > .TreeItem_head .m_RebaseDot {
+.TreeItem-parent.n_Collapse > .TreeItem_head .m_RebaseDot {
   margin-top: 0;
   left: -15px;
 }

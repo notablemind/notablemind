@@ -55,8 +55,9 @@ var Splitter = React.createClass({
       , Comp = this.props.comp
     var children
     if (config.leaf) {
-      children = <div className='Splitter_first' style={{flex: 1}}>
+      children = <div className='Splitter_only' style={{flex: 1}}>
         <Comp {...this.props.cprops}
+          key={config.value.config.view.view.id}
           pos={pos.concat(['first'])}
           value={config.value}/>
         </div>
@@ -69,6 +70,7 @@ var Splitter = React.createClass({
               pos={pos.concat(['first'])}
               config={config.value.first} /> :
             <Comp {...this.props.cprops}
+              key={config.value.first.value.config.view.view.id}
               pos={pos.concat(['first'])}
               value={config.value.first.value}/>}
         </div>,
@@ -79,6 +81,7 @@ var Splitter = React.createClass({
               pos={pos.concat(['second'])}
               config={config.value.second}/> :
             <Comp {...this.props.cprops}
+              key={config.value.second.value.config.view.view.id}
               pos={pos.concat(['second'])}
               value={config.value.second.value}/>}
         </div>
