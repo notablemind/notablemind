@@ -143,7 +143,7 @@ var DocViewer = React.createClass({
   },
 
   getNewWindowConfig: function (currentConfig) {
-    var config = makePaneConfig(this.props.store, this.props.plugins, this.props.keys)
+    var config = makePaneConfig(this.props.store, this.props.plugins, this.props.keys, currentConfig.root)
       , id = uuid()
       , value = {
           config: config,

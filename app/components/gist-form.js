@@ -29,8 +29,8 @@ var GistForm = React.createClass({
       <input value={this.state.value}
         placeholder="username/id"
         onChange={(e) => this.setState({value: e.target.value})}
-        onKeyDown={(e) => e.key === 'Return' ? this.onSubmit() : null}/>
-      <button disabled={!this.isValid()} onClick={this.onSubmit}>Load Gist</button>
+        onKeyDown={(e) => e.key === 'Enter' ? this.onSubmit() : null}/>
+      <button disabled={this.state.value === this.props.initialValue || !this.isValid()} onClick={this.onSubmit}>Load Gist</button>
     </div>
   }
 })

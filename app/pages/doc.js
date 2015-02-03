@@ -70,6 +70,11 @@ var DocPage = React.createClass({
     files.update(id, {windows: dehydrateWindows(windows)}, done)
   },
 
+  updateFile: function (update, done) {
+    var id = this.getParams().id
+    files.update(id, update, done)
+  },
+
   loadFile: function () {
     this.setState({error: null, loading: true})
     var id = this.getParams().id

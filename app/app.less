@@ -54,6 +54,20 @@ body {
 
 .GistPage {
   &:extend(.DocPage all);
+
+  &-form {
+    padding: 50px;
+  }
+}
+
+.GistPage_error {
+  font-family: Monda;
+  text-align: center;
+  color: rgb(216, 0, 0);
+
+  h3 {
+    margin-bottom: 10px;
+  }
 }
 
 .DocViewer {
@@ -192,7 +206,12 @@ body {
   font-family: 'Monda', sans-serif;
 }
 
-.TreeItem-root.TreeItem-type-ipython > .TreeItem_head .treed_body {
-  margin-left: 0;
+.TreeItem-root.TreeItem-type-ipython,
+.TreeItem-type-code-playground {
+  > .TreeItem_head .treed_body {
+    margin-left: 0;
+    font-size: 16px;
+  }
 }
+
 

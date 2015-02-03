@@ -19,16 +19,25 @@
   button {
     font-size: 17px;
     padding: 5px 10px 5px;
-    background: transparent;
+    background: rgb(49, 67, 255);
     border: 1px solid #aaa;
     border-left: none;
-    color: #666;
+    color: white;
     transition: background-color .3s ease, color .3s ease;
     cursor: pointer;
 
     &:hover {
       background-color: #ddd;
       color: black;
+    }
+
+    &[disabled] {
+      background-color: white;
+      color: #666;
+    }
+
+    &:not([disabled]):hover {
+      background-color: rgb(4, 0, 150);
     }
   }
 }
