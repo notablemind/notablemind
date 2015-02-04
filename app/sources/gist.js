@@ -67,9 +67,9 @@ module.exports = {
       var files = {}
       files['Document.nm'] = {content: text}
       newGist(token, title, files, (err, result) => {
-        if (err) {
+        if (err || !result.id) {
           clearAuth() // TODO maybe don't do this every time
-          return done(err)
+          return done(err || new Error('failed to create gist'))
         }
         done(null, {gist_id: result.id}, Date.now())
       })
@@ -123,7 +123,7 @@ function authorize(done) {
 
 // create a gist out of the current document :D
 function newGist(access_token, description, files, done) {
-  ajax.post(CONFIG.api, {
+  ajax.post(CONFIG.api.slice(0, -1), {
     'Authorization': 'token ' + access_token,
   }, {
     description: description,

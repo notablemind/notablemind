@@ -39,6 +39,10 @@ var DocPage = React.createClass({
 
   componentWillUnmount: function () {
     window.removeEventListener('keydown', this._keyDown)
+
+    if (this.state.store) {
+      this._unlistenToStore(this.state.store)
+    }
   },
 
   getInitialState: function () {
@@ -46,6 +50,42 @@ var DocPage = React.createClass({
       loading: false,
       error: null,
     }
+  },
+
+  // file stuff
+  _listenToStore: function (store) {
+    store.on(['changed'], this._onDirty)
+    store.on(['node:' + store.db.root], this._onRootChanged)
+  },
+
+  _unlistenToStore: function (store) {
+    store.off(['changed'], this._onDirty)
+    store.off(['node:' + store.db.root], this._onRootChanged)
+  },
+
+  _onDirty: function () {
+    var source = this.state.file.source
+    this.state.file.modified = Date.now()
+    if (!source) return
+    source.dirty = true
+    files.update(this.state.file.id, {
+      source: source,
+      modified: this.state.file.modified,
+    }, file => this.setState({file: file}))
+  },
+
+  _onRootChanged: function () {
+    var db = this.state.store.db
+      , title = db.nodes[db.root].content
+    if (title.length > 100) {
+      title = title.slice(0, 98) + '..'
+      window.document.title = title
+    }
+    this._changeTitle(title)
+  },
+
+  _changeTitle: function (title) {
+    files.update(this.state.file.id, {title: title}, file => this.setState({file: file}))
   },
 
   _keyDown: function (e) {
@@ -75,6 +115,29 @@ var DocPage = React.createClass({
     files.update(id, update, done)
   },
 
+  _onLoad: function (file, store, plugins) {
+    window.store = store
+    window.docPage = this
+    window.document.title = file.title
+    this._listenToStore(store)
+
+    var keys = new KeyManager()
+    keys.attach(store)
+    keys.addKeys({
+      'g q': () => this.transitionTo('browse'),
+    })
+
+    files.update(file.id, {opened: Date.now()}, file => {
+      this.setState({
+        keys,
+        file,
+        store,
+        plugins,
+        loading: false,
+      })
+    })
+  },
+
   loadFile: function () {
     this.setState({error: null, loading: true})
     var id = this.getParams().id
@@ -86,24 +149,7 @@ var DocPage = React.createClass({
           if (err) {
             return this._onError(err)
           }
-          window.store = store
-          window.docPage = this
-
-          var keys = new KeyManager()
-          keys.attach(store)
-          keys.addKeys({
-            'g q': () => this.transitionTo('browse'),
-          })
-
-          files.update(file.id, {opened: Date.now()}, file => {
-            this.setState({
-              keys,
-              file,
-              store,
-              plugins,
-              loading: false,
-            })
-          })
+          this._onLoad(file, store, plugins)
         })
       })
     )

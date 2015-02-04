@@ -18,6 +18,9 @@ var DropDown = React.createClass({
       window.addEventListener('mousedown', this._onClose)
     }
   },
+  componentWillUnmount: function () {
+    window.removeEventListener('mousedown', this._onClose)
+  },
   _onClick: function (i) {
     this._onClose()
     if (this.props.items[i].action) {

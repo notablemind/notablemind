@@ -313,9 +313,11 @@ var Pane = React.createClass({
     return <div className={'App_pane App_pane-' + this.props.value.type}>
       <div className='App_pane_top'>
         {statusbar}
-        <button onClick={this.props.onSplit.bind(null, this.props.pos, 'horiz')}>||</button>
-        <button onClick={this.props.onSplit.bind(null, this.props.pos, 'vert')}> = </button>
-        <button onClick={this.props.onRemove.bind(null, this.props.pos)}>x</button>
+        <div className='App_pane_splitters'>
+          <button onClick={this.props.onSplit.bind(null, this.props.pos, 'horiz')}>||</button>
+          <button onClick={this.props.onSplit.bind(null, this.props.pos, 'vert')}> = </button>
+          <button onClick={this.props.onRemove.bind(null, this.props.pos)}>x</button>
+        </div>
         <TypeSwitcher
           types={this.props.viewTypes}
           type={this.props.value.type}

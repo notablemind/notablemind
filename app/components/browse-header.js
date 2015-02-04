@@ -90,7 +90,7 @@ var BrowseHeader = React.createClass({
         keys={this.props.keys} />
     } else if (this.state.open === 'new') {
       opener = <NewFile
-        onSubmit={this._onNewFile}
+        onSubmit={this.props.onNewFile}
         keys={this.props.keys}
         onClose={this._onNewOpen.bind(null, 'new', false)}/>
     } else {

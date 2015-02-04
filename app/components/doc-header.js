@@ -2,6 +2,7 @@ var React = require('react')
   , {Navigation, State} = require('react-router')
   , PT = React.PropTypes
   , Dupload = require('./dupload')
+  , Saver = require('./saver')
 
 var DocHeader = React.createClass({
   propTypes: {
@@ -45,12 +46,11 @@ var DocHeader = React.createClass({
       {this.props.plugins.map(plugin =>
         plugin.view && plugin.view.global && plugin.view.global(headStore)
       )}
-      {/*this.props.savingEnabled ?
-        <Saver
-          onFileUpdate={this.props.onFileUpdate}
-          store={this.props.store}
-          value={this.props.file.source}/>
-      */}
+      <Saver
+        onFileUpdate={this.props.onFileUpdate}
+        store={this.props.store}
+        file={this.props.file}
+        value={this.props.file.source}/>
     </div>
   }
 })

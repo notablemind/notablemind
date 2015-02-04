@@ -48,9 +48,23 @@ var BrowsePage = React.createClass({
     })
   },
 
+  _onNewFile: function (title, repl) {
+    this.setState({newing: null, error: null, loading: true})
+
+    files.create(title, repl, (file, pl) =>
+      files.init(file, pl, (err, store, plugins) => {
+        if (err) {
+          return this._onError(err)
+        }
+        this.transitionTo('doc', {id: file.id})
+      })
+    )
+  },
+
   render: function () {
     return <div className='BrowsePage'>
       <BrowseHeader
+        onNewFile={this._onNewFile}
         onUpdated={this._reloadFiles} />
       {this.state.files ?
         <Browse
