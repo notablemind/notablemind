@@ -2,27 +2,51 @@
 
 var jsdom = require('jsdom')
   , fs = require('fs')
+  , path = require('path')
+
+var program = require('commander')
+
+program
+  .usage('demobox [options]')
+  .option('-i, --infile <infile>', "The path of the NotableMind file")
+  .option('-o, --outfile <outfile>', "The output path")
+  .option('-r, --relative-path [relpath]', 'The relative path to the nm assets, default ""')
+  .version('1.0.0')
+  .parse(process.argv);
+
+var outFile = path.join(process.cwd(), program.outfile)
+  , inFile = path.join(process.cwd(), program.infile)
+  , relPath = program.relativePath || ''
+
+if (!fs.existsSync(path.dirname(outFile))) {
+  console.error('Output directory doesn\'t exist')
+  process.exit(1)
+}
+
 
 jsdom.env('<html><body><div></div></body></html>', function (err, window) {
+
+  // this is all needed so that codemirror won't complain
   global.window = window
+  global.parent = window
   global.document = window.document
   global.location = window.location
-  global.parent = window
-
   global.navigator = window.navigator
-  require('node-jsx').install({harmony: true, extension: '.js'})
-  var path = require('path')
 
-  var data = fs.readFileSync(path.join(process.cwd(), process.argv.slice(-1)[0]), {encoding: 'utf8'})
+  // get us some jsx + es6
+  require('node-jsx').install({harmony: true, extension: '.js'})
+
+  var data = fs.readFileSync(inFile, {encoding: 'utf8'})
   data = JSON.parse(data)
 
-  console.log('Setup finished')
-  require('./server')(data, function (err, text) {
+  console.log('Setup finished\n')
+  require('./server')(data, relPath, function (err, text) {
     if (err) {
       console.log('failed', err)
       process.exit(1)
     }
     console.log('\n\nFinished!\n')
-    fs.writeFileSync('./www/out.html', text, {encoding: 'utf8'})
+    fs.writeFileSync(outFile, text, {encoding: 'utf8'})
   })
 })
+

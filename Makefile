@@ -31,9 +31,6 @@ pages:
 vendorlib:
 	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
 
-# treed:
-	# browserify -d `echo ${TREEDS} | sed -e 's/ / -r /g'` -o www/treed.js
-
 view-js:
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d view.js -o www/viewer/build.js
 
@@ -48,6 +45,10 @@ watch-baked:
 
 baked:
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js -o www/baked.js
+
+tutorial:
+	mkdir -p www/tutorial
+	./bin/bake.js -i pages/src/tutorial.nm -o www/tutorial/index.html -r ../
 
 slow:
 	browserify ${ARGS} -d run.js -o www/build.js

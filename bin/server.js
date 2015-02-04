@@ -32,7 +32,7 @@ formatters.map(plugin => {
 })
 
 
-module.exports = function (data, done) {
+module.exports = function (data, relPath, done) {
   console.log('require bakeddoc')
   var BakedDoc = require('../app/pages/baked')
 
@@ -47,19 +47,19 @@ module.exports = function (data, done) {
     done(null, `<!doctype html>
       <head>
         <meta charset="utf8">
-        <title>Awesome</title>
-        <script src="vendor/d3.js"></script>
-        <script src="vendor/vega.js"></script>
-        <link rel="stylesheet" href="build.css">
-        <link rel="stylesheet" href="vendor/font-awesome-4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="vendor/katex/katex.min.css">
+        <title>${data.title} | Notablemind</title>
+        <script src="${relPath}vendor/d3.js"></script>
+        <script src="${relPath}vendor/vega.js"></script>
+        <link rel="stylesheet" href="${relPath}build.css">
+        <link rel="stylesheet" href="${relPath}vendor/font-awesome-4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${relPath}vendor/katex/katex.min.css">
 
 
         <script>
           var NM_BAKED_DATA=${embedData};
         </script>
-        <script src="vendor.js"></script>
-        <script src="baked.js"></script>
+        <script src="${relPath}vendor.js"></script>
+        <script src="${relPath}baked.js"></script>
       </head>
       <body>
         <div id="main">
