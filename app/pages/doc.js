@@ -174,7 +174,6 @@ var DocPage = React.createClass({
         plugins={plugins}
         onFileUpdate={this.onFileUpdate}
 
-        setPanes={this._setPanes}
         changeTitle={this._changeTitle}
         onClose={!this.props.noHome && (() => this.transitionTo('browse'))}
       />

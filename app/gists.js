@@ -1,10 +1,5 @@
 var MemPL = require('treed/pl/mem')
-  , Db = require('treed/db')
-  , treed = require('treed')
-
   , files = require('./files')
-
-var uuid = require('../lib/uuid')
 
 module.exports = {
   load: loadGist

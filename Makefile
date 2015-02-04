@@ -43,6 +43,12 @@ watch-view:
 js:
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js -o www/build.js
 
+watch-baked:
+	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d bin/client.js -o www/baked.js
+
+baked:
+	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js -o www/baked.js
+
 slow:
 	browserify ${ARGS} -d run.js -o www/build.js
 

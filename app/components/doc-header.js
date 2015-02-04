@@ -36,9 +36,10 @@ var DocHeader = React.createClass({
           <i className='fa fa-github-alt'/>
         </a>
       </span>
-      <button className='DocHeader_home' onClick={this.props.onClose}>
-        Home
-      </button>
+      {!!this.props.onClose &&
+        <button className='DocHeader_home' onClick={this.props.onClose}>
+          Home
+        </button>}
       <span className='DocHeader_title'>
         {this.props.file.title}
       </span>
