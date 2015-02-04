@@ -49,7 +49,7 @@ var BakedDoc = React.createClass({
   propTypes: {
     file: PT.object,
     store: PT.object,
-    plugins: PT.object,
+    plugins: PT.array,
     keys: PT.object,
   },
   getInitialState: function () {

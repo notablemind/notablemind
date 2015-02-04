@@ -32,7 +32,7 @@ function cloneShallow(s) {
 var SplitManager = React.createClass({
   propTypes: {
     config: PT.object,
-    comp: PT.element,
+    comp: PT.object,
     getNew: PT.func,
     onRemove: PT.func,
     onChange: PT.func,

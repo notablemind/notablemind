@@ -80,7 +80,7 @@ var DocViewer = React.createClass({
   propTypes: {
     store: PT.object,
     file: PT.object,
-    plugins: PT.object,
+    plugins: PT.array,
     keys: PT.object,
     viewTypes: PT.object,
     saveWindowConfig: PT.func,

@@ -9,9 +9,9 @@ var DocHeader = React.createClass({
     file: PT.object.isRequired,
     store: PT.object.isRequired,
     saver: PT.renderable,
-    onClose: PT.func.isRequired,
-    setPanes: PT.func.isRequired,
     savingEnabled: PT.bool,
+    // if not given, no "Home" button will be shown
+    onClose: PT.func,
   },
 
   getDefaultProps: function () {
