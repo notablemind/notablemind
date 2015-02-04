@@ -27,6 +27,7 @@ pages:
 	rsync www/* pages/ -rLu
 	lessc -x run.less pages/build.css
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js | uglifyjs --screw-ie8 > pages/build.js
+	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js | uglifyjs --screw-ie8 > pages/baked.js
 
 vendorlib:
 	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
