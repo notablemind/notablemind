@@ -28,6 +28,23 @@
     z-index: 100;
   }
 
+  &_sort {
+    position: relative;
+
+    &:before {
+      content: '\25be';
+      position: absolute;
+      left: 7px;
+      pointer-events: none;
+      top: 6px;
+      font-size: 13px;
+    }
+
+    &-rev:before {
+      content: '\25b4';
+    }
+  }
+
   &_container {
     overflow: auto;
     position: absolute;

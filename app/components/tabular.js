@@ -4,11 +4,13 @@ var React = require('react/addons')
   , cx = React.addons.classSet
   , PT = React.PropTypes
   , KeysMixin = require('../keys-mixin')
+  , TableBody = require('./table-body')
 
 var Tabular = React.createClass({
   propTypes: {
     items: PT.array,
     headers: PT.object,
+    sortHeaders: PT.object,
     searchHeaders: PT.array,
     onSelect: PT.func,
     keys: PT.func,
@@ -21,13 +23,6 @@ var Tabular = React.createClass({
   statics: {
     keys: function () {
       return {
-        'g g': this.toTop,
-        'shift+[': this.toTop,
-        'shift+g': this.toBottom,
-        'shift+]': this.toBottom,
-        'j, down': this.goDown,
-        'k, up': this.goUp,
-        'return': this.keySelect,
         '/': this.startSearch,
       }
     },
@@ -35,77 +30,18 @@ var Tabular = React.createClass({
 
   componentDidMount: function () {
     this.resizeHead()
-    if (this.props.extraKeys) {
-      var k = {}
-      for (var name in this.props.extraKeys) {
-        k[name] = this._extraKeys.bind(null, this.props.extraKeys[name])
-      }
-      this._extra_keys = this.props.keys.add(k)
-    }
-  },
-
-  componentWillUnmount: function () {
-    if (this._extra_keys) {
-      this.props.keys.remove(this._extra_keys)
-      delete this._extra_keys
-    }
   },
 
   componentDidUpdate: function (prevProps, prevState) {
     this.resizeHead()
-    if (this.state.selected !== prevState.selected) {
-      this.refs.selected && ensureInView(this.refs.selected.getDOMNode())
-    }
-  },
-
-  componentWillReceiveProps: function (nextProps) {
-    if (this._extra_keys && nextProps.keys) {
-      nextProps.keys.remove(this._extra_keys)
-      delete this._extra_keys
-    }
-    if (nextProps.extraKeys) {
-      var k = {}
-      for (var name in nextProps.extraKeys) {
-        k[name] = this._extraKeys.bind(null, nextProps.extraKeys[name])
-      }
-      this._extra_keys = nextProps.keys.add(k)
-    }
   },
 
   getInitialState: function () {
     return {
-      selected: 0,
       searching: false,
       searchtext: '',
-      searchitems: [],
-    }
-  },
-
-  _extraKeys: function (fn) {
-    fn(this.props.items[this.state.selected])
-  },
-
-  keySelect: function () {
-    this.props.onSelect((this.state.searching ? this.state.searchitems : this.props.items)[this.state.selected])
-  },
-
-  toTop: function () {
-    this.setState({selected: 0})
-  },
-
-  toBottom: function () {
-    this.setState({selected: this.props.items.length - 1})
-  },
-
-  goUp: function () {
-    if (this.state.selected > 0) {
-      this.setState({selected: this.state.selected - 1})
-    }
-  },
-
-  goDown: function () {
-    if (this.state.selected < this.props.items.length - 1) {
-      this.setState({selected: this.state.selected + 1})
+      sorting: Object.keys(this.props.headers)[0],
+      sortDir: 1,
     }
   },
 
@@ -120,13 +56,8 @@ var Tabular = React.createClass({
     })
   },
 
-  _onMenu: function (item, i, e) {
-    this.setState({selected: i})
-    this.props.onMenu(item, e)
-  },
-
   startSearch: function () {
-    this.setState({searching: true, searchitems: this.props.items})
+    this.setState({searching: true, searchtext: ''})
   },
 
   _onChangeSearch: function (e) {
@@ -140,34 +71,49 @@ var Tabular = React.createClass({
         }) : this.props.items
     this.setState({
       searchtext: text,
-      searchitems: items,
-      selected: 0,
     })
   },
 
   _onSearchKey: function (e) {
     e.stopPropagation()
     if (e.key === 'Enter') {
-      e.preventDefault()
-      if (this.state.selected > this.state.searchitems.length) return
-      return this.props.onSelect(this.state.searchitems[this.state.selected])
+      this.refs.body.keySelect()
+      return e.preventDefault()
     }
     if (e.key === 'Escape') {
       e.preventDefault()
       return this.setState({searching: false, searchtext: ''})
     }
     if (e.key === 'ArrowDown') {
-      if (this.state.selected < this.state.searchitems.length - 1) {
-        this.setState({selected: this.state.selected + 1})
-      }
+      this.refs.body.goDown()
       return e.preventDefault()
     }
     if (e.key === 'ArrowUp') {
-      if (this.state.selected > 0) {
-        this.setState({selected: this.state.selected - 1})
-      }
+      this.refs.body.goUp()
       return e.preventDefault()
     }
+  },
+
+  setSort: function (name) {
+    if (this.state.sorting === name) {
+      return this.setState({sortDir: -this.state.sortDir})
+    }
+    this.setState({sorting: name, sortDir: 1})
+  },
+
+  getItems: function () {
+    if (this.state.searching) {
+      return this.props.items.filter(item =>
+        this.props.searchHeaders.some(head =>
+          this.props.headers[head](item).toLowerCase()
+            .indexOf(this.state.searchtext.toLowerCase()) !== -1))
+    }
+    var head = this.props.sortHeaders[this.state.sorting] || this.props.headers[this.state.sorting]
+      , heads = this.props.items.map((item, i) => [head(item), i])
+    heads.sort((a, b) =>
+      a[0] == b[0] ? 0 :
+        (a[0] > b[0] ? 1 : -1) * this.state.sortDir)
+    return heads.map(head => this.props.items[head[1]])
   },
 
   render: function () {
@@ -177,7 +123,11 @@ var Tabular = React.createClass({
         <thead>
           <tr>
             {
-              heads.map(name => <th key={name}>{name}</th>)
+              heads.map(name => <th
+                onClick={this.setSort.bind(null, name)}
+                className={this.state.sorting !== name ? null :
+                  ('Tabular_sort ' + (this.state.sortDir === 1 ? '' : 'Tabular_sort-rev'))}
+                key={name}>{name}</th>)
             }
           </tr>
         </thead>
@@ -207,25 +157,20 @@ var Tabular = React.createClass({
                   </td>
                 </tr> : null
             }
-            {
-              (this.state.searching ? this.state.searchitems : this.props.items)
-                .map((item, i) => <tr
-                  key={i}
-                  ref={i === this.state.selected ? 'selected' : undefined}
-                  className={i === this.state.selected ? 'selected' : ''}
-                  onContextMenu={this._onMenu.bind(null, item, i)}
-                  onClick={this.props.onSelect.bind(null, item)}>
-                {heads.map(name =>
-                  <td key={name}>
-                    {this.props.headers[name](item)}
-                  </td>)}
-              </tr>)
-            }
             {!this.props.items.length &&
               <tr className='Tabular_empty'>
                 <td colSpan={3}>{this.props.emptyText}</td>
               </tr>}
           </tbody>
+          <TableBody
+            keys={this.props.keys}
+            items={this.getItems()}
+            headers={this.props.headers}
+            onMenu={this.props.onMenu}
+            onSelect={this.props.onSelect}
+            extraKeys={this.props.extraKeys}
+            ref="body"
+            />
         </table>
       </div>
     </div>

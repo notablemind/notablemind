@@ -159,9 +159,13 @@ var Browse = React.createClass({
         }}
         onMenu={this._onMenu}
         searchHeaders={['Name']}
+        sortHeaders={{
+          'Modified': file => -file.modified || 0,
+          'Opened': file => -file.opened || 0,
+        }}
         headers={{
           'Name': file => file.title,
-          'Repl': file => ['null', 'none'].indexOf(file.repl) === -1 ? file.repl : null,
+          'Repl': file => ['null', 'none'].indexOf(file.repl) === -1 ? file.repl : '',
           'Sync': file => file.source ? file.source.type : null,
           'Modified': file => file.modified ? fuzzyTime(file.modified) : null,
           'Opened': file => fuzzyTime(file.opened),
