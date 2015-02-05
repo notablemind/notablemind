@@ -64,6 +64,7 @@ var BrowsePage = React.createClass({
   render: function () {
     return <div className='BrowsePage'>
       <BrowseHeader
+        fileslib={files}
         onNewFile={this._onNewFile}
         onUpdated={this._reloadFiles} />
       {this.state.files ?

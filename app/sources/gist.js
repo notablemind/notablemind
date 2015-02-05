@@ -13,13 +13,15 @@ module.exports = {
   },
 
   select: function (done) {
-    loadGistModal(loadGist, function (err, result, gist_id) {
-      if (err) return
-      var parts = gist_id.split('/')
-      if (parts.length === 1) {
-        parts.unshift(null)
-      }
-      done(err, result, {user: parts[0], gist_id: parts[1]})
+    authorize((err, token) => {
+      loadGistModal(loadGist.bind(null, token), function (err, result, gist_id) {
+        if (err) return
+        var parts = gist_id.split('/')
+        if (parts.length === 1) {
+          parts.unshift(null)
+        }
+        done(err, result, {user: parts[0], gist_id: parts[1]})
+      })
     })
   },
 

@@ -12,6 +12,8 @@ var React = require('react')
   , history = require('./history')
   , kernels = require('../kernels')
   , async = require('async')
+  , files = require('../files')
+  , fuzzyTime = require('./fuzzy-time')
 
 var Browse = React.createClass({
 
@@ -156,17 +158,20 @@ var Browse = React.createClass({
           'ctrl+return': item => window.open('#/doc/' + item.id)
         }}
         onMenu={this._onMenu}
+        searchHeaders={['Name']}
         headers={{
           'Name': file => file.title,
-          'Repl': file => file.repl,
-          'Source': file => file.source ? file.source.type : null,
+          'Repl': file => ['null', 'none'].indexOf(file.repl) === -1 ? file.repl : null,
+          'Sync': file => file.source ? file.source.type : null,
+          'Modified': file => file.modified ? fuzzyTime(file.modified) : null,
+          'Opened': file => fuzzyTime(file.opened),
         }}
         headerWidths={{
           Repl: 100,
           Source: 100,
         }}
       />
-      {/*<Dumper files={this.props.files}/>*/}
+      {/*<Dumper files={files}/>*/}
       {this.state.menu && this._renderMenu()}
     </div>
   }

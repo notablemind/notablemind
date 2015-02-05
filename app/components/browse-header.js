@@ -6,6 +6,7 @@ var React = require('react')
   , Importer = require('./importer')
   , NewFile = require('./new-file')
   , Morph = require('../helpers/morph')
+  , readFile = require('./read-file')
 
 var BrowseHeader = React.createClass({
   mixins: [KeysMixin, Morph],

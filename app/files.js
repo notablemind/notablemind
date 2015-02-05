@@ -3,6 +3,7 @@ var IxPL = require('treed/pl/ixdb')
   , treed = require('treed')
   , kernelConfig = require('./kernels')
   , Db = require('treed/db')
+  , async = require('async')
 
 var uuid = require('../lib/uuid')
 
@@ -110,7 +111,11 @@ function importRaw(data, done) {
       return done(new Error('Invalid format'))
     }
   }
-  importOne(data, done)
+  if (Array.isArray(data) && data[0].title && data[0].root) {
+    async.parallel(data.map(one => (next) => importOne(one, next)), done)
+  } else {
+    importOne(data, done)
+  }
 }
 
 function importOne(data, done) {

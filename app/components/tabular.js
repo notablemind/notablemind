@@ -9,6 +9,7 @@ var Tabular = React.createClass({
   propTypes: {
     items: PT.array,
     headers: PT.object,
+    searchHeaders: PT.array,
     onSelect: PT.func,
     keys: PT.func,
     emptyText: PT.node,
@@ -21,7 +22,9 @@ var Tabular = React.createClass({
     keys: function () {
       return {
         'g g': this.toTop,
+        'shift+[': this.toTop,
         'shift+g': this.toBottom,
+        'shift+]': this.toBottom,
         'j, down': this.goDown,
         'k, up': this.goUp,
         'return': this.keySelect,
@@ -51,7 +54,7 @@ var Tabular = React.createClass({
   componentDidUpdate: function (prevProps, prevState) {
     this.resizeHead()
     if (this.state.selected !== prevState.selected) {
-      ensureInView(this.refs.selected.getDOMNode())
+      this.refs.selected && ensureInView(this.refs.selected.getDOMNode())
     }
   },
 
@@ -128,7 +131,7 @@ var Tabular = React.createClass({
 
   _onChangeSearch: function (e) {
     var text = e.target.value.toLowerCase()
-      , heads = Object.keys(this.props.headers)
+      , heads = this.props.searchHeaders || Object.keys(this.props.headers)
       , items = text.trim() ? this.props.items.filter(item => {
           return heads.some(name => {
             var res = this.props.headers[name](item)
@@ -151,7 +154,7 @@ var Tabular = React.createClass({
     }
     if (e.key === 'Escape') {
       e.preventDefault()
-      return this.setState({searching: false})
+      return this.setState({searching: false, searchtext: ''})
     }
     if (e.key === 'ArrowDown') {
       if (this.state.selected < this.state.searchitems.length - 1) {

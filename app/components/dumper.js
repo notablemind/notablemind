@@ -2,6 +2,7 @@
 var React = require('react/addons')
   , cx = React.addons.classSet
   , PT = React.PropTypes
+  , async = require('async')
 
 var Dumper = React.createClass({
   getInitialState: function () {
