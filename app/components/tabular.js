@@ -159,7 +159,7 @@ var Tabular = React.createClass({
             }
             {!this.props.items.length &&
               <tr className='Tabular_empty'>
-                <td colSpan={3}>{this.props.emptyText}</td>
+                <td colSpan={heads.length}>{this.props.emptyText}</td>
               </tr>}
           </tbody>
           <TableBody
