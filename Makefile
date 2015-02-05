@@ -29,6 +29,9 @@ pages:
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js | uglifyjs --screw-ie8 > pages/build.js
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js | uglifyjs --screw-ie8 > pages/baked.js
 
+gh-pages:
+	cd pages && git add . && git commit -am"update" && git push
+
 vendorlib:
 	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
 
