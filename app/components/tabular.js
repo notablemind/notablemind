@@ -198,7 +198,7 @@ var Tabular = React.createClass({
             {
               this.state.searching ?
                 <tr>
-                  <td colSpan={3}>
+                  <td colSpan={heads.length}>
                     Search: <input
                       value={this.state.searchtext}
                       autoFocus={true}
