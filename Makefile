@@ -22,7 +22,7 @@ codemirror/addon/hint/show-hint'
 ENVBLS='GITHUB_CLIENT_ID=a15ba5cf761a832d0b25 \
 	GDRIVE_CLIENT_ID=956621131838-be892j0qs2mpil992t8srhp74ijm0ski.apps.googleusercontent.com'
 
-all: js css
+all: vendor vendorlib js css
 
 
 # old stuff
@@ -86,21 +86,24 @@ start-ijulia:
 start-ipython:
 	ipython notebook --NotebookApp.allow_origin='*'
 
-dumb-server:
+serve:
 	cd www; python -mSimpleHTTPServer
 
 vendor: www/vendor/d3.js www/vendor/vega.js www/vendor/font-awesome-4.3.0
 
 www/vendor/font-awesome-4.3.0:
+	mkdir -p www/vendor
 	cd www/vendor && \
 	  wget http://fontawesome.io/assets/font-awesome-4.3.0.zip &&\
 	  unzip font-awesome-4.3.0.zip &&\
 	  rm font-awesome-4.3.0.zip
 
 www/vendor/d3.js:
+	mkdir -p www/vendor
 	wget http://trifacta.github.io/vega/lib/d3.v3.min.js -O www/vendor/d3.js
 
 www/vendor/vega.js:
+	mkdir -p www/vendor
 	wget http://trifacta.github.io/vega/vega.js -O www/vendor/vega.js
 
 launch-chrome:
