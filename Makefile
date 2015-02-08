@@ -19,9 +19,53 @@ codemirror/addon/edit/matchbrackets \
 codemirror/addon/hint/javascript-hint \
 codemirror/addon/hint/show-hint'
 
-# TREEDS=' treed/rx treed/rx/views/tree treed/rx/pl/ixdb treed/rx/pl/queuedb'
+ENVBLS='GITHUB_CLIENT_ID=a15ba5cf761a832d0b25 \
+	GDRIVE_CLIENT_ID=956621131838-be892j0qs2mpil992t8srhp74ijm0ski.apps.googleusercontent.com'
 
 all: js css
+
+
+# old stuff
+
+view-js:
+	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d view.js -o www/viewer/build.js
+
+watch-view:
+	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d view.js -o www/viewer/build.js
+
+
+# main assets
+
+js:
+	env ${ENVBLS} browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js -o www/build.js
+
+watch:
+	env ${ENVBLS} watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d run.js -o www/build.js
+
+css:
+	lessc --source-map --source-map-basepath=www/ run.less www/build.css
+
+vendorlib:
+	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
+
+
+# js files for baked docs
+
+baked:
+	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js -o www/baked.js
+
+watch-baked:
+	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d bin/client.js -o www/baked.js
+
+
+# docs
+
+tutorial:
+	mkdir -p www/tutorial
+	./bin/bake.js -i pages/src/tutorial.nm -o www/tutorial/index.html -r ../
+
+
+# github pages things
 
 pages:
 	rsync www/* pages/ -rLu
@@ -32,36 +76,9 @@ pages:
 gh-pages:
 	cd pages && git add . && git commit -am"update" && git push
 
-vendorlib:
-	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
 
-view-js:
-	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d view.js -o www/viewer/build.js
 
-watch-view:
-	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d view.js -o www/viewer/build.js
-
-js:
-	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js -o www/build.js
-
-watch-baked:
-	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d bin/client.js -o www/baked.js
-
-baked:
-	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js -o www/baked.js
-
-tutorial:
-	mkdir -p www/tutorial
-	./bin/bake.js -i pages/src/tutorial.nm -o www/tutorial/index.html -r ../
-
-slow:
-	browserify ${ARGS} -d run.js -o www/build.js
-
-watch:
-	watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d run.js -o www/build.js
-
-css:
-	lessc --source-map --source-map-basepath=www/ run.less www/build.css
+# helpers
 
 start-ijulia:
 	ipython notebook --NotebookApp.allow_origin='*' --profile=julia

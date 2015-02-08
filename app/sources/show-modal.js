@@ -5,16 +5,20 @@ var React = require('react')
 
 module.exports = showModal
 
-                                           
-
-function showModal   (title        , body     , done    ) {
+function showModal(title, initialState, body, done) {
+  if (arguments.length === 3) {
+    done = body
+    body = initialState
+    initialState = {}
+  }
   var node = document.createElement('div')
   document.body.appendChild(node)
-  var onClose = function (err        ) {
+  var onClose = function (err) {
     node.parentNode.removeChild(node)
     done.apply(null, arguments)
   }
   React.render(React.createElement(Modal, {
+    initialState: initialState,
     onClose: onClose, 
     title: title, 
     body: body}), node)

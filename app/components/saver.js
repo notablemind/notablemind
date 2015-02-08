@@ -6,17 +6,96 @@ var React = require('react')
   , DropDown = require('./dropdown')
   , sync = require('../sync')
   , files = require('../files')
+  , assign = require('../assign')
+  , sourceSettings = require('./source-settings')
+
+function saveTimer(save, longTime, shortTime) {
+  var last = null
+    , longSync = null
+    , shortSync = null
+  function doSave() {
+    clearTimeout(longSync)
+    clearTimeout(shortSync)
+    save(() => {
+      longSync = setTimeout(doSave, longTime)
+    })
+  }
+  longSync = setTimeout(doSave, longTime)
+  return {
+    dirty: function () {
+      clearTimeout(shortSync)
+      shortSync = setTimeout(doSave, shortTime)
+    },
+    clear: function () {
+      clearTimeout(longSync)
+      clearTimeout(shortSync)
+    },
+  }
+}
 
 var Saver = React.createClass({
   propTypes: {
-    store: PT.object,
-    value: PT.object,
+    store: PT.object.isRequired,
+    value: PT.object.isRequired, // the source
+    file: PT.object.isRequired,
+    onFileUpdate: PT.func.isRequired,
   },
+
   getInitialState: function () {
     return {
       loading: false,
       error: false,
     }
+  },
+
+  componentDidMount: function () {
+    this.props.store.on(['changed'], this._onDirty)
+    if (this.props.value && this.props.value.autosync) {
+      this._startTimer()
+      if (this.props.value.dirty) this._saveTimer.dirty()
+    }
+  },
+
+  componentWillUnmount: function () {
+    this.props.store.off(['changed'], this._onDirty)
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.store !== this.props.store) {
+      this.props.store.off(['changed'], this._onDirty)
+      nextProps.store.on(['changed'], this._onDirty)
+    }
+    // need to start up autosync
+    if (nextProps.value && nextProps.value.autosync && (!this.props.value || !this.props.value.autosync)) {
+      this._startTimer()
+    }
+    if (!nextProps.value || !nextProps.value.autosync) {
+      this._clearTimer()
+    }
+  },
+
+  _startTimer: function () {
+    this._saveTimer = saveTimer(this._onSync, 5 * 60 * 1000, 15 * 1000)
+  },
+
+  _clearTimer: function () {
+    if (!this._saveTimer) return
+    this._saveTimer.clear()
+    delete this._saveTimer
+  },
+
+  _onDirty: function () {
+    if (!this.props.file.source) {
+      return files.update(this.props.file.id, {
+        modified: Date.now()
+      }, file => this.props.onFileUpdate(file))
+    }
+    var source = assign({}, this.props.file.source, {dirty: true})
+    files.update(this.props.file.id, {
+      source: source,
+      modified: Date.now(),
+    }, file => this.props.onFileUpdate(file))
+    if (this._saveTimer) this._saveTimer.dirty()
   },
 
   _onSetup: function (type) {
@@ -29,13 +108,14 @@ var Saver = React.createClass({
     })
   },
 
-  _onSync: function () {
+  _onSync: function (done) {
     this.setState({loading: true})
     this._realSync((err) => {
       this.setState({
         error: err,
         loading: false,
       })
+      done && done()
     })
   },
 
@@ -72,7 +152,13 @@ var Saver = React.createClass({
   },
 
   _showSettings: function () {
-    fail
+    sourceSettings(this.props.file.source, (err, settings) => {
+      if (err) return console.warn('failed to do settings dialog', err)
+      var source = assign({}, this.props.file.source, settings)
+      files.update(this.props.file.id, {
+        source: source
+      }, file => this.props.onFileUpdate(file))
+    })
   },
 
   _showSource: function () {
@@ -101,12 +187,14 @@ var Saver = React.createClass({
     var source = this.props.value
 
     return <div className='Saver' style={{display: 'flex'}}>
-      <button className='Saver_sync' onClick={this._onSync}><i className='fa fa-refresh'/></button>
-      <span className='Saver_message'> {this.props.value.dirty ? 'Unsaved local changes' : 'Local changes saved'}</span>
+      <button className='Saver_sync' onClick={this._onSync.bind(null, false)}><i className='fa fa-refresh'/></button>
+      <span className='Saver_message'> {
+        this.props.value.dirty ? (this.props.value.autosync ? '' : 'Unsaved local changes') : 'Local changes saved'
+      }</span>
       <DropDown
         title={<i className='fa fa-cog' style={{margin: '5px 10px'}}/>}
         items={[
-          /*{title: 'Configure', action: this._showSettings},*/
+          {title: 'Configure', action: this._showSettings},
           sources[source.type].link && {title: 'Open ' + source.type, action: this._showSource},
         ]}
         />

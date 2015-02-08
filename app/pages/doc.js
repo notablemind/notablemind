@@ -54,24 +54,11 @@ var DocPage = React.createClass({
 
   // file stuff
   _listenToStore: function (store) {
-    store.on(['changed'], this._onDirty)
     store.on(['node:' + store.db.root], this._onRootChanged)
   },
 
   _unlistenToStore: function (store) {
-    store.off(['changed'], this._onDirty)
     store.off(['node:' + store.db.root], this._onRootChanged)
-  },
-
-  _onDirty: function () {
-    var source = this.state.file.source
-    this.state.file.modified = Date.now()
-    if (!source) return
-    source.dirty = true
-    files.update(this.state.file.id, {
-      source: source,
-      modified: this.state.file.modified,
-    }, file => this.setState({file: file}))
   },
 
   _onRootChanged: function () {

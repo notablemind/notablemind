@@ -2,6 +2,8 @@
 module.exports = {
   gist: require('./gist'),
 
+  // gdrive: require('./gdrive'),
+
   /*
   github: {
     title: 'Github repo',

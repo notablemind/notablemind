@@ -6,9 +6,10 @@ var Modal = React.createClass({
   propTypes: {
     title: PT.string.isRequired,
     onClose: PT.func.isRequired,
+    initialState: PT.object,
   },
   getInitialState: function () {
-    return {}
+    return this.props.initialState
   },
   onClose: function () {
     this.props.onClose(null, this.state)

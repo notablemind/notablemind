@@ -39,7 +39,8 @@ module.exports = {
     })
   },
 
-  load: function (config, done) {
+  load: function (config, headContent, done) {
+    if (headContent) return done(headContent)
     authorize((err, token) => {
       loadGist(token, config.gist_id, done)
     })
@@ -85,7 +86,7 @@ var CONFIG = {
   authorize: 'https://github.com/login/oauth/authorize',
   proxy: 'https://auth-server.herokuapp.com/proxy',
   redirect_uri: parent.location.origin + '/connect.html',
-  client_id: 'a15ba5cf761a832d0b25',
+  client_id: process.env.GITHUB_CLIENT_ID,
   api: 'https://api.github.com/gists/',
 }
 
@@ -115,7 +116,7 @@ function authorize(done) {
   if (window.localStorage[LS_KEY]) return done(null, window.localStorage[LS_KEY])
   oauth(CONFIG, function (err, data) {
     if (err) {
-      delete window.localStorage[LS_KEY]
+      clearAuth()
       return done(err, null)
     }
     window.localStorage[LS_KEY] = data.access_token
