@@ -2,7 +2,7 @@
 module.exports = {
   gist: require('./gist'),
 
-  // gdrive: require('./gdrive'),
+  gdrive: require('./gdrive'),
 
   /*
   github: {

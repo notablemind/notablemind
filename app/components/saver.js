@@ -98,9 +98,9 @@ var Saver = React.createClass({
     if (this._saveTimer) this._saveTimer.dirty()
   },
 
-  _onSetup: function (type) {
+  _onSetup: function (item) {
     this.setState({loading: true})
-    this._realSetup(type, (err) => {
+    this._realSetup(item.type, (err) => {
       this.setState({
         error: err,
         loading: false,
@@ -129,9 +129,9 @@ var Saver = React.createClass({
 
   _realSetup: function (type, done) {
     var store = this.props.store
-      , text = JSON.stringify(store.db.exportTree(null, true), null, 2)
+      , exported = sync.exportContents(this.props.file, store)
       , title = store.db.nodes[store.db.root].content
-    sources[type].saveAs(title, text, (err, config, time) => {
+    sources[type].saveAs(title, exported, (err, config, time) => {
       if (err) return done(new Error('Failed to set source'))
       files.update(this.props.file.id, {
         source: {
@@ -179,7 +179,7 @@ var Saver = React.createClass({
       return <div className='Saver Saver-none'>
         <DropDown
           title="Setup sync"
-          items={Object.keys(sources)}
+          items={Object.keys(sources).map(name => ({title: sources[name].title, type: name}))}
           onSelect={this._onSetup}/>
       </div>
     }
@@ -195,7 +195,7 @@ var Saver = React.createClass({
         title={<i className='fa fa-cog' style={{margin: '5px 10px'}}/>}
         items={[
           {title: 'Configure', action: this._showSettings},
-          sources[source.type].link && {title: 'Open ' + source.type, action: this._showSource},
+          sources[source.type].link && {title: 'Open with ' + sources[source.type].title, action: this._showSource},
         ]}
         />
       {this.state.error}

@@ -24,7 +24,7 @@ var NewFile = React.createClass({
     this.props.onSubmit(this.state.title, this.state.repl)
   },
   _onKeyDown: function (e) {
-    if (e.key === 'Return') {
+    if (e.key === 'Enter') {
       return this._onSubmit(e)
     }
   },

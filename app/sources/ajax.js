@@ -20,7 +20,8 @@ function send (method, url, headers, data, done) {
   x.onreadystatechange = function () {
     if (this.readyState !== 4) return
     var data
-    if (this.getResponseHeader('content-type').indexOf('json') !== -1) {
+      , mime = this.getResponseHeader('content-type')
+    if (mime.indexOf('json') !== -1 || mime.indexOf('notablemind') !== -1) {
       try {
         data = JSON.parse(this.responseText)
       } catch (e) {

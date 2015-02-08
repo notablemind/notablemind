@@ -29,7 +29,7 @@ var BrowsePage = React.createClass({
     this.setState({
       keys: kh
     })
-    window.addEventListener('keydown', kh)
+    window.addEventListener('keydown', this._keyDown)
   },
 
   componentDidMount: function () {
@@ -38,6 +38,14 @@ var BrowsePage = React.createClass({
 
   componentWillUnmount: function () {
     window.removeEventListener('keydown', this.state.keys)
+  },
+
+  _keyDown: function (e) {
+    if (!this.state.keys) return
+    if (['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
+      return
+    }
+    this.state.keys(e)
   },
 
   _reloadFiles: function () {
@@ -65,6 +73,7 @@ var BrowsePage = React.createClass({
     return <div className='BrowsePage'>
       <BrowseHeader
         fileslib={files}
+        keys={this.state.keys}
         onNewFile={this._onNewFile}
         onUpdated={this._reloadFiles} />
       {this.state.files ?

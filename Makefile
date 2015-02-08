@@ -1,5 +1,5 @@
 
-ARGS=-t [ reactify --es6 --everything --visitors jstransform/visitors/es6-destructuring-visitors ]
+ARGS=-t [ reactify --es6 --everything --visitors jstransform/visitors/es6-destructuring-visitors ] -t envify
 
 MODS=' react react/addons less majax marked moment async ansi-to-html eventemitter3 highlight.js \
 codemirror \
@@ -19,11 +19,12 @@ codemirror/addon/edit/matchbrackets \
 codemirror/addon/hint/javascript-hint \
 codemirror/addon/hint/show-hint'
 
-ENVBLS='GITHUB_CLIENT_ID=a15ba5cf761a832d0b25 \
-	GDRIVE_CLIENT_ID=956621131838-be892j0qs2mpil992t8srhp74ijm0ski.apps.googleusercontent.com'
+ENVBLS=GITHUB_CLIENT_ID=a15ba5cf761a832d0b25 GDRIVE_CLIENT_ID=956621131838-be892j0qs2mpil992t8srhp74ijm0ski.apps.googleusercontent.com
 
-all: vendor vendorlib js css
+all: node_modules vendor vendorlib js css
 
+node_modules:
+	npm install
 
 # old stuff
 

@@ -6,6 +6,7 @@ var SOURCES = require('./sources')
 
 module.exports = {
   doSync: doSync,
+  exportContents: exportContents,
 }
 
 function exportContents(file, store) {
@@ -39,13 +40,11 @@ function commit(file, store, done) {
   })
 }
 
-function maybe_get(content, file, store, updated_at, fn, done) {
-  if (content) {
-    return fn(file, store, content, updated_at, done)
-  }
+function maybe_get(headData, file, store, updated_at, fn, done) {
   var source = file.source
-  SOURCES[source.type].load(source.config, result => {
-    fn(file, store, result, updated_at, done)
+  SOURCES[source.type].load(source.config, headData, (err, content) => {
+    if (err) return done(err)
+    fn(file, store, content, updated_at, done)
   })
 }
 
@@ -160,7 +159,7 @@ function doSync(file, store, done) {
     , localModified = file.modified
     , src = SOURCES[source.type]
 
-  src.head(source.config, (err, lastModified, content) => {
+  src.head(source.config, (err, lastModified, headData) => {
     if (err) {
       return done(err)
     }
@@ -168,14 +167,17 @@ function doSync(file, store, done) {
       if (source.dirty) {
         return commit(file, store, done)
       } else {
+        source.synced = lastModified
         return done()
       }
     } else {
+      var nextStep
       if (!source.dirty && localModified <= lastModified) {
-        return maybe_get(content, file, store, lastModified, apply, done)
+        nextStep = apply
       } else {
-        return maybe_get(content, file, store, lastModified, merge_and_commit, done)
+        nextStep = merge_and_commit
       }
+      return maybe_get(headData, file, store, lastModified, nextStep, done)
     }
   })
 }

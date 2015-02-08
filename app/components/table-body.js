@@ -35,7 +35,7 @@ var TableBody = React.createClass({
         'shift+]': this.toBottom,
         'j, down': this.goDown,
         'k, up': this.goUp,
-        'return': this.keySelect,
+        'enter': this.keySelect,
       }
     }
   },

@@ -74,7 +74,7 @@ module.exports = {
           clearAuth() // TODO maybe don't do this every time
           return done(err || new Error('failed to create gist'))
         }
-        done(null, {gist_id: result.id}, Date.now())
+        done(null, {gist_id: result.id}, new Date(result.updated_at).getTime())
       })
     })
   },
@@ -100,11 +100,8 @@ function headGist(access_token, id, done) {
 }
 
 function loadGist(access_token, id, done) {
-  if (id.indexOf('/') !== -1) {
-    id = id.split('/').slice(-1)[0]
-  }
-  ajax.get('https://gist.githubusercontent.com/raw/' + id, {
-    'Authorization': 'token ' + access_token,
+  ajax.get('https://gist.githubusercontent.com/' + id + '/raw/', {
+    // 'Authorization': 'token ' + access_token,
   }, done)
 }
 
