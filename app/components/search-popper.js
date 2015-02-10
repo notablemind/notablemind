@@ -2,6 +2,7 @@
 var React = require('react/addons')
   , PT = React.PropTypes
   , cx = React.addons.classSet
+  , ensureInView = require('treed/util/ensure-in-view')
 
 function toReg(needle) {
   return new RegExp(needle
@@ -47,7 +48,6 @@ var SearchPopper = React.createClass({
   getInitialState: function () {
     return {
       needle: '',
-      items: this.props.matchItems(),
     }
   },
 
@@ -59,7 +59,6 @@ var SearchPopper = React.createClass({
     var needle = e.target.value
     this.setState({
       needle: needle,
-      items: this.props.matchItems(toReg(needle))
     })
   },
 
@@ -67,9 +66,15 @@ var SearchPopper = React.createClass({
     e.stopPropagation()
     if (e.key === 'Enter') {
       e.preventDefault()
-      // TODO visually indicate in the UI that pressing the Alt key will
-      // trigger a rebase
-      return this.props.onSelect(this.state.items[0], !!e.altKey);
+      this.refs.list.handleEnter(!!e.altKey)
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      this.refs.list.handleGoUp()
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      this.refs.list.handleGoDown()
     }
     if (e.key === 'Escape') {
       this.props.onClose()
@@ -77,23 +82,12 @@ var SearchPopper = React.createClass({
   },
 
   render: function () {
-    var items = []
-    for (var i=this.state.items.length-1; i>=0; i--) {
-      var item = this.state.items[i]
-      items.push(
-        <li className={cx({
-          'SearchPopper_result': true,
-          // 'SearchPopper_result-selected': i === this.state.selected,
-        })} key={i}>
-              {highlight(item.content, this.state.needle, 200)}
-        </li>
-      )
-    }
-
     return <div className='SearchPopper'>
-      <ul>
-        {items}
-      </ul>
+      <SearchBody
+        ref="list"
+        onSelect={this.props.onSelect}
+        needle={this.state.needle}
+        items={this.props.matchItems(toReg(this.state.needle))}/>
       <div className='SearchPopper_input'>
         <input
           ref="input"
@@ -105,6 +99,77 @@ var SearchPopper = React.createClass({
       </div>
     </div>
   }
+})
+
+var SearchBody = React.createClass({
+  propTypes: {
+    items: PT.array,
+    onSelect: PT.func,
+  },
+
+  getInitialState: function () {
+    return {
+      selected: 0,
+    }
+  },
+
+  handleEnter: function (jump) {
+    return this.props.onSelect(this.props.items[this.state.selected], jump)
+  },
+
+  handleGoUp: function () {
+    if (this.state.selected < this.props.items.length - 1) {
+      this.setState({selected: this.state.selected + 1})
+    }
+  },
+
+  handleGoDown: function () {
+    if (this.state.selected > 0) {
+      this.setState({selected: this.state.selected - 1})
+    }
+  },
+
+  componentWillReceiveProps: function () {
+    this.setState({selected: 0})
+  },
+
+  componentDidMount: function () {
+    if (!this.refs || !this.refs.selected) return;
+    var node = this.refs.selected.getDOMNode();
+    node.offsetParent.scrollTop = node.offsetParent.scrollHeight
+  },
+
+  componentDidUpdate: function (prevProps, prevState) {
+    if (!this.refs || !this.refs.selected) return;
+    var node = this.refs.selected.getDOMNode();
+    if (prevState.selected !== this.state.selected) {
+      ensureInView(node);
+    } else {
+      node.offsetParent.scrollTop = node.offsetParent.scrollHeight
+    }
+  },
+
+  render: function () {
+    var items = []
+    for (var i=this.props.items.length-1; i>=0; i--) {
+      var item = this.props.items[i]
+      items.push(
+        <li className={cx({
+          'SearchPopper_result': true,
+          'SearchPopper_result-selected': i === this.state.selected,
+        })}
+          ref={i === this.state.selected ? 'selected' : undefined}
+          onClick={this.props.onSelect.bind(null, item, false)}
+          key={i}>
+              {highlight(item.content, this.props.needle, 200)}
+        </li>
+      )
+    }
+
+    return <ul>
+      {items}
+    </ul>
+  },
 })
 
 module.exports = SearchPopper

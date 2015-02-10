@@ -205,7 +205,7 @@ var DocViewer = React.createClass({
 
     var frontier = [root]
       , found = []
-    while (frontier.length && found.length < 5) {
+    while (frontier.length && found.length < 20) {
       var next = db.nodes[frontier.shift()]
       if (next.content.trim().length && blackTypes.indexOf(next.type) === -1 && (!needle || next.content.match(needle))) {
         found.push(next)

@@ -17,9 +17,9 @@ var Importer = React.createClass({
   statics: {
     keys: function () {
       return {
-        'j, l, down, right': this.goRight,
-        'k, h, up, left': this.goLeft,
-        'return': this.doSelected,
+        'j, l, down, right, tab': this.goRight,
+        'k, h, up, left, shift+tab': this.goLeft,
+        'enter': this.doSelected,
         'escape': this.props.onClose,
       }
     },
@@ -44,12 +44,16 @@ var Importer = React.createClass({
   goLeft: function () {
     if (this.state.selected > 0) {
       this.setState({selected: this.state.selected - 1})
+    } else {
+      this.setState({selected: this.props.sources.length - 1})
     }
   },
 
   goRight: function () {
     if (this.state.selected < this.props.sources.length - 1) {
       this.setState({selected: this.state.selected + 1})
+    } else {
+      this.setState({selected: 0})
     }
   },
 

@@ -4,12 +4,21 @@ var React = require('react/addons')
   , kernels = require('../kernels')
   , KeysMixin = require('../keys-mixin')
 
+var repls = Object.keys(kernels)
+
 var NewFile = React.createClass({
   getInitialState: function () {
     return {
       title: 'Untitled',
       repl: 'null',
     }
+  },
+
+  componentDidMount: function () {
+    var inp = this.refs.input.getDOMNode()
+    inp.focus()
+    inp.selectionStart = 0
+    inp.selectionEnd = inp.value.length
   },
 
   _onChange: function (e) {
@@ -24,14 +33,34 @@ var NewFile = React.createClass({
     this.props.onSubmit(this.state.title, this.state.repl)
   },
   _onKeyDown: function (e) {
+    e.stopPropagation()
     if (e.key === 'Enter') {
       return this._onSubmit(e)
+    }
+    if (e.key === 'Escape') {
+      return this.props.onClose()
+    }
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      if (e.shiftKey) {
+        if (this.state.repl === repls[0]) {
+          this.setState({repl: repls[repls.length - 1]})
+        } else {
+          this.setState({repl: repls[repls.indexOf(this.state.repl) - 1]})
+        }
+      } else {
+        if (this.state.repl === repls[repls.length - 1]) {
+          this.setState({repl: repls[0]})
+        } else {
+          this.setState({repl: repls[repls.indexOf(this.state.repl) + 1]})
+        }
+      }
     }
   },
 
   repls: function () {
     return <ul className='NewFile_repls'>
-      {Object.keys(kernels).map(key =>
+      {repls.map(key =>
         <li
             onClick={this._setRepl.bind(null, key)}
             className={cx({
@@ -62,7 +91,6 @@ var NewFile = React.createClass({
       <div>
         <h3 className="NewFile_head">New Document</h3>
         <input
-          autoFocus={true}
           type="text"
           ref="input"
           onKeyDown={this._onKeyDown}

@@ -212,7 +212,13 @@ body {
   font-family: 'Monda', sans-serif;
   min-height: 34px;
   word-break: break-word;
+
+  &:empty {
+    border-bottom: 2px dotted #AAA;
+    border-radius: 0;
+  }
 }
+
 
 .TreeView {
   max-width: 1000px;

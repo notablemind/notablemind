@@ -22,7 +22,7 @@ var BrowseHeader = React.createClass({
   statics: {
     keys: function () {
       return {
-        'n': () => this.setState({open: 'new'}),
+        'n, c': () => this.setState({open: 'new'}),
         'i': () => this.setState({open: 'import'}),
       }
     },
