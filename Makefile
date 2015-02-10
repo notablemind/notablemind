@@ -37,6 +37,9 @@ watch-view:
 
 # main assets
 
+disk-bundle:
+	env ${ENVBLS} browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} --full-paths -d run.js -o disk.js
+
 js:
 	env ${ENVBLS} browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js -o www/build.js
 
@@ -88,7 +91,7 @@ start-ipython:
 	ipython notebook --NotebookApp.allow_origin='*'
 
 serve:
-	cd www; python -mSimpleHTTPServer
+	cd www; python -mSimpleHTTPServer 6682
 
 vendor: www/vendor/d3.js www/vendor/vega.js www/vendor/font-awesome-4.3.0
 

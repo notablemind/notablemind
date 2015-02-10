@@ -5,6 +5,7 @@ var React = require('react')
   , TypeSwitcher = require('./type-switcher')
   , Tree = require('treed/views/tree')
   , SplitManager = require('./split-manager')
+  , SearchPopper = require('./search-popper')
   , uuid = require('../../lib/uuid')
   , PT = React.PropTypes
   , windowJump = require('./window-jump')
@@ -73,6 +74,7 @@ var DocViewer = React.createClass({
         'shift+; v s': this._split.bind(null, 'horiz'),
         'shift+; s p': this._split.bind(null, 'vert'),
         'shift+; q': this._remove,
+        '/': this._startSearching,
       }
     },
   },
@@ -103,6 +105,7 @@ var DocViewer = React.createClass({
     return {
       windowConfig: windowConfig,
       windowMap: windowMap,
+      searching: false,
     }
   },
 
@@ -188,81 +191,43 @@ var DocViewer = React.createClass({
     window.removeEventListener('keydown', this._keyDown)
   },
 
-  /*
-  makePaneConfig: function (store, keys, plugins, num, panings, prev) {
-    if (prev.length >= num) {
-      for (var i=num; i<prev.length; i++) {
-        store.unregisterView(prev[i].config.view.id)
-      }
-      delete prev[num-1].config.view.view.windowRight
-      return prev.slice(0, num)
-    }
-    var configs = prev.slice()
-    for (var i=prev.length; i<num; i++) {
-      var pane = treed.viewConfig(store, plugins, null)
-      configs.push({
-        type: this.props.defaultType,
-        config: pane,
-      })
-      pane.view.on(pane.view.events.rootChanged(), this._onRebased)
-      if (panings && panings.length > i) {
-        pane.view.view.root = panings[i]
-        pane.view.view.active = panings[i]
-      }
-      keys.addView(pane.view.id, pane.keys)
-    }
-    for (var i=0; i<configs.length; i++) {
-      if (i > 0) {
-        configs[i - 1].config.view.view.windowRight = configs[i].config.view.id
-      }
-      if (i < configs.length - 1) {
-        configs[i + 1].config.view.view.windowLeft = configs[i].config.view.id
-      }
-    }
-    return configs
+  _startSearching: function (e) {
+    if (this.props.store.views[this.props.store.activeView].mode === 'insert') return true
+    this.setState({searching: true})
   },
 
-  makePanes: function () {
-    var plugins = []
-    var panes = this.state.panes.map((pane, i) => {
-      var statusbar = []
-      pane.config.props.plugins.map(plugin => {
-        if (!plugin.statusbar) return
-        statusbar.push(plugin.statusbar(pane.config.props.store))
-      })
-      pane.config.props.skipMix = ['top']
-      return <div className={'App_pane App_pane-' + pane.type}>
-        <div className='App_pane_top'>
-          {statusbar}
-          <TypeSwitcher
-            types={this.props.types}
-            type={pane.type}
-            onChange={this._changePaneType.bind(null, i)}/>
-        </div>
-        <div className='App_pane_scroll'>
-          {this.props.types[pane.type](pane.config.props)}
-        </div>
-      </div>})
-    var ids = []
-    // TODO: this.state.store.setViewPositions(ids or something)
-    return <div className='App_panes'>
-      {panes}
-    </div>
+  _searchItems: function (needle) {
+    var store = this.props.store
+      , blackTypes = ['ipython', 'code-playground'] // TODO have plugins declare this, as "nosearch" or something
+      , view = store.views[store.activeView]
+      , root = view.root
+      , db = store.db
+
+    var frontier = [root]
+      , found = []
+    while (frontier.length && found.length < 5) {
+      var next = db.nodes[frontier.shift()]
+      if (next.content.trim().length && blackTypes.indexOf(next.type) === -1 && (!needle || next.content.match(needle))) {
+        found.push(next)
+      }
+      if (next.children) {
+        frontier = frontier.concat(next.children)
+      }
+    }
+    return found
   },
 
-  _setPanes: function (num) {
-    var panings = this.state.file.panings ? this.state.file.panings.slice(0, num) : []
-    for (var i=panings.length; i<num; i++) {
-      panings.push(this.state.store.db.root)
+  _onSearchSelect: function (item, jump) {
+    var actions = this.props.store.currentViewActions()
+    // TODO think about what should be the default behavior. Should it be to
+    // rebase, or to scroll + open?
+    if (jump) {
+      actions.rebase(item.id)
+    } else {
+      actions.expandToAndSelect(item.id)
     }
-    localFiles.update(this.state.file.id, {panings: panings}, file => {
-      this.setState({
-        file: file,
-        panes: this.makePaneConfig(this.state.store, this.state.keys, this.state.plugins, num, panings, this.state.panes),
-      })
-    })
+    this.setState({searching: false})
   },
-  */
 
   render: function () {
     var {store, file, plugins} = this.props
@@ -279,6 +244,10 @@ var DocViewer = React.createClass({
         getNew={this.getNewWindowConfig}
         onRemove={this._onRemovedWindow}
         onChange={this._changeWindowConfig}/>
+      {this.state.searching && <SearchPopper
+        matchItems={this._searchItems}
+        onClose={() => this.setState({searching: false})}
+        onSelect={this._onSearchSelect} />}
     </div>
   }
 })

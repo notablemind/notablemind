@@ -1,0 +1,63 @@
+@font-size: 20px;
+.SearchPopper {
+
+  z-index: 10000;
+  background-color: rgba(255,255,255,.7);
+  display: inline-block;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #777;
+  font-size: @font-size;
+  font-family: monospace;
+
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  max-width: 500px;
+  margin-left: -250px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style: none;
+    padding: 5px 10px;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+    }
+    
+    strong {
+      color: green;
+    }
+  }
+
+
+  
+  &_input {
+    display: flex;
+    border-top: 1px solid #ccc;
+    box-shadow: 0px -1px 3px black inset;
+    border-bottom-left-radius: 5px;
+    background-color: #fff;
+    border-bottom-right-radius: 5px;
+    
+    &:before {
+      content: '/';
+      padding: 5px 0 5px 5px;
+      color: black;
+      //font-weight: bold;
+    }
+    input {
+      flex: 1;
+      background-color: transparent;
+      border: none;
+      font-size: @font-size;
+      padding: 5px 4px;
+      color: #111;
+      outline: none;
+      font-family: monospace;
+    }
+  }
+}
