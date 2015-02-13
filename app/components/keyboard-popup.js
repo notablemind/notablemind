@@ -22,8 +22,15 @@ var KeyboardPopup = React.createClass({
   },
 
   renderBindings: function (bindings) {
+    var extra = {}
+      , prefix =  'KeyboardPopup_bindings_mode-zoom KeyboardPopup_bindings_mode-zoom-'
+    if (bindings.normal) {
+      extra = {visual: prefix + 'up', insert: prefix + 'down'}
+    } else {
+      extra[Object.keys(bindings)[1]] = prefix + 'up'
+    }
     return modes.map(mode => bindings[mode] &&
-      <div className={"KeyboardPopup_bindings_mode KeyboardPopup_bindings_mode-" + mode}>{
+      <div className={"KeyboardPopup_bindings_mode KeyboardPopup_bindings_mode-" + mode + ' ' + (extra[mode] || '')}>{
         bindings[mode].split(', ').map(binding => <span>{binding}</span>)
       }</div>)
   },
