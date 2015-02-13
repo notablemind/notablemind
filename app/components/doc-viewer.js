@@ -6,6 +6,7 @@ var React = require('react')
   , Tree = require('treed/views/tree')
   , SplitManager = require('./split-manager')
   , SearchPopper = require('./search-popper')
+  , KeyboardHelper = require('./keyboard-helper')
   , uuid = require('../../lib/uuid')
   , PT = React.PropTypes
   , windowJump = require('./window-jump')
@@ -248,6 +249,7 @@ var DocViewer = React.createClass({
         matchItems={this._searchItems}
         onClose={() => this.setState({searching: false})}
         onSelect={this._onSearchSelect} />}
+      <KeyboardHelper keys={this.props.keys} plugins={this.props.store.allPlugins}/>
     </div>
   }
 })

@@ -7,6 +7,8 @@ var Modal = React.createClass({
     title: PT.string.isRequired,
     onClose: PT.func.isRequired,
     initialState: PT.object,
+    buttons: PT.object,
+    render: PT.func,
   },
   getInitialState: function () {
     return this.props.initialState
@@ -17,6 +19,7 @@ var Modal = React.createClass({
   onCancel: function () {
     this.props.onClose(new Error('Modal cancelled'))
   },
+
   set: function (name, value) {
     var up = {}
     up[name] = value
@@ -25,6 +28,17 @@ var Modal = React.createClass({
   setEvt: function (name, e) {
     var up = {}
     up[name] = e.target.value
+    this.setState(up)
+  },
+
+  _onChangeEvt: function (name, e) {
+    var up = {}
+    up[name] = e.target.value
+    this.setState(up)
+  },
+  _onChange: function (name, value) {
+    var up = {}
+    up[name] = value
     this.setState(up)
   },
 
@@ -45,12 +59,44 @@ var Modal = React.createClass({
           {this.props.title}
         </div>
         <div className='Modal_body'>
-          {this.props.body.call(this, this.state, set, this.onClose, this.onCancel)}
+          {this.props.renderBody.call(
+            this,
+            this.state,
+            set,
+            this.onClose,
+            this.onCancel
+          )}
         </div>
+        {this.props.buttons ?
+          <div className='Modal_buttons'>
+            {Object.keys(this.props.buttons).map(name => 
+              <button onClick={this.props.buttons[name].bind(this)}>
+                {name}
+              </button>)}
+          </div> : null}
       </div>
     </div>
   }
 })
+
+Modal.show = function (config) {
+  var parent = config.parent || document
+    , node = document.createElement('div')
+  parent.body.appendChild(node)
+
+  var onClose = function (err) {
+    node.parentNode.removeChild(node)
+    config.done.apply(null, arguments)
+  }
+
+  React.render(
+    <Modal
+      initialState={config.initialState || {}}
+      title={config.title || 'Modal'}
+      onClose={onClose}
+      buttons={config.buttons}
+      renderBody={config.renderBody || config.body} />, node)
+}
 
 module.exports = Modal
 

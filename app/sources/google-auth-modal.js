@@ -1,5 +1,5 @@
 
-var showModal = require('./show-modal')
+var showModal = require('../ui/show-modal')
 
 module.exports = function (authorize, done) {
   showModal('Authorize with Google Drive', function (state, set, done) {

@@ -1,0 +1,45 @@
+// this is maybe a hack. It's for custom things that aren't really tied to
+// notablemind, but to the rendering of a few tutorial documents.
+// TODO: I think this ought to be enabled by letting a file depend on
+// additional CSS files. These would then be loaded in when the file is
+// loaded, and discarded when the file is closed. But for now, it's hakkin.
+
+.keyboard-shortcut-table {
+  table {
+    border-collapse: collapse;
+    border-radius: 10px;
+    background-color: #333;
+    padding: 10px;
+    box-shadow: 0 2px 10px #f6b;
+
+    th {
+      padding: 10px 10px 5px;
+      color: #f6b;
+    }
+
+    td:first-child {
+      min-width: 50px;
+      text-align: right;
+      padding: 5px 0 5px 20px;
+    }
+
+    td {
+      color: white;
+      padding: 5px 20px 5px 10px;
+    }
+
+    tr:last-child td {
+      padding-bottom: 20px;
+    }
+
+    code {
+      background-color: #555;
+      color: #fdd;
+      border-radius: 5px;
+      padding: 5px 10px;
+      text-shadow: 0 0 5px #000;
+      box-shadow: 0 0 5px #000 inset;
+    }
+  }
+}
+

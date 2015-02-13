@@ -1,0 +1,108 @@
+
+.KeyboardPopup {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 100px;
+  z-index: 1000;
+  background-color: rgba(0,0,0,.7);
+
+  &_title {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Monda, sans-serif;
+  }
+
+  &_bindings {
+    span {
+      background-color: white;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-family: monospace;
+      white-space: pre;
+      color: black;
+    }
+
+    &_mode {
+      &-normal span {
+        background-color: magenta;
+      }
+      &-visual span {
+        background-color: cyan;
+      }
+      &-insert span {
+        background-color: green;
+      }
+
+
+      &-zoom {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        transition: top .2s ease, opacity .2s ease;
+      }
+
+      tr:hover & {
+        z-index: 10;
+      }
+
+      tr:hover &-zoom {
+        z-index: 6;
+        opacity: 1;
+      }
+
+      tr:hover &-zoom-down {
+        top: 100%;
+      }
+
+      tr:hover &-zoom-up {
+        top: -100%;
+      }
+    }
+  }
+
+  &_action {
+  }
+}
+
+.KeyboardPopup_body {
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgb(36, 36, 36);
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid rgb(11, 11, 11);
+  box-shadow: 0 2px 10px rgb(24, 24, 24);
+}
+
+.KeyboardPopup_sections {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: space-around;
+}
+
+.KeyboardPopup_section {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  margin: 5px;
+
+  width: 300px;
+  box-sizing: border-box;
+
+  &_title {
+    color: yellow;
+    font-weight: bold;
+  }
+}

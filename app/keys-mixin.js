@@ -1,3 +1,23 @@
+/**
+ * Automatically register and deregister keys for a component.
+ */
+
+/**
+ * Example usage
+ *
+ *  var MyComponent = React.createClass({
+ *      mixins: [KeysMixin],
+ *
+ *      statics: {
+ *          keys: function () { // this is the component
+ *              return {
+ *                  'k': this.hireKoala,
+ *                  'q': this.onQuit,
+ *              }
+ *          },
+ *      },
+ *  })
+ */
 
 module.exports = {
   _registerKeys: function (keys, config) {

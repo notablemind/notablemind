@@ -1,5 +1,5 @@
 
-var showModal = require('./show-modal')
+var showModal = require('../ui/show-modal')
 
 module.exports = function (title, placeholder, done) {
   showModal(title, (state, set, done) =>

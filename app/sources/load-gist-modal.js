@@ -1,5 +1,5 @@
 
-var showModal = require('./show-modal')
+var showModal = require('../ui/show-modal')
 
 module.exports = function (tryImport, done) {
   showModal('Import a Gist', function (state, set, done) {

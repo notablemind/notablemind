@@ -40,8 +40,8 @@ var Tabular = React.createClass({
     return {
       searching: false,
       searchtext: '',
-      sorting: Object.keys(this.props.headers)[0],
-      sortDir: 1,
+      sorting: this.props.initialSort || Object.keys(this.props.headers)[0],
+      sortDir: this.props.initialSortDir || 1,
     }
   },
 
@@ -94,6 +94,10 @@ var Tabular = React.createClass({
     }
   },
 
+  _onBlurSearch: function () {
+    this.setState({searching: false, searchtext: ''})
+  },
+
   setSort: function (name) {
     if (this.state.sorting === name) {
       return this.setState({sortDir: -this.state.sortDir})
@@ -102,18 +106,21 @@ var Tabular = React.createClass({
   },
 
   getItems: function () {
+    var items
     if (this.state.searching) {
-      return this.props.items.filter(item =>
+      items = this.props.items.filter(item =>
         this.props.searchHeaders.some(head =>
           this.props.headers[head](item).toLowerCase()
             .indexOf(this.state.searchtext.toLowerCase()) !== -1))
+    } else {
+      items = this.props.items
     }
     var head = this.props.sortHeaders[this.state.sorting] || this.props.headers[this.state.sorting]
-      , heads = this.props.items.map((item, i) => [head(item), i])
+      , heads = items.map((item, i) => [head(item), i])
     heads.sort((a, b) =>
       a[0] == b[0] ? 0 :
         (a[0] > b[0] ? 1 : -1) * this.state.sortDir)
-    return heads.map(head => this.props.items[head[1]])
+    return heads.map(head => items[head[1]])
   },
 
   render: function () {
@@ -152,6 +159,7 @@ var Tabular = React.createClass({
                     Search: <input
                       value={this.state.searchtext}
                       autoFocus={true}
+                      onBlur={this._onBlurSearch}
                       onChange={this._onChangeSearch}
                       onKeyDown={this._onSearchKey}/>
                   </td>

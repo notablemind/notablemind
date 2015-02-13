@@ -159,6 +159,7 @@ var Browse = React.createClass({
         }}
         onMenu={this._onMenu}
         searchHeaders={['Name']}
+        initialSort="Opened"
         sortHeaders={{
           'Modified': file => -file.modified || 0,
           'Opened': file => -file.opened || 0,
