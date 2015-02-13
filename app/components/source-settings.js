@@ -1,5 +1,5 @@
 
-var showModal = require('../sources/show-modal')
+var showModal = require('../ui/show-modal')
 
 module.exports = function sourceSettings(source, done) {
   showModal('Configure Syncing', {

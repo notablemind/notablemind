@@ -45,7 +45,7 @@ var KeyboardHelper = React.createClass({
     this.setState({open: false})
   },
   _onKeyDown: function (e) {
-    if (e.key === '27') this.onHide()
+    if (e.keyCode === 27) this.hide()
   },
 
   organizeSections: function () {

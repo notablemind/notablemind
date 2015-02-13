@@ -21,23 +21,22 @@ var KeyboardPopup = React.createClass({
     node.style.width = node.scrollWidth + 'px';
   },
 
-  renderBindings: function (bindings) {
-    var extra = {}
-      , prefix =  'KeyboardPopup_bindings_mode-zoom KeyboardPopup_bindings_mode-zoom-'
-    if (bindings.normal) {
-      extra = {visual: prefix + 'up', insert: prefix + 'down'}
-    } else {
-      extra[Object.keys(bindings)[1]] = prefix + 'up'
-    }
-    return modes.map(mode => bindings[mode] &&
-      <div className={"KeyboardPopup_bindings_mode KeyboardPopup_bindings_mode-" + mode + ' ' + (extra[mode] || '')}>{
-        bindings[mode].split(', ').map(binding => <span>{binding}</span>)
-      }</div>)
+  renderRow: function (action, bindings) {
+    var text = bindings.text || bindings.normal || bindings.visual || bindings.insert
+    if (!text) return
+    return <tr>
+      <td className="KeyboardPopup_bindings">
+        {
+          text.split(', ').map(binding => <span>{binding}</span>)
+        }
+      </td>
+      <td className="KeyboardPopup_action">{bindings.title || action}</td>
+    </tr>
   },
 
   render: function () {
     return <div className='KeyboardPopup' onClick={this.props.onClose}>
-      <div className='KeyboardPopup_body'>
+      <div className='KeyboardPopup_body' onClick={e => e.stopPropagation()}>
         <div className="KeyboardPopup_title">
           Notablemind Keyboard Shortcuts
         </div>
@@ -48,14 +47,7 @@ var KeyboardPopup = React.createClass({
             </div>
             <table>
               <tbody>
-                {Object.keys(section.actions).map(action => <tr>
-                  <td className="KeyboardPopup_bindings">
-                    {
-                      this.renderBindings(section.actions[action])
-                    }
-                  </td>
-                  <td className="KeyboardPopup_action">{action}</td>
-                </tr>)}
+                {Object.keys(section.actions).map(action => this.renderRow(action, section.actions[action]))}
               </tbody>
             </table>
           </div>)}

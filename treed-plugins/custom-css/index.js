@@ -6,6 +6,8 @@
 var editCustomCSS = require('./edit-custom-css');
 
 module.exports = {
+  title: 'Custom CSS',
+
   node: {
     classes: function (node, state) {
       return node.customCSS || ''

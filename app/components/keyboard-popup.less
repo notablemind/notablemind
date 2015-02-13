@@ -7,16 +7,20 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 100px;
+  padding: 50px;
   z-index: 1000;
   background-color: rgba(0,0,0,.7);
+  cursor: pointer;
 
   &_title {
-    font-size: 40px;
+    font-size: 25px;
     font-weight: bold;
     font-family: Monda, sans-serif;
+    color: white;
+    text-align: center;
   }
 
+  /*
   &_bindings {
     span {
       border-radius: 3px;
@@ -30,54 +34,21 @@
     }
 
     &_mode {
-      &-normal span {
-        background-color: magenta;
-      }
-      &-visual span {
-        background-color: cyan;
-      }
-      &-insert span {
-        background-color: green;
-      }
-
-
-      &-zoom {
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        left: 0;
-        transition: top .2s ease, opacity .2s ease;
-      }
-
-      tr:hover & {
-        z-index: 10;
-      }
-
-      tr:hover &-zoom {
-        z-index: 6;
-        opacity: 1;
-      }
-
-      tr:hover &-zoom-down {
-        top: 100%;
-      }
-
-      tr:hover &-zoom-up {
-        top: -100%;
-      }
     }
   }
 
   &_action {
   }
+  */
 }
 
 .KeyboardPopup_body {
   display: flex;
   flex-direction: column;
+  cursor: default;
 
   background-color: rgb(36, 36, 36);
-  padding: 30px;
+  padding: 10px 30px;
   border-radius: 20px;
   border: 2px solid rgb(11, 11, 11);
   box-shadow: 0 2px 10px rgb(24, 24, 24);
@@ -94,17 +65,62 @@
 }
 
 .KeyboardPopup_section {
-  padding: 20px;
-  border-radius: 10px;
-  background-color: black;
   color: white;
-  margin: 5px;
-
-  width: 400px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #333;
+  padding: 2px 10px 10px;
+  box-shadow: 0 1px 4px #f6b;
+  width: 350px;
   box-sizing: border-box;
+  margin-bottom: 10px;
+  font-family: 'Monda', sans-serif;
 
   &_title {
-    color: yellow;
+    color: #f6b;
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th {
+      padding: 10px 10px 5px;
+      color: #f6b;
+    }
+
+    td:first-child {
+      min-width: 50px;
+      text-align: right;
+      padding: 5px 0 5px 10px;
+      font-family: monospace;
+
+      span {
+        background-color: #555;
+        color: #fdd;
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-shadow: 0 0 5px #000;
+        box-shadow: 0 0 5px #000 inset;
+        white-space: nowrap;
+      }
+    }
+
+    td {
+      color: white;
+      padding: 5px 10px 5px 10px;
+    }
+
   }
 }
+
+
+
+
+.keyboard-shortcut-table {
+}
+
+
