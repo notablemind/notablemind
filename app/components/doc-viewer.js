@@ -67,10 +67,10 @@ var DocViewer = React.createClass({
   statics: {
     keys: function () {
       return {
-        'w l': this._windowJump.bind(null, 'right'),
-        'w j': this._windowJump.bind(null, 'down'),
-        'w k': this._windowJump.bind(null, 'up'),
-        'w h': this._windowJump.bind(null, 'left'),
+        'w l, w right': this._windowJump.bind(null, 'right'),
+        'w j, w down': this._windowJump.bind(null, 'down'),
+        'w k, w up': this._windowJump.bind(null, 'up'),
+        'w h, w left': this._windowJump.bind(null, 'left'),
         'shift+; v s': this._split.bind(null, 'horiz'),
         'shift+; s p': this._split.bind(null, 'vert'),
         'shift+; q': this._remove,
