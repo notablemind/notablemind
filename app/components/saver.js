@@ -189,7 +189,7 @@ var Saver = React.createClass({
     return <div className='Saver' style={{display: 'flex'}}>
       <button className='Saver_sync' onClick={this._onSync.bind(null, false)}><i className='fa fa-refresh'/></button>
       <span className='Saver_message'> {
-        this.props.value.dirty ? (this.props.value.autosync ? '' : 'Unsaved local changes') : 'Local changes saved'
+        this.props.value.dirty ? (this.props.value.autosync ? '' : 'Unsynced local changes') : 'Local changes synced'
       }</span>
       <DropDown
         title={<i className='fa fa-cog' style={{margin: '5px 10px'}}/>}

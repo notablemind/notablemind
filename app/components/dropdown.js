@@ -5,7 +5,7 @@ var React = require('react')
 var DropDown = React.createClass({
   propTypes: {
     items: PT.array,
-    title: PT.renderable,
+    title: PT.node,
     onSelect: PT.func,
   },
   getInitialState: function () {

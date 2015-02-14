@@ -7,10 +7,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 50px;
+  padding: 80px;
   z-index: 1000;
   background-color: rgba(0,0,0,.7);
   cursor: pointer;
+  opacity: 0;
+  transition: opacity .1s ease;
+
+  &-fade-in {
+    opacity: 1;
+  }
 
   &_title {
     font-size: 25px;
@@ -19,28 +25,35 @@
     color: white;
     text-align: center;
   }
-
-  /*
-  &_bindings {
-    span {
-      border-radius: 3px;
-      padding: 2px 6px;
-      font-family: monospace;
-      white-space: pre;
-      font-size: 12px;
-      text-shadow: 1px 1px 1px rgba(255,255,255,.5);
-      font-weight: bold;
-      color: black;
-    }
-
-    &_mode {
-    }
-  }
-
-  &_action {
-  }
-  */
 }
+
+.KeyboardPopup_pages {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.KeyboardPopup_pages button {
+  background: #70007C;
+  padding: 2px 20px;
+  margin: 5px 3px 0;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  font-family: Monda, sans-serif;
+  border: 2px solid transparent;
+
+  &[disabled] {
+    border-color: magenta;
+  }
+
+  &:last-child::after {
+    content: 'tab to switch';
+    color: #555;
+    margin-left: 35px;
+    position: absolute;
+  }
+}
+
 
 .KeyboardPopup_body {
   display: flex;
@@ -69,11 +82,10 @@
   margin: 10px;
   border-radius: 10px;
   background-color: #333;
-  padding: 2px 10px 10px;
+  padding: 2px 0 10px;
   box-shadow: 0 1px 4px #f6b;
   width: 350px;
   box-sizing: border-box;
-  margin-bottom: 10px;
   font-family: 'Monda', sans-serif;
 
   &_title {
@@ -98,6 +110,10 @@
       padding: 5px 0 5px 10px;
       font-family: monospace;
 
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
       span {
         background-color: #555;
         color: #fdd;
@@ -106,6 +122,8 @@
         text-shadow: 0 0 5px #000;
         box-shadow: 0 0 5px #000 inset;
         white-space: nowrap;
+        margin-right: 3px;
+        margin-bottom: 3px;
       }
     }
 
@@ -117,10 +135,29 @@
   }
 }
 
+.Toaster {
+  position: fixed;
+  bottom: 0;
+  right: 35px;
+  background-color: #000;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-family: Monda, sans-serif;
+  color: white;
+  font-size: 13px;
+  padding: 3px 14px;
+  opacity: .6;
+  cursor: pointer;
+  transition: opacity .2s ease, transform .3s ease;
+  transform: translate(0, 50px);
 
+  &-toasted {
+    transform: translate(0, 0);
+  }
 
-
-.keyboard-shortcut-table {
+  &:hover {
+    opacity: 1;
+  }
 }
 
 

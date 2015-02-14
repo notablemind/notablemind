@@ -21,5 +21,5 @@ function showModal(title, initialState, body, done) {
     initialState: initialState,
     onClose: onClose, 
     title: title, 
-    body: body}), node)
+    renderBody: body}), node)
 }

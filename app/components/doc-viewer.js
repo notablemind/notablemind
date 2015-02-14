@@ -230,6 +230,11 @@ var DocViewer = React.createClass({
     this.setState({searching: false})
   },
 
+  _canGrabKeyboard: function (e) {
+    return (this.props.store.views[this.props.store.activeView].mode !== 'insert' &&
+        ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) === -1)
+  },
+
   render: function () {
     var {store, file, plugins} = this.props
 
@@ -249,7 +254,7 @@ var DocViewer = React.createClass({
         matchItems={this._searchItems}
         onClose={() => this.setState({searching: false})}
         onSelect={this._onSearchSelect} />}
-      <KeyboardHelper keys={this.props.keys} plugins={this.props.store.allPlugins}/>
+      <KeyboardHelper canGrabKeyboard={this._canGrabKeyboard} keys={this.props.keys} plugins={this.props.store.allPlugins}/>
     </div>
   }
 })

@@ -14,28 +14,24 @@ var KeyboardHelper = React.createClass({
   statics: {
     keys: function () {
       return {
-        'shift+/': this.show,
+        'shift+/': this.showKey,
       }
     },
   },
 
   propTypes: {
+    canGrabKeyboard: PT.func.isRequired,
     plugins: PT.arrayOf(PT.object).isRequired,
-    keys: PT.func.isRequired,
+    keys: PT.object.isRequired,
   },
 
   getInitialState: function () {
     return {open: false}
   },
-  componentDidUpdate: function (prevProps, prevState) {
-    if (this.state.open && !prevState.open) { // register things
-      this.props.keys.disable()
-      window.addEventListener('keydown', this._onKeyDown)
-    }
-    if (prevState.open && !this.state.open) { // unregister things
-      this.props.keys.enable()
-      window.removeEventListener('keydown', this._onKeyDown)
-    }
+
+  showKey: function (e) {
+    if (!this.props.canGrabKeyboard(e)) return true
+    this.show()
   },
 
   show: function () {
@@ -44,14 +40,16 @@ var KeyboardHelper = React.createClass({
   hide: function () {
     this.setState({open: false})
   },
-  _onKeyDown: function (e) {
-    if (e.keyCode === 27) this.hide()
+
+  mainPage: function () {
+    return Object.keys(viewKeys).map(title => ({
+      title: title,
+      actions: viewKeys[title],
+    }))
   },
 
-  organizeSections: function () {
-    var sections = [];
-    // make default sections
-    sections = sections.concat(this.props.plugins.reduce((sections, plugin) => {
+  pluginsPage: function () {
+    return this.props.plugins.reduce((sections, plugin) => {
       if (!plugin.keys) return sections
       var keys = plugin.keys
       if ('function' === typeof keys) {
@@ -62,14 +60,37 @@ var KeyboardHelper = React.createClass({
         actions: keys
       })
       return sections
-    }, []))
-    // debugger;
-    return sections
+    }, [])
   },
 
   render: function () {
-    if (!this.state.open) return <span/>
-    return <KeyboardPopup sections={this.organizeSections()} onClose={this.hide}/>
+    if (!this.state.open) {
+      return <Toaster onClick={this.show}>
+        Press ? for keyboard shortcuts
+      </Toaster>
+    }
+    return <KeyboardPopup
+      keys={this.props.keys}
+      pages={{
+        'Main': this.mainPage(),
+        'Plugins': this.pluginsPage(),
+      }}
+      onClose={this.hide}/>
+  },
+})
+
+var Toaster = React.createClass({
+  getInitialState: function () {
+    return {toasted: false}
+  },
+  componentDidMount: function () {
+    setTimeout(() => this.setState({toasted: true}), 100);
+  },
+  render: function () {
+    var cls = 'Toaster ' + (this.state.toasted ? 'Toaster-toasted' : '')
+    return <div className={cls} {...this.props}>
+      {this.props.children}
+    </div>
   },
 })
 
