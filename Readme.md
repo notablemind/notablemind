@@ -7,9 +7,9 @@
 
 ### Screenshots
 
-<a href="https://notablemind.org/todo-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/todo-shot.png" height="200px" float="left"></a>
-<a href="https://notablemind.org/tutorial-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/tutorial-shot.png" height="200px" float="left"></a>
-<a href="https://notablemind.org/mona-lisa-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/mona-lisa-shot.png" height="200px" float="left"></a>
+<a href="https://notablemind.org/todo-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/todo-shot.png" height="200px" width="30%" float="left"></a>
+<a href="https://notablemind.org/tutorial-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/tutorial-shot.png" height="200px" width="30%" float="left"></a>
+<a href="https://notablemind.org/mona-lisa-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/mona-lisa-shot.png" height="200px" width="30%" float="left"></a>
 
 #### **Notablemind** is a life manager
 **Good for**
