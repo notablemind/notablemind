@@ -24,12 +24,12 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="13.785611"
-     inkscape:cx="57.076973"
-     inkscape:cy="592.13315"
+     inkscape:zoom="0.8616007"
+     inkscape:cx="452.91783"
+     inkscape:cy="389.63128"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      inkscape:snap-global="false"
      inkscape:window-width="1920"
      inkscape:window-height="1031"
@@ -61,6 +61,17 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#2196f3;fill-opacity:1;stroke:none"
+       id="rect3950"
+       width="545.48517"
+       height="167.63852"
+       x="153.49338"
+       y="595.65411"
+       ry="0"
+       inkscape:export-filename="/home/jared/clone/nm/notablemind/site/logo-full.png"
+       inkscape:export-xdpi="247.48613"
+       inkscape:export-ydpi="247.48613" />
     <rect
        style="fill:#cccccc;fill-opacity:1;stroke:none"
        id="rect3157"
@@ -958,6 +969,129 @@
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="cccccccccccc" />
       </g>
+    </g>
+    <g
+       inkscape:export-ydpi="89.841492"
+       inkscape:export-xdpi="89.841492"
+       inkscape:export-filename="/home/jared/clone/nm/notablemind/www/favicon.png"
+       id="g3166"
+       transform="matrix(1.0973428,0,0,1.0324066,426.49595,132.32969)">
+      <path
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0"
+         id="path3168"
+         d="m 54.647353,409.50021 c -1.027344,-0.32812 -1.964843,-1.86719 -1.863281,-2.19531 l 1.355469,-0.51563 1.800781,1.42188 z"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <g
+         transform="matrix(1,0,0,1.0089695,0,-3.6730827)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+         id="g3170">
+        <path
+           d="m 81.937865,380.70781 -5.04,28.8 -7.24,0 -5.04,-15.76 -2.72,15.76 -7.24,0 5.08,-28.8 7.8775,0 4.96,14.72 2.1625,-14.72 7.2,0"
+           id="path3172"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccccccc" />
+      </g>
+      <g
+         transform="translate(8.131728,-6.0104076)"
+         id="g3174"
+         style="font-size:38.28133774px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One">
+        <path
+           sodipodi:nodetypes="ccccccccccccccc"
+           inkscape:connector-curvature="0"
+           id="path3176"
+           d="m 50,384.96875 -4.84375,27.5625 1.875,2.1875 6.28125,0 L 55.78125,400.5 59.5,412.53125 l 1.875,2.1875 6.9375,0 4.8125,-27.5625 -1.875,-2.1875 -6.101602,0.0884 -2.62408,12.58211 L 59,387.15625 l -1.875,-2.1875 z" />
+      </g>
+      <g
+         transform="matrix(1,0,0,1.0089528,0,-3.3887555)"
+         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+         id="g3178">
+        <path
+           d="m 80.057502,378.51274 -5.04,28.8 -7.24,0 -5.04,-15.76 -2.72,15.76 -7.24,0 4.973488,-28.23233 c 0.0688,-0.37047 0.513337,-0.54855 0.841906,-0.56314 l 7.048356,-0.005 4.55375,13.9075 2.6625,-13.9075 7.2,0"
+           id="path3180"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccccccccccc" />
+      </g>
+    </g>
+    <g
+       id="g3187"
+       transform="translate(-1.7409668,29.304087)"
+       inkscape:export-filename="/home/jared/clone/nm/notablemind/site/logo-full.png"
+       inkscape:export-xdpi="247.48613"
+       inkscape:export-ydpi="247.48613">
+      <g
+         transform="translate(-0.58714401,0)"
+         id="g3175">
+        <g
+           transform="matrix(1.0973428,0,0,1.0324066,271.91448,222.78632)"
+           id="g3150"
+           inkscape:export-filename="/home/jared/clone/nm/notablemind/www/favicon.png"
+           inkscape:export-xdpi="89.841492"
+           inkscape:export-ydpi="89.841492">
+          <path
+             style="fill:#00172c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+             d="m 54.647353,409.50021 c -1.027344,-0.32812 -1.964843,-1.86719 -1.863281,-2.19531 l 1.355469,-0.51563 1.800781,1.42188 z"
+             id="path3152"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="ccccc" />
+          <g
+             id="g3154"
+             style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00172c;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+             transform="matrix(1,0,0,1.0089695,0,-3.6730827)">
+            <path
+               sodipodi:nodetypes="ccccccccccc"
+               inkscape:connector-curvature="0"
+               id="path3156"
+               d="m 81.937865,380.70781 -5.04,28.8 -7.24,0 -5.04,-15.76 -2.72,15.76 -7.24,0 5.08,-28.8 7.8775,0 4.96,14.72 2.1625,-14.72 7.2,0"
+               style="fill:#00172c;fill-opacity:1" />
+          </g>
+          <g
+             style="font-size:38.28133774px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+             id="g3158"
+             transform="translate(8.131728,-6.0104076)">
+            <path
+               d="m 50,384.96875 -4.84375,27.5625 1.875,2.1875 6.28125,0 L 55.78125,400.5 59.5,412.53125 l 1.875,2.1875 6.9375,0 4.8125,-27.5625 -1.875,-2.1875 -6.101602,0.0884 -2.62408,12.58211 L 59,387.15625 l -1.875,-2.1875 z"
+               id="path3160"
+               inkscape:connector-curvature="0"
+               sodipodi:nodetypes="ccccccccccccccc" />
+          </g>
+          <g
+             id="g3162"
+             style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00172c;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+             transform="matrix(1,0,0,1.0089528,0,-3.3887555)">
+            <path
+               sodipodi:nodetypes="cccccccccccc"
+               inkscape:connector-curvature="0"
+               id="path3164"
+               d="m 80.057502,378.51274 -5.04,28.8 -7.24,0 -5.04,-15.76 -2.72,15.76 -7.24,0 4.973488,-28.23233 c 0.0688,-0.37047 0.513337,-0.54855 0.841906,-0.56314 l 7.048356,-0.005 4.55375,13.9075 2.6625,-13.9075 7.2,0"
+               style="fill:#00172c;fill-opacity:1" />
+          </g>
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+           x="359.56552"
+           y="643.65826"
+           id="text3952"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3954"
+             x="359.56552"
+             y="643.65826"
+             style="font-size:30px;fill:#ffffff;fill-opacity:1">otablemind</tspan></text>
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3169"
+         y="665.87225"
+         x="343.8696"
+         style="font-size:30px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Fugaz One;-inkscape-font-specification:Fugaz One"
+         xml:space="preserve"><tspan
+           style="font-size:12px;fill:#ffffff"
+           y="665.87225"
+           x="343.8696"
+           id="tspan3171"
+           sodipodi:role="line">All your mind. All your notes.</tspan></text>
     </g>
   </g>
 </svg>
