@@ -3,6 +3,8 @@
 
 [![Join the chat at https://gitter.im/notablemind/notablemind](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/notablemind/notablemind?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+### [Notablemind.org](https://notablemind.org)  &nbsp;&nbsp;|&nbsp;&nbsp;  [Tutorial](https://app.notablemind.org/#/gist/jaredly/2a15dbba420eb509e12d)&nbsp;&nbsp; |&nbsp;&nbsp; [View roadmap](https://app.notablemind.org/#/gist/jaredly/9680269723596b0249a3)
+
 ### Screenshots
 
 <a href="https://notablemind.org/todo-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/todo-shot.png" height="200px" float="left"></a>
@@ -10,7 +12,7 @@
 <a href="https://notablemind.org/mona-lisa-shot.png"><img alt="screenshot-todo" src="https://notablemind.org/mona-lisa-shot.png" height="200px" float="left"></a>
 
 #### **Notablemind** is a life manager
-Good for
+**Good for**
 
 - note taking
 - journaling
