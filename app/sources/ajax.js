@@ -19,8 +19,11 @@ function send (method, url, headers, data, done) {
   }
   x.onreadystatechange = function () {
     if (this.readyState !== 4) return
+    if (!this.getAllResponseHeaders()) {
+      return done(new Error('Looks like a disconnected network'))
+    }
     var data
-      , mime = this.getResponseHeader('content-type')
+      , mime = this.getResponseHeader('content-type') || ''
     if (mime.indexOf('json') !== -1 || mime.indexOf('notablemind') !== -1) {
       try {
         data = JSON.parse(this.responseText)

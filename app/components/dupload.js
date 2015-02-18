@@ -47,7 +47,7 @@ var Dupload = React.createClass({
   },
 
   _onDrop: function (files) {
-    if (files.length) {
+    if (files.length && files[0].name && files[0].kind !== 'string') {
       this.setState({
         uploading: true,
         uploadFile: files[0],

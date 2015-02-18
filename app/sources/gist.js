@@ -12,6 +12,11 @@ module.exports = {
     return 'https://gist.github.com/' + config.gist_id
   },
 
+  share: function (config) {
+    // TODO view.notablemind.org
+    return 'https://app.notablemind.org/#/gist/' + config.gist_id
+  },
+
   select: function (done) {
     authorize((err, token) => {
       loadGistModal(loadGist.bind(null, token), function (err, result, gist_id) {
