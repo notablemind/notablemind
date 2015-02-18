@@ -66,6 +66,7 @@
   cursor: pointer;
 
   &:hover > .TreeItem_body {
+    border-radius: 0;
     background-color: #eee;
   }
 }
@@ -299,12 +300,17 @@
 
 .m_RebaseDot {
   top: 0;
-  left: -15px;
   width: 4px;
   height: 5px;
   z-index: 1;
   opacity: 0;
   background-color: #bbb;
+  position: absolute;
+  left: -19px;
+  top: -1px;
+  height: 10px;
+  box-sizing: border-box;
+  width: 10px;
 
   &:hover {
     background-color: #aaa;
@@ -319,6 +325,7 @@
 
   .TreeItem-parent > .TreeItem_head:hover & {
     opacity: 1;
+    margin-left: 3px;
   }
 
   .TreeItem-parent.n_Collapse > .TreeItem_head & {
@@ -328,7 +335,7 @@
 
 .TreeItem-parent.n_Collapse > .TreeItem_head .m_RebaseDot {
   margin-top: 0;
-  left: -15px;
+  left: -19px;
 }
 
 /** PDF STUFF **/
