@@ -3,7 +3,6 @@ var React = require('react')
   , treed = require('treed')
   , KeysMixin = require('../keys-mixin')
   , TypeSwitcher = require('./type-switcher')
-  , Tree = require('treed/views/tree')
   , SplitManager = require('./split-manager')
   , SearchPopper = require('./search-popper')
   , KeyboardHelper = require('./keyboard-helper')
@@ -99,7 +98,7 @@ var DocViewer = React.createClass({
       ratio: .5,
       value: {
         root: null,
-        type: 'tree',
+        type: 'list',
       },
     }
     var windowMap = hydrateInitialWindows(windowConfig, this.props.store, this.props.plugins, this.props.keys)
@@ -114,7 +113,7 @@ var DocViewer = React.createClass({
     return {
       viewTypes: {
         // pdf: require('treed/views/pdf'),
-        tree: require('treed/views/tree'),
+        list: require('treed/views/list'),
         paper: require('treed/views/paper'),
         focus: require('treed/views/focus'),
       }
@@ -286,6 +285,9 @@ var Pane = React.createClass({
     })
     config.props.skipMix = ['top']
     var View = this.props.viewTypes[this.props.value.type]
+    if (!View) {
+      View = this.props.viewTypes.list
+    }
     return <div className={'App_pane App_pane-' + this.props.value.type}>
       <div className='App_pane_top'>
         {statusbar}

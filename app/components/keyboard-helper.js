@@ -3,7 +3,7 @@
  */
 
 var React = require('react')
-  , viewKeys = require('treed/views/tree/keys')
+  , viewKeys = require('treed/views/list/keys')
   , KeysMixin = require('../keys-mixin')
   , KeyboardPopup = require('./keyboard-popup')
   , PT = React.PropTypes
