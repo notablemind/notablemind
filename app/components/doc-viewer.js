@@ -207,8 +207,8 @@ var DocViewer = React.createClass({
     }
 
     this.setState({windowMap: wmap})
+    this.props.saveWindowConfig(this.state.windowConfig, () => null)
   },
-
 
   componentDidMount: function () {
     // TODO: need to abstract out the logic from browse.js

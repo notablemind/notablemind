@@ -9,7 +9,7 @@ function findNextActiveId(windows, currentActiveView, direction) {
 
 function windowBoxes(windows, container) {
   if (windows.leaf) {
-    return [{box: container, id: windows.value.config.view.view.id}]
+    return [{box: container, id: windows.value.config.store.view.id}]
   }
   var split = splitBox(container, windows.value.orient, windows.value.ratio || .5)
   return windowBoxes(windows.value.first, split.first)
