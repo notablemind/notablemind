@@ -4,6 +4,9 @@ var React = require('react')
   , KeyManager = require('treed/key-manager')
   , keys = require('treed/lib/keys')
   , files = require('../files')
+  , kernelConfig = require('../kernels')
+
+  , Treed = require('treed/classy')
 
   , DocHeader = require('../components/doc-header')
   , DocViewer = require('../components/doc-viewer')
@@ -40,8 +43,8 @@ var DocPage = React.createClass({
   componentWillUnmount: function () {
     window.removeEventListener('keydown', this._keyDown)
 
-    if (this.state.store) {
-      this._unlistenToStore(this.state.store)
+    if (this.state.treed) {
+      this._unlistenToStore(this.state.treed.store)
     }
   },
 
@@ -62,7 +65,7 @@ var DocPage = React.createClass({
   },
 
   _onRootChanged: function () {
-    var db = this.state.store.db
+    var db = this.state.treed.store.db
       , title = db.nodes[db.root].content
     if (title.length > 100) {
       title = title.slice(0, 98) + '..'
@@ -76,12 +79,12 @@ var DocPage = React.createClass({
   },
 
   _keyDown: function (e) {
-    if (!this.state.keys) return
-    if (this.state.store.views[this.state.store.activeView].mode !== 'insert' &&
+    if (!this.state.treed) return
+    if (this.state.treed.store.views[this.state.treed.store.activeView].mode !== 'insert' &&
         ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
       return
     }
-    return this.state.keys.keyDown(e)
+    return this.state.treed.keyManager.keyDown(e)
   },
 
   _onError: function (err) {
@@ -102,25 +105,21 @@ var DocPage = React.createClass({
     files.update(id, update, done)
   },
 
-  _onLoad: function (file, store, plugins) {
-    window.store = store
+  _onLoad: function (treed, file) {
+    window.store = treed.store
     window.docPage = this
     window.document.title = file.title
-    this._listenToStore(store)
+    this._listenToStore(treed.store)
 
-    var keys = new KeyManager()
-    keys.attach(store)
-    keys.addKeys({
+    treed.keyManager.addKeys({
       'g q': () => this.transitionTo('browse'),
     })
 
     files.update(file.id, {opened: Date.now()}, file => {
       this.setState({
-        keys,
-        file,
-        store,
-        plugins,
         loading: false,
+        treed,
+        file,
       })
     })
   },
@@ -129,15 +128,31 @@ var DocPage = React.createClass({
     this.setState({error: null, loading: true})
     var id = this.getParams().id
 
+    var plugins = [
+      require('treed/plugins/undo'),
+      require('treed/plugins/todo'),
+      require('treed/plugins/image'),
+      require('treed/plugins/types'),
+      require('treed/plugins/collapse'),
+      require('treed/plugins/clipboard'),
+      require('treed/plugins/lists'),
+      require('treed/plugins/rebase'),
+      require('../../treed-plugins/custom-css'),
+    ]
+
+
     files.find(id, file =>
       files.get(id, pl => {
-        // if (err) return this._onError(err)
-        files.init(file, pl, (err, store, plugins) => {
-          if (err) {
-            return this._onError(err)
-          }
-          this._onLoad(file, store, plugins)
-        })
+        var config = kernelConfig[file.repl]
+        if (config && config.kernel) {
+          // repl
+          plugins.unshift(require('itreed/lib/plugin')(config))
+        }
+
+        var treed = new Treed({plugins: plugins})
+        treed.initStore({content: file.title, children: []}, {pl}).then(store => {
+          this._onLoad(treed, file)
+        }).catch(err => this._onError(err))
       })
     )
   },
@@ -149,16 +164,15 @@ var DocPage = React.createClass({
     if (this.state.error) {
       return <em>Error loading file {this.state.error + ''}</em>
     }
-    if (!this.state.store) {
+    if (!this.state.treed) {
       return <em>Loading</em>
     }
-    var {store, file, plugins} = this.state
+    var {treed, file} = this.state
 
     return <div className='DocPage'>
       <DocHeader
         file={file}
-        store={store}
-        plugins={plugins}
+        treed={treed}
         onFileUpdate={this.onFileUpdate}
 
         changeTitle={this._changeTitle}
@@ -166,11 +180,10 @@ var DocPage = React.createClass({
       />
       <DocViewer
         file={file}
-        store={store}
-        plugins={plugins}
+        treed={treed}
         query={this.getQuery()}
         saveWindowConfig={this.saveWindowConfig}
-        keys={this.state.keys}/>
+        keys={this.state.treed.keyManager}/>
     </div>
   },
 })

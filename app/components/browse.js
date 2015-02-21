@@ -6,7 +6,6 @@ var React = require('react')
   , Tabular = require('./tabular')
   , Dumper = require('./dumper')
   , readFile = require('./read-file')
-  , treed = require('treed')
   , cx = React.addons.classSet
   , PT = React.PropTypes
   , history = require('./history')

@@ -154,8 +154,6 @@ function init(file, pl, defaultData, done) {
     require('treed/plugins/collapse'),
     require('treed/plugins/clipboard'),
     require('treed/plugins/lists'),
-    // require('treed/plugins/window-switch'),
-
     require('treed/plugins/rebase'),
 
     require('../treed-plugins/custom-css'),

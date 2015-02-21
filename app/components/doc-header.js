@@ -7,7 +7,7 @@ var React = require('react')
 var DocHeader = React.createClass({
   propTypes: {
     file: PT.object.isRequired,
-    store: PT.object.isRequired,
+    treed: PT.object.isRequired,
     saver: PT.node,
     savingEnabled: PT.bool,
     // if not given, no "Home" button will be shown
@@ -28,7 +28,7 @@ var DocHeader = React.createClass({
   },
 
   render: function () {
-    var headStore = this.props.store.headerView()
+    var headStore = this.props.treed.store.headerView()
     return <div className='DocHeader'>
       <span className='DocHeader_name'>
         <a target="_blank" href="http://notablemind.github.io">Notablemind</a>
@@ -43,13 +43,13 @@ var DocHeader = React.createClass({
       <span className='DocHeader_title'>
         {this.props.file.title}
       </span>
-      <Dupload store={this.props.store}/>
-      {this.props.plugins.map(plugin =>
+      <Dupload store={this.props.treed.store}/>
+      {this.props.treed.options.plugins.map(plugin =>
         plugin.view && plugin.view.global && plugin.view.global(headStore)
       )}
       <Saver
         onFileUpdate={this.props.onFileUpdate}
-        store={this.props.store}
+        store={this.props.treed.store}
         file={this.props.file}
         value={this.props.file.source}/>
     </div>

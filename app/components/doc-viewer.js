@@ -1,6 +1,6 @@
 var React = require('react')
   , {Link, State, Navigation} = require('react-router')
-  , treed = require('treed')
+  , Treed = require('treed/classy')
   , KeysMixin = require('../keys-mixin')
   , TypeSwitcher = require('./type-switcher')
   , SplitManager = require('./split-manager')
@@ -22,42 +22,51 @@ function windowPos(windows, fn, pos) {
   if (second) return second
 }
 
-function makePaneConfig(store, plugins, keys, root) {
-  var config = treed.viewConfig(store, plugins, {root: root})
-  keys.addView(config.view.id, config.keys)
-  return config
-}
-
-function hydrateWindows(windows, store, plugins, keys, windowMap) {
-  var id
+function hydrateWindows(windows, treed, windowMap, viewTypes) {
+  var id, view
   if (windows.first.leaf) {
-    windows.first.value.config = makePaneConfig(store, plugins, keys, windows.first.value.root)
+    view = viewTypes[windows.first.value.type || 'list'] || viewTypes.list
+    windows.first.value.config = treed.addView({
+      root: windows.first.value.root,
+      actions: view.actions,
+      keys: view.keys,
+    })
     id = uuid()
     windows.first.value.id = id
     windowMap[id] = windows.first.value
   } else {
-    hydrateWindows(windows.first.value, store, plugins, keys, windowMap)
+    hydrateWindows(windows.first.value, treed, windowMap, viewTypes)
   }
   if (windows.second.leaf) {
-    windows.second.value.config = makePaneConfig(store, plugins, keys, windows.second.value.root)
+    view = viewTypes[windows.second.value.type || 'list'] || viewTypes.list
+    windows.second.value.config = treed.addView({
+      root: windows.second.value.root,
+      actions: view.actions,
+      keys: view.keys,
+    })
     id = uuid()
     windows.second.value.id = id
     windowMap[id] = windows.second.value
   } else {
-    hydrateWindows(windows.second.value, store, plugins, keys, windowMap)
+    hydrateWindows(windows.second.value, treed, windowMap, viewTypes)
   }
 }
 
-function hydrateInitialWindows(windows, store, plugins, keys) {
+function hydrateInitialWindows(windows, treed, viewTypes) {
   var windowMap = {}
   if (windows.leaf) {
     var id = uuid()
-    windows.value.config = makePaneConfig(store, plugins, keys, windows.value.root)
+      , view = viewTypes[windows.value.type || 'list'] || viewTypes.list
+    windows.value.config = treed.addView({
+      root: windows.value.root,
+      actions: view.actions,
+      keys: view.keys,
+    })
     windows.value.id = id
     windowMap[id] = windows.value
     return windowMap
   }
-  hydrateWindows(windows.value, store, plugins, keys, windowMap)
+  hydrateWindows(windows.value, treed, windowMap, viewTypes)
   return windowMap
 }
 
@@ -80,9 +89,8 @@ var DocViewer = React.createClass({
   },
 
   propTypes: {
-    store: PT.object,
+    treed: PT.object,
     file: PT.object,
-    plugins: PT.array,
     keys: PT.object,
     viewTypes: PT.object,
     saveWindowConfig: PT.func,
@@ -101,7 +109,7 @@ var DocViewer = React.createClass({
         type: 'list',
       },
     }
-    var windowMap = hydrateInitialWindows(windowConfig, this.props.store, this.props.plugins, this.props.keys)
+    var windowMap = hydrateInitialWindows(windowConfig, this.props.treed, this.props.viewTypes)
     return {
       windowConfig: windowConfig,
       windowMap: windowMap,
@@ -114,6 +122,7 @@ var DocViewer = React.createClass({
       viewTypes: {
         // pdf: require('treed/views/pdf'),
         list: require('treed/views/list'),
+        mindmap: require('treed/views/mindmap'),
         paper: require('treed/views/paper'),
         focus: require('treed/views/focus'),
       }
@@ -121,8 +130,8 @@ var DocViewer = React.createClass({
   },
 
   findCurrentPane: function () {
-    var vid = this.props.store.activeView
-    return windowPos(this.state.windowConfig, (value) => value.config.view.view.id === vid)
+    var vid = this.props.treed.store.activeView
+    return windowPos(this.state.windowConfig, (value) => value.config.store.view.id === vid)
   },
 
   _split: function (orient) {
@@ -138,15 +147,15 @@ var DocViewer = React.createClass({
   },
 
   _windowJump: function (direction) {
-    var currentView = this.props.store.activeView
+    var currentView = this.props.treed.store.activeView
       , nextId = windowJump(this.state.windowConfig, currentView, direction)
     if (false === nextId) return
-    this.props.store.activeView = nextId
-    this.props.store.changed(this.props.store.events.activeViewChanged())
+    this.props.treed.store.activeView = nextId
+    this.props.treed.store.changed(this.props.treed.store.events.activeViewChanged())
   },
 
   getNewWindowConfig: function (currentConfig) {
-    var config = makePaneConfig(this.props.store, this.props.plugins, this.props.keys, currentConfig.root)
+    var config = this.props.treed.addView({root: currentConfig.root})
       , id = uuid()
       , value = {
           config: config,
@@ -159,8 +168,8 @@ var DocViewer = React.createClass({
   },
 
   _onRemovedWindow: function (window) {
-    var id = window.config.view.view.id
-    this.props.store.unregisterView(id)
+    var id = window.config.store.view.id
+    this.props.treed.store.unregisterView(id)
   },
 
   _changeWindowConfig: function (windowConfig) {
@@ -192,12 +201,12 @@ var DocViewer = React.createClass({
   },
 
   _startSearching: function (e) {
-    if (this.props.store.views[this.props.store.activeView].mode === 'insert') return true
+    if (this.props.treed.store.views[this.props.treed.store.activeView].mode === 'insert') return true
     this.setState({searching: true})
   },
 
   _searchItems: function (needle) {
-    var store = this.props.store
+    var store = this.props.treed.store
       , blackTypes = ['ipython', 'code-playground'] // TODO have plugins declare this, as "nosearch" or something
       , view = store.views[store.activeView]
       , root = view.root
@@ -218,7 +227,7 @@ var DocViewer = React.createClass({
   },
 
   _onSearchSelect: function (item, jump) {
-    var actions = this.props.store.currentViewActions()
+    var actions = this.props.treed.store.currentViewActions()
     // TODO think about what should be the default behavior. Should it be to
     // rebase, or to scroll + open?
     if (jump) {
@@ -230,12 +239,12 @@ var DocViewer = React.createClass({
   },
 
   _canGrabKeyboard: function (e) {
-    return (this.props.store.views[this.props.store.activeView].mode !== 'insert' &&
+    return (this.props.treed.store.views[this.props.treed.store.activeView].mode !== 'insert' &&
         ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) === -1)
   },
 
   render: function () {
-    var {store, file, plugins} = this.props
+    var {treed, file, plugins} = this.props
 
     return <div className='DocViewer'>
       <SplitManager
@@ -253,7 +262,7 @@ var DocViewer = React.createClass({
         matchItems={this._searchItems}
         onClose={() => this.setState({searching: false})}
         onSelect={this._onSearchSelect} />}
-      <KeyboardHelper canGrabKeyboard={this._canGrabKeyboard} keys={this.props.keys} plugins={this.props.store.allPlugins}/>
+      <KeyboardHelper canGrabKeyboard={this._canGrabKeyboard} keys={this.props.keys} plugins={this.props.treed.options.plugins}/>
     </div>
   }
 })
@@ -265,25 +274,25 @@ var Pane = React.createClass({
     value: PT.object,
   },
   _onRebase: function () {
-    var view = this.props.value.config.view
-    this.props.onRebase(this.props.value.id, view.view.root)
+    var store = this.props.value.config.store
+    this.props.onRebase(this.props.value.id, store.view.root)
   },
   componentDidMount: function () {
-    var view = this.props.value.config.view
+    var view = this.props.value.config.store
     view.on(view.events.rootChanged(), this._onRebase)
   },
   componentWillUnmount: function () {
-    var view = this.props.value.config.view
+    var view = this.props.value.config.store
     view.on(view.events.rootChanged(), this._onRebase)
   },
   render: function () {
-    var config = this.props.value.config
+    var props = this.props.value.config
     var statusbar = []
-    config.props.plugins.map(plugin => {
+    props.plugins.map(plugin => {
       if (!plugin.statusbar) return
-      statusbar.push(plugin.statusbar(config.props.store))
+      statusbar.push(plugin.statusbar(props.store))
     })
-    config.props.skipMix = ['top']
+    props.skipMix = ['top']
     var View = this.props.viewTypes[this.props.value.type]
     if (!View) {
       View = this.props.viewTypes.list
@@ -302,7 +311,7 @@ var Pane = React.createClass({
           onChange={this.props.changeViewType.bind(null, this.props.value.id)}/>
       </div>
       <div className='App_pane_scroll'>
-        <View {...config.props}/>
+        <View {...props}/>
       </div>
     </div>
   }
