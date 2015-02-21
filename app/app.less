@@ -139,6 +139,38 @@ body {
   }
 }
 
+.App_pane-mindmap {
+  .App_pane_scroll {
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+  }
+
+  &:first-child .App_pane_scroll {
+    padding-left: 0;
+  }
+
+  &:last-child .App_pane_scroll {
+    padding-right: 0;
+  }
+}
+
+.Mindmap {
+  flex: 1;
+  width: auto;
+  height: auto;
+  margin: 0;
+  display: flex;
+}
+
+.MindmapMovable {
+  overflow: hidden;
+  height: auto;
+  width: auto;
+  position: static;
+  flex: 1;
+}
+
 /** focus stuff. TODO move it? **/
 
 .App_pane-focus {

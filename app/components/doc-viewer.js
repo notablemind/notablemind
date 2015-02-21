@@ -155,7 +155,13 @@ var DocViewer = React.createClass({
   },
 
   getNewWindowConfig: function (currentConfig) {
-    var config = this.props.treed.addView({root: currentConfig.root})
+
+    var view = this.props.viewTypes[currentConfig.type || 'list'] || this.props.viewTypes.list
+    var config = this.props.treed.addView({
+        root: currentConfig.root,
+        actions: view.actions,
+        keys: view.keys,
+      })
       , id = uuid()
       , value = {
           config: config,
@@ -185,7 +191,21 @@ var DocViewer = React.createClass({
 
   _changeViewType: function (wid, type) {
     var wmap = this.state.windowMap
-    wmap[wid].type = type
+      , view = this.props.viewTypes[type || 'list'] || this.props.viewTypes.list
+      , isActive = this.props.treed.store.activeView === wmap[wid].config.store.id
+    this.props.treed.removeView(wmap[wid].config.id)
+
+    wmap[wid].type = type || 'list'
+    var config = wmap[wid].config = this.props.treed.addView({
+      root: wmap[wid].root,
+      actions: view.actions,
+      keys: view.keys,
+    })
+
+    if (isActive) {
+      config.store.actions.setActiveView()
+    }
+
     this.setState({windowMap: wmap})
   },
 

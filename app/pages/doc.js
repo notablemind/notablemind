@@ -140,7 +140,6 @@ var DocPage = React.createClass({
       require('../../treed-plugins/custom-css'),
     ]
 
-
     files.find(id, file =>
       files.get(id, pl => {
         var config = kernelConfig[file.repl]
