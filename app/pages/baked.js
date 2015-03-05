@@ -36,7 +36,7 @@ function init(data, done) {
   }
 
   var treed = new Treed({plugins: plugins})
-  treed.initStore({content: file.title, children: []}, {pl}).then(store => {
+  treed.initStore(data.root, {pl}).then(store => {
     done(null, treed, file)
   }).catch(err => done(err))
 
@@ -74,7 +74,7 @@ var BakedDoc = React.createClass({
   componentWillUnmount: function () {
     window.removeEventListener('keydown', this._keyDown)
 
-    if (this.props.store) {
+    if (this.props.treed.store) {
       this._unlistenToStore(this.props.treed.store)
     }
   },
@@ -132,6 +132,7 @@ var BakedDoc = React.createClass({
       <DocHeader
         file={file}
         treed={treed}
+        noSave={true}
         onFileUpdate={file => this.setState({file})}
 
         changeTitle={this._changeTitle}

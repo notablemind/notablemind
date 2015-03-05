@@ -58,7 +58,7 @@ module.exports = function (data, relPath, done) {
         <script>
           var NM_BAKED_DATA=${embedData};
         </script>
-        <script src="${relPath}vendor.js"></script>
+        <script src="${relPath}baked-vendor.js"></script>
         <script src="${relPath}baked.js"></script>
       </head>
       <body>

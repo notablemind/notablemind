@@ -8,6 +8,7 @@ var DocHeader = React.createClass({
   propTypes: {
     file: PT.object.isRequired,
     treed: PT.object.isRequired,
+    noSave: PT.bool,
     saver: PT.node,
     savingEnabled: PT.bool,
     // if not given, no "Home" button will be shown
@@ -47,11 +48,11 @@ var DocHeader = React.createClass({
       {this.props.treed.options.plugins.map(plugin =>
         plugin.view && plugin.view.global && plugin.view.global(headStore)
       )}
-      <Saver
+      {!this.props.noSave && <Saver
         onFileUpdate={this.props.onFileUpdate}
         store={this.props.treed.store}
         file={this.props.file}
-        value={this.props.file.source}/>
+        value={this.props.file.source}/>}
     </div>
   }
 })

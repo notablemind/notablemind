@@ -56,6 +56,9 @@ vendorlib:
 
 # js files for baked docs
 
+bakedlib:
+	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/baked-vendor.js
+
 baked:
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js -o www/baked.js
 
