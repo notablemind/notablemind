@@ -148,7 +148,8 @@ var DocViewer = React.createClass({
 
   _windowJump: function (direction) {
     var currentView = this.props.treed.store.activeView
-      , nextId = windowJump(this.state.windowConfig, currentView, direction)
+    if (this.props.treed.store.views[currentView].mode === 'insert') return true
+    var nextId = windowJump(this.state.windowConfig, currentView, direction)
     if (false === nextId) return
     this.props.treed.store.activeView = nextId
     this.props.treed.store.changed(this.props.treed.store.events.activeViewChanged())

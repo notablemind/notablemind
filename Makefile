@@ -65,6 +65,10 @@ watch-baked:
 
 # docs
 
+ipython:
+	mkdir -p www/tutorial/ipython
+	./bin/bake.js -i pages/src/ipython.nm -o www/tutorial/ipython/index.html -r ../../
+
 tutorial:
 	mkdir -p www/tutorial
 	./bin/bake.js -i pages/src/tutorial.nm -o www/tutorial/index.html -r ../

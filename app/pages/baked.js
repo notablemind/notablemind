@@ -5,6 +5,8 @@ var React = require('react')
   , KeyManager = require('treed/key-manager')
   , MemPL = require('treed/pl/mem')
   , files = require('../files')
+  , kernelConfig = require('../kernels')
+  , Treed = require('treed/classy')
 
   , DocHeader = require('../components/doc-header')
   , DocViewer = require('../components/doc-viewer')
@@ -15,42 +17,48 @@ function init(data, done) {
     title: data.title || 'Notablemind Doc',
     repl: data.repl,
   }
-  files.init(file, pl, data.root, (err, store, plugins) => {
-    if (err) return done(err)
-    done(null, file, store, plugins)
-  })
+  var plugins = [
+    require('treed/plugins/undo'),
+    require('treed/plugins/todo'),
+    require('treed/plugins/image'),
+    require('treed/plugins/types'),
+    require('treed/plugins/collapse'),
+    require('treed/plugins/clipboard'),
+    require('treed/plugins/lists'),
+    require('treed/plugins/rebase'),
+    require('../../treed-plugins/custom-css'),
+  ]
+
+  var config = kernelConfig[file.repl]
+  if (config && config.kernel) {
+    // repl
+    plugins.unshift(require('itreed/lib/plugin')(config))
+  }
+
+  var treed = new Treed({plugins: plugins})
+  treed.initStore({content: file.title, children: []}, {pl}).then(store => {
+    done(null, treed, file)
+  }).catch(err => done(err))
+
 }
 
 var BakedDoc = React.createClass({
 
   statics: {
     load: function (data, done) {
-
-      init(data, (err, file, store, plugins) => {
+      init(data, (err, treed, file) => {
         if (err) return done(err)
 
-        var keys = new KeyManager()
-        keys.attach(store)
-        /*
-        keys.addKeys({
-          'g q': () => this.transitionTo('browse'),
-        })
-        */
-
         done(null, <BakedDoc
-          keys={keys}
           file={file}
-          store={store}
-          plugins={plugins}/>)
+          treed={treed}/>)
       })
     },
   },
 
   propTypes: {
     file: PT.object,
-    store: PT.object,
-    plugins: PT.array,
-    keys: PT.object,
+    treed: PT.object,
   },
   getInitialState: function () {
     return {
@@ -60,14 +68,14 @@ var BakedDoc = React.createClass({
 
   componentDidMount: function () {
     window.addEventListener('keydown', this._keyDown)
-    this._listenToStore(this.props.store)
+    this._listenToStore(this.props.treed.store)
   },
 
   componentWillUnmount: function () {
     window.removeEventListener('keydown', this._keyDown)
 
     if (this.props.store) {
-      this._unlistenToStore(this.props.store)
+      this._unlistenToStore(this.props.treed.store)
     }
   },
 
@@ -92,7 +100,7 @@ var BakedDoc = React.createClass({
   },
 
   _onRootChanged: function () {
-    var db = this.props.store.db
+    var db = this.props.treed.store.db
       , title = db.nodes[db.root].content
     if (title.length > 100) {
       title = title.slice(0, 98) + '..'
@@ -101,14 +109,13 @@ var BakedDoc = React.createClass({
     this._changeTitle(title)
   },
 
-
   _keyDown: function (e) {
-    if (!this.props.keys) return
-    if (this.props.store.views[this.props.store.activeView].mode !== 'insert' &&
+    if (!this.props.treed) return
+    if (this.props.treed.store.views[this.props.treed.store.activeView].mode !== 'insert' &&
         ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
       return
     }
-    return this.props.keys.keyDown(e)
+    return this.props.treed.keyManager.keyDown(e)
   },
 
   _changeTitle: function (title) {
@@ -118,24 +125,22 @@ var BakedDoc = React.createClass({
   },
 
   render: function () {
-    var {store, plugins} = this.props
+    var {treed} = this.props
       , file = this.state.file
 
     return <div className='DocPage'>
       <DocHeader
         file={file}
-        store={store}
-        plugins={plugins}
+        treed={treed}
         onFileUpdate={file => this.setState({file})}
 
         changeTitle={this._changeTitle}
       />
       <DocViewer
         file={file}
-        store={store}
-        plugins={plugins}
+        treed={treed}
         saveWindowConfig={(_, done) => done && done()}
-        keys={this.props.keys}/>
+        keys={this.props.treed.keyManager}/>
     </div>
   },
 })

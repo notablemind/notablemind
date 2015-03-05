@@ -33,8 +33,7 @@ jsdom.env('<html><body><div></div></body></html>', function (err, window) {
   global.location = window.location
   global.navigator = window.navigator
 
-  // get us some jsx + es6
-  require('node-jsx').install({harmony: true, extension: '.js'})
+  require('babel/register')
 
   var data = fs.readFileSync(inFile, {encoding: 'utf8'})
   data = JSON.parse(data)
