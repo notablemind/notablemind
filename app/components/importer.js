@@ -8,7 +8,9 @@ var Importer = React.createClass({
   _importFrom: function (name) {
     sources[name].select((err, data, config) => {
       if (err) return console.warn('failed to source')
-      this.props.onSourced(data, {config: config, type: name})
+      // syncable is false for local upload... maybe others will too
+      let sourceConfig = sources[name].syncable !== false ? {config: config, type: name} : false
+      this.props.onSourced(data, sourceConfig)
     })
   },
 

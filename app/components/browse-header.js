@@ -47,9 +47,13 @@ var BrowseHeader = React.createClass({
       }
     }
     this.props.fileslib.importRaw(data, (err, file) => {
-      this.props.fileslib.update(file.id, {source: source}, (err) => {
+      if (source) {
+        this.props.fileslib.update(file.id, {source: source}, (err) => {
+          this.props.onUpdated()
+        })
+      } else {
         this.props.onUpdated()
-      })
+      }
     })
   },
 

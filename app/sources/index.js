@@ -4,6 +4,8 @@ module.exports = {
 
   gdrive: require('./gdrive'),
 
+  local: require('./local'),
+
   /*
   github: {
     title: 'Github repo',

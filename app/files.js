@@ -84,14 +84,23 @@ function convertToFile(data) {
     if (data.root && data.title) {
       return data
     }
+    if (!data.content) {
+      return false
+    }
     data = [data]
   }
   if (data.length === 1) {
+    if (!data[0].content) {
+      return false
+    }
     return {
       title: data[0].content,
       root: data[0],
       repl: 'none',
     }
+  }
+  if (!data[0].content) {
+    return false
   }
   return {
     title: 'Imported...',
