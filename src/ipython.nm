@@ -28,9 +28,9 @@
           {
             "id": "pwfrm82zx21jthpc4b1swm3qttb6x10k",
             "created": 1425535687882,
-            "modified": 1425535687883,
+            "modified": 1425539722229,
             "collapsed": true,
-            "content": "The first step is to connect up an ipython kernel. run `ipython notebook --NotebookApp.allow_origin='https://app.notablemind.org'` and notice the port it starts on (default is `8888`). Then click `set the repl host` in the top bar, and enter `localhost:` followed by the port number.",
+            "content": "The first step is to connect up an ipython kernel. run `ipython notebook --NotebookApp.allow_origin='http://app.notablemind.org'` and notice the port it starts on (default is `8888`). Then click `set the repl host` in the top bar, and enter `localhost:` followed by the port number.",
             "type": "base",
             "children": []
           },
