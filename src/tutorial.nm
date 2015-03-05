@@ -1,7 +1,7 @@
 {
   "title": "Notablemind Tutorial",
   "created": 1421128499662,
-  "opened": 1424129708629,
+  "opened": 1425540307820,
   "repl": "ijs",
   "root": {
     "id": "3r8ljzq4lh48qe6k26vtdtj9uopr4uc6",
@@ -27,7 +27,7 @@
             "children": [
               {
                 "id": "h6hgjy3u0q6ko2o8gu7avkc802t89j0d",
-                "content": "<span style=\"background-color:magenta\">\"Normal\"</span> mode",
+                "content": "\"Normal\" mode",
                 "children": [
                   {
                     "id": "7xwacnbb1d61eu1gpjc24oxddnoaesue",
@@ -48,12 +48,12 @@
                   }
                 ],
                 "created": 1421128878982,
-                "modified": 1423092506510,
+                "modified": 1425540398435,
                 "type": "base"
               },
               {
                 "id": "0c5rp3527sy4vtxnxswtp8x3whkvzdl4",
-                "content": "<span style=\"background:rgb(0,184,0)\">\"Edit\"</span> mode",
+                "content": "\"Edit\" mode",
                 "children": [
                   {
                     "id": "by08aliorrb971bstlv38xihu5vaf6ze",
@@ -74,12 +74,12 @@
                   }
                 ],
                 "created": 1421128893799,
-                "modified": 1423092506510,
+                "modified": 1425540403744,
                 "type": "base"
               },
               {
                 "id": "f6yfsbrezdhapz1q1mibhr4wutqngo83",
-                "content": "<span style=\"background:cyan\">\"Select\"</span> mode.",
+                "content": "\"Select\" mode.",
                 "children": [
                   {
                     "id": "zoitgn15cfrvpkakx73r8zjmq2nq48n0",
@@ -108,7 +108,7 @@
                   }
                 ],
                 "created": 1421128898926,
-                "modified": 1423092506510,
+                "modified": 1425540409458,
                 "type": "base"
               }
             ],
@@ -119,7 +119,7 @@
           {
             "id": "43qc85dayvtmw4n0qbo1izdfj6v333pk",
             "created": 1423792527837,
-            "modified": 1424130439193,
+            "modified": 1423792527837,
             "collapsed": false,
             "content": "### Using the keyboard",
             "type": "base",
@@ -220,7 +220,7 @@
               {
                 "id": "l7peghe3g9dkqs800j7dx1jca40l3dv4",
                 "created": 1424130436778,
-                "modified": 1424130476930,
+                "modified": 1424130436779,
                 "collapsed": false,
                 "content": "Searching",
                 "type": "base",
@@ -228,7 +228,7 @@
                   {
                     "id": "7klwhl1242die9tg4s9fcjr1yvrpavlg",
                     "created": 1424130439010,
-                    "modified": 1424130476094,
+                    "modified": 1424130439010,
                     "collapsed": true,
                     "content": "If you press `/` in normal mode, the search box pops up, and you can type to search.",
                     "type": "base",
@@ -237,7 +237,7 @@
                   {
                     "id": "yoch6az7ctdw9pz3p1ardvhusmmkodfl",
                     "created": 1424130476929,
-                    "modified": 1424130498737,
+                    "modified": 1424130476929,
                     "collapsed": true,
                     "content": "Only nodes within the current subtree are shown. To search to wole document, hit `g r` first  to go to the document root.",
                     "type": "base",
@@ -246,7 +246,7 @@
                   {
                     "id": "cu15yycss0u5c1kejt526m0bzi9ku9lp",
                     "created": 1424130476094,
-                    "modified": 1424130521045,
+                    "modified": 1424130476094,
                     "collapsed": true,
                     "content": "Hitting `enter` from the search box will scroll (and expand if necessary) to that node. `Alt+enter` will zoom to that node.",
                     "type": "base",
