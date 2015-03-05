@@ -3,7 +3,7 @@
 
 [![Join the chat at https://gitter.im/notablemind/notablemind](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/notablemind/notablemind?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-### [Notablemind.org](https://notablemind.org)  &nbsp;&nbsp;|&nbsp;&nbsp;  [Tutorial](https://app.notablemind.org/#/gist/jaredly/2a15dbba420eb509e12d)&nbsp;&nbsp; |&nbsp;&nbsp; [View roadmap](https://app.notablemind.org/#/gist/jaredly/9680269723596b0249a3)
+### [Notablemind.org](https://notablemind.org)  &nbsp;&nbsp;|&nbsp;&nbsp;  [Tutorial](https://app.notablemind.org/tutorial/)&nbsp;&nbsp; |&nbsp;&nbsp; [View roadmap](https://app.notablemind.org/#/gist/jaredly/9680269723596b0249a3)
 
 ### Screenshots
 
