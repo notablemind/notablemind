@@ -76,11 +76,13 @@ tutorial:
 
 # github pages things
 
-pages:
-	rsync www/* pages/ -rLu
+pages: sync-pages
 	lessc -x run.less pages/build.css
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js | uglifyjs --screw-ie8 > pages/build.js
 	browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d bin/client.js | uglifyjs --screw-ie8 > pages/baked.js
+
+sync-pages:
+	rsync www/* pages/ -rLu
 
 gh-pages:
 	cd pages && git add . && git commit -am"update" && git push
@@ -118,4 +120,4 @@ www/vendor/vega.js:
 launch-chrome:
 	google-chrome --load-and-launch-app=`pwd`/chromeapp
 
-.PHONY: css watch js all start-ipython pages vendor vendorlib
+.PHONY: css watch js all start-ipython pages vendor vendorlib sync-pages ipython tutorial
