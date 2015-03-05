@@ -1,7 +1,8 @@
 
-ARGS=-t [ reactify --es6 --everything --visitors jstransform/visitors/es6-destructuring-visitors ] -t envify
+ARGS=-t [ babelify --experimental ] -t envify
 
 MODS=' react react/addons less majax marked moment async ansi-to-html eventemitter3 highlight.js \
+babel \
 codemirror \
 codemirror/mode/javascript/javascript \
 codemirror/mode/python/python \

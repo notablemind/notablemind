@@ -39,6 +39,8 @@
     "treed": "git+https://github.com/jaredly/treed"
   },
   "devDependencies": {
+    "babel": "^4.6.6",
+    "babelify": "^5.0.3",
     "eventemitter2": "^0.4.13",
     "handlebars": "^1.3.0",
     "hbsfy": "^1.3.2",
