@@ -1,0 +1,42 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.DocHeader {
+    padding: 0;
+}
+
+span.treed_body_rendered {
+    min-height: 20px;
+    font-size: 10px;
+}
+
+span.treed_body_rendered {}
+
+.ITreedCodeEditor {
+    font-size: 10px;
+}
+
+.m_IPython.m_IPython-empty {
+    margin: 0;
+}
+
+.m_IPython_time {
+    font-size: 8px;
+    top: 1px;
+    right: -2px;
+}
+
+.TreeItem_body {
+    font-size: 10px;
+}
+
+.treed_body_rendered, .textarea-grow textarea, .textarea-grow .shadow {
+    min-height: 20px;
+    font-size: 10px;
+}
+
+.TreeItem-active > .TreeItem_head > .TreeItem_body {
+    outline: 2px solid #ccc;
+}

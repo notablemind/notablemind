@@ -77,7 +77,7 @@ var SplitManager = React.createClass({
         removed = config.value[pos[0]].value
         config = config.value[pos[0] === 'first' ? 'second' : 'first']
       } else {
-        leaf = false
+        let leaf = false
         config = cloneShallow(config)
         var last = pos.pop()
           , sec = pos.pop()

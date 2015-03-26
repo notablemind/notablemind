@@ -20,6 +20,7 @@ var formatters = [
   require('itreed/formatters/live-button'),
   require('itreed/formatters/react'),
   require('itreed/formatters/vega'),
+  require('itreed/formatters/table'),
   require('itreed/formatters/dom'),
   require('itreed/formatters/latex'),
   // require('itreed/formatters/image'),

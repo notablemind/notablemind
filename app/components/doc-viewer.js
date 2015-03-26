@@ -228,7 +228,7 @@ var DocViewer = React.createClass({
 
   _searchItems: function (needle) {
     var store = this.props.treed.store
-      , blackTypes = ['ipython', 'code-playground'] // TODO have plugins declare this, as "nosearch" or something
+      , blackTypes = []//'ipython', 'code-playground'] // TODO have plugins declare this, as "nosearch" or something
       , view = store.views[store.activeView]
       , root = view.root
       , db = store.db
