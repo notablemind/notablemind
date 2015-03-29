@@ -36,7 +36,6 @@ function saveTimer(save, longTime, shortTime) {
 var Saver = React.createClass({
   propTypes: {
     store: PT.object.isRequired,
-    value: PT.object.isRequired, // the source
     file: PT.object.isRequired,
     onFileUpdate: PT.func.isRequired,
   },

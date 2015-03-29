@@ -88,7 +88,7 @@ var KeyboardPopup = React.createClass({
         </div>
         <div className='KeyboardPopup_pages'>
           {pageNames.map((name, i) =>
-            <button disabled={i === this.state.pageIndex} onClick={() => this.setState({pageIndex: i})}>
+            <button key={i} disabled={i === this.state.pageIndex} onClick={() => this.setState({pageIndex: i})}>
               {name}
             </button>)}
         </div>
