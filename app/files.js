@@ -221,6 +221,7 @@ function newFile(title, repl, done) {
   var file = {
     id: uuid(),
     created: Date.now(),
+    plugins: {},
     opened: Date.now(),
     title: title,
     repl: repl

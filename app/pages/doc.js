@@ -105,6 +105,36 @@ var DocPage = React.createClass({
     files.update(id, update, done)
   },
 
+  updatePlugin(id, values) {
+    if (!this.state.file.plugins) {
+      this.state.file.plugins = {}
+    }
+    let plugin = this.state.file.plugins[id] || {}
+    for (let name in values) {
+      plugin[name] = values[name]
+    }
+    this.state.file.plugins[id] = plugin
+    // TODO arghhh mutable
+    this.updateFile({plugins: this.state.file.plugins})
+  },
+
+  getPluginConfig(id) {
+    if (!this.state.file.plugins) return {}
+    return this.state.file.plugins[id] || {}
+  },
+
+  childContextTypes: {
+    updatePlugin: React.PropTypes.func,
+    getPluginConfig: React.PropTypes.func,
+  },
+
+  getChildContext() {
+    return {
+      updatePlugin: this.updatePlugin,
+      getPluginConfig: this.getPluginConfig,
+    }
+  },
+
   _onLoad: function (treed, file) {
     window.store = treed.store
     window.docPage = this
@@ -145,7 +175,8 @@ var DocPage = React.createClass({
         var config = kernelConfig[file.repl]
         if (config && config.kernel) {
           // repl
-          plugins.unshift(require('itreed/lib/plugin')(config))
+          let cc = file.plugins && file.plugins.itreed
+          plugins.unshift(require('itreed/lib/plugin')(config, cc))
         }
 
         var treed = new Treed({plugins: plugins})
