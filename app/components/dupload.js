@@ -1,9 +1,9 @@
+// yeah
 
 var React = require('react')
   , PT = React.PropTypes
   , Downloader = require('./downloader')
   , Uploader = require('./uploader')
-  , Dropload = require('./dropload')
 
 var Dupload = React.createClass({
   propTypes: {
@@ -79,7 +79,6 @@ var Dupload = React.createClass({
       <span className='Dupload_download' onClick={this._onDownload}/>
       <span className='Dupload_upload' onClick={this._onUpload}/>
       {modal}
-      <Dropload onDrop={this._onDrop} message="Drop anywhere to import"/>
     </div>
   },
 })
