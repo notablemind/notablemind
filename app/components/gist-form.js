@@ -25,7 +25,7 @@ var GistForm = React.createClass({
   },
   render: function () {
     return <div className='GistForm'>
-      Load from gist: 
+      Load from gist:{' '}
       <input value={this.state.value}
         placeholder="username/id"
         onChange={(e) => this.setState({value: e.target.value})}

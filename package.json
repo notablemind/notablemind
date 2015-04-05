@@ -19,10 +19,12 @@
   "dependencies": {
     "ansi-to-html": "~0.2.0",
     "async": "~0.9.0",
+    "browserify": "^9.0.6",
     "classnames": "^1.2.0",
     "codemirror": "git+https://github.com/jaredly/CodeMirror.git",
     "commander": "^2.6.0",
     "deep-equal": "^0.2.1",
+    "deepcopy": "^0.4.0",
     "envify": "^3.2.0",
     "escodegen": "~1.4.1",
     "esprima": "~1.2.2",
@@ -37,13 +39,19 @@
     "moment": "~2.8.3",
     "react": "^0.12.2",
     "react-router": "^0.12.4",
-    "treed": "git+https://github.com/jaredly/treed"
+    "serve-static": "^1.9.2",
+    "treed": "git+https://github.com/jaredly/treed",
+    "watchify": "^3.1.0"
   },
   "devDependencies": {
     "babel": "^4.6.6",
     "babelify": "^5.0.3",
+    "body-parser": "^1.12.2",
+    "compression": "^1.4.3",
+    "connect": "^3.3.5",
     "eventemitter2": "^0.4.13",
     "jsdom": "^3.1.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "through": "^2.3.6"
   }
 }

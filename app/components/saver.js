@@ -1,6 +1,5 @@
 
 var React = require('react')
-  , cx = React.addons.classSet
   , PT = React.PropTypes
   , sources = require('../sources')
   , DropDown = require('./dropdown')
@@ -10,8 +9,7 @@ var React = require('react')
   , sourceSettings = require('./source-settings')
 
 function saveTimer(save, longTime, shortTime) {
-  var last = null
-    , longSync = null
+  var longSync = null
     , shortSync = null
   function doSave() {
     clearTimeout(longSync)
@@ -84,13 +82,16 @@ var Saver = React.createClass({
   },
 
   _onDirty: function () {
+    let count = Object.keys(this.props.store.db.nodes).length
     if (!this.props.file.source) {
       return files.update(this.props.file.id, {
-        modified: Date.now()
+        modified: Date.now(),
+        size: count,
       }, file => this.props.onFileUpdate(file))
     }
     var source = assign({}, this.props.file.source, {dirty: true})
     files.update(this.props.file.id, {
+      size: count,
       source: source,
       modified: Date.now(),
     }, file => this.props.onFileUpdate(file))

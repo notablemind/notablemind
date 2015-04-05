@@ -72,7 +72,7 @@ var Importer = React.createClass({
           this.props.sources.map((name, i) => <li key={name}>
             <button
               className={cx({
-                "Importer_source": true,
+                Importer_source: true,
                 'Importer_source-selected': i === this.state.selected
               })}
               onClick={this._importFrom.bind(null, name)}>

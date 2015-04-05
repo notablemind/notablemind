@@ -4,6 +4,14 @@ var React = require('react/addons')
   , PT = React.PropTypes
 
 var Splitter = React.createClass({
+  propTypes: {
+    onChangeRatio: PT.func,
+    config: PT.object,
+    pos: PT.object,
+    comp: PT.element,
+    cprops: PT.object,
+  },
+
   getInitialState: function () {
     return {ratio: this.props.config.value.ratio || .5, moving: null}
   },

@@ -3,6 +3,11 @@ var React = require('react')
   , PT = React.PropTypes
 
 var Dropload = React.createClass({
+  propTypes: {
+    message: PT.node,
+    onDrop: PT.func,
+  },
+
   getDefaultProps: function () {
     return {
       message: 'Drop anywhere to upload',

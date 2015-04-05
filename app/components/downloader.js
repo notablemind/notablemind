@@ -17,7 +17,7 @@ var Downloader = React.createClass({
   getInitialState: function () {
     return {
       name: this._getDefaultName(false),
-      whole_notebook: false,
+      wholeNotebook: false,
       format: 'notablemind',
     }
   },
@@ -29,9 +29,9 @@ var Downloader = React.createClass({
     inp.selectionEnd = inp.value.length
   },
 
-  _getDefaultName: function (whole_notebook) {
+  _getDefaultName: function (wholeNotebook) {
     var id = this.props.ids[0]
-    if (whole_notebook) {
+    if (wholeNotebook) {
       id = this.props.root
     }
     return this.props.nodeContents(id).trim().replace(/[^\w-_.]/g, '-').slice(0, 100)
@@ -43,7 +43,7 @@ var Downloader = React.createClass({
   },
 
   onDownload: function () {
-    var ids = this.state.whole_notebook ? [this.props.root] : this.props.ids
+    var ids = this.state.wholeNotebook ? [this.props.root] : this.props.ids
       , format = this.state.format
       , trees = this.props.exportMany(ids)
       , data = convert[format].strFromTrees(trees)
@@ -68,14 +68,13 @@ var Downloader = React.createClass({
 
   _setWhole: function (whole) {
     this.setState({
-      whole_notebook: whole,
+      wholeNotebook: whole,
       name: this._getDefaultName(whole),
     })
   },
 
   render: function () {
-    var ids = this.props.ids
-      , whole_notebook = this.state.whole_notebook
+    let ids = this.props.ids
       , whole = false
       , what
     if (ids.length === 1) {
@@ -94,11 +93,11 @@ var Downloader = React.createClass({
         <span className='Download_what'>Download
           <button onClick={this._setWhole.bind(null, false)} className={cx({
             'Download_which': true,
-            'Download_which-selected': !this.state.whole_notebook,
+            'Download_which-selected': !this.state.wholeNotebook,
           })}>{what}</button>
           <button onClick={this._setWhole.bind(null, true)} className={cx({
             'Download_which': true,
-            'Download_which-selected': this.state.whole_notebook,
+            'Download_which-selected': this.state.wholeNotebook,
           })}>the whole notebook</button>
         </span>}
       <FormatPicker formats={convert.formats} format={this.state.format} onChange={this._onChangeFormat}/>

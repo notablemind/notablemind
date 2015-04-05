@@ -1,5 +1,4 @@
 var React = require('react')
-  , {Navigation, State} = require('react-router')
   , PT = React.PropTypes
   , KeysMixin = require('../keys-mixin')
   , Dropload = require('./dropload')
@@ -47,8 +46,14 @@ var BrowseHeader = React.createClass({
       }
     }
     this.props.fileslib.importRaw(data, (err, file) => {
+      if (err) {
+        return console.warn('failed to import file', err) // TODO UI?
+      }
       if (source) {
         this.props.fileslib.update(file.id, {source: source}, (err) => {
+          if (err) {
+            return console.warn('failed to update', err) // TODO UI?
+          }
           this.props.onUpdated()
         })
       } else {

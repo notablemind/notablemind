@@ -1,16 +1,10 @@
 
 var React = require('react')
-  , NewFile = require('./new-file')
-  , Dropload = require('./dropload')
-  , Importer = require('./importer')
   , Tabular = require('./tabular')
-  , Dumper = require('./dumper')
-  , readFile = require('./read-file')
+  // , Dumper = require('./dumper')
   , cx = React.addons.classSet
   , PT = React.PropTypes
-  , history = require('./history')
   , kernels = require('../kernels')
-  , async = require('async')
   , files = require('../files')
   , fuzzyTime = require('./fuzzy-time')
 
@@ -169,6 +163,7 @@ var Browse = React.createClass({
           'Sync': file => file.source ? file.source.type : null,
           'Modified': file => file.modified ? fuzzyTime(file.modified) : null,
           'Opened': file => fuzzyTime(file.opened),
+          'Size': file => file.size,
         }}
         headerWidths={{
           Repl: 100,

@@ -43,7 +43,14 @@ var Modal = React.createClass({
   },
 
   render: function () {
-    var set = (name, evt) => {
+    let style
+    if (this.props.width) {
+      style = {
+        width: this.props.width + 'px',
+        marginLeft: -this.props.width/2 + 'px'
+      }
+    }
+    let set = (name, evt) => {
       if (evt) {
         return this.setEvt.bind(null, name)
       }
@@ -52,12 +59,13 @@ var Modal = React.createClass({
       }
       this.setState(name)
     }
-    return <div className='Modal_wrapper'>
+    return <div className='Modal-container'>
       <div className='Modal_back' onClick={this.onCancel}/>
-      <div className='Modal'>
-        <div className='Modal_top'>
+      <div className='Modal_popup' style={style}>
+        <div className='Modal_title'>
           {this.props.title}
         </div>
+        <div className='Modal_close' onClick={this.props.onClose}>&times;</div>
         <div className='Modal_body'>
           {this.props.renderBody.call(
             this,
@@ -94,6 +102,7 @@ Modal.show = function (config) {
       initialState={config.initialState || {}}
       title={config.title || 'Modal'}
       onClose={onClose}
+      width={config.width}
       buttons={config.buttons}
       renderBody={config.renderBody || config.body} />, node)
 }

@@ -1,7 +1,5 @@
 
 var React = require('react/addons')
-  , ensureInView = require('treed/util/ensure-in-view')
-  , cx = React.addons.classSet
   , PT = React.PropTypes
   , KeysMixin = require('../keys-mixin')
   , TableBody = require('./table-body')
@@ -32,7 +30,7 @@ var Tabular = React.createClass({
     this.resizeHead()
   },
 
-  componentDidUpdate: function (prevProps, prevState) {
+  componentDidUpdate: function () {
     this.resizeHead()
   },
 
@@ -61,16 +59,8 @@ var Tabular = React.createClass({
   },
 
   _onChangeSearch: function (e) {
-    var text = e.target.value.toLowerCase()
-      , heads = this.props.searchHeaders || Object.keys(this.props.headers)
-      , items = text.trim() ? this.props.items.filter(item => {
-          return heads.some(name => {
-            var res = this.props.headers[name](item)
-            return res && res.toLowerCase().indexOf(text) !== -1
-          })
-        }) : this.props.items
     this.setState({
-      searchtext: text,
+      searchtext: e.target.value.toLowerCase(),
     })
   },
 

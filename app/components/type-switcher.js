@@ -1,8 +1,7 @@
 
-var React = require('react')
-  , treed = require('treed')
+import React from 'react'
 
-var TypeSwitcher = React.createClass({
+export default React.createClass({
   propTypes: {
     types: React.PropTypes.object,
   },
@@ -43,6 +42,4 @@ var TypeSwitcher = React.createClass({
     </div>
   }
 })
-
-module.exports = TypeSwitcher
 

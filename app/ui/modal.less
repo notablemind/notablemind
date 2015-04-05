@@ -1,0 +1,68 @@
+
+.Modal {
+  &_back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .7);
+    cursor: pointer;
+    z-index: 10000;
+  }
+
+  &_popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+
+    width: 600px;
+    margin-left: -300px;
+    margin-top: -200px;
+    z-index: 10000;
+
+    border: none;
+    box-shadow: 0 0 5px #999;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  &_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 12px;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 22px;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    &:hover {
+      color: #c55;
+    }
+  }
+
+  &_title {
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  &_body {
+    padding: 10px;
+    text-align: center;
+  }
+
+  &_buttons {
+    padding: 10px;
+    text-align: center;
+
+    button {
+      cursor: pointer;
+    }
+  }
+}
+
+

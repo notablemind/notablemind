@@ -107,11 +107,11 @@ var Uploader = React.createClass({
     return <Modal className="Modal-upload" onClose={this.props.onClose} title="Import">
       {this.state.error && <div className="Uploader_error">{this.state.error}</div>}
       <FormatPicker
-        formats={[["replace", "Replace notebook"], ["insert", "Insert at cursor"]]}
+        formats={[['replace', 'Replace notebook'], ['insert', 'Insert at cursor']]}
         onChange={this._onChangeMode}
         format={this.state.mode}/>
       {this.file()}
-      {this.state.file && 
+      {this.state.file &&
         <FormatPicker
           formats={convert.formats}
           onChange={this._onChangeFormat}

@@ -59,20 +59,20 @@ var Dupload = React.createClass({
     var modal = null
     if (this.state.downloading) {
       var store = this.props.store
-      modal = Downloader({
-        exportMany: store.db.exportMany.bind(this.props.store.db),
-        nodeContents: (id) => store.db.nodes[id].content,
-        ids: store.views[store.activeView].selection || [store.views[store.activeView].active],
-        root: store.db.root,
-        onClose: this._onClose,
-      })
+      modal = <Downloader
+        exportMany={store.db.exportMany.bind(this.props.store.db)}
+        nodeContents={(id) => store.db.nodes[id].content}
+        ids={store.views[store.activeView].selection || [store.views[store.activeView].active]}
+        root={store.db.root}
+        onClose={this._onClose}
+      />
     } else if (this.state.uploading) {
-      modal = Uploader({
-        initialFile: this.state.uploadFile,
-        onUploaded: this._onUploaded,
-        store: this.props.store,
-        onClose: this._onClose,
-      })
+      modal = <Uploader
+        initialFile={this.state.uploadFile}
+        onUploaded={this._onUploaded}
+        store={this.props.store}
+        onClose={this._onClose}
+      />
     }
 
     return <div className='Dupload'>

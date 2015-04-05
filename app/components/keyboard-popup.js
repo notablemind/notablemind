@@ -5,8 +5,6 @@
 var React = require('react')
   , PT = React.PropTypes
 
-var modes = ['insert', 'visual', 'normal']
-
 var KeyboardPopup = React.createClass({
   propTypes: {
     onClose: PT.func.isRequired,
@@ -42,7 +40,7 @@ var KeyboardPopup = React.createClass({
 
   _onKeyDown: function (e) {
     if (e.keyCode === 27) return this._onClose()
-    if (e.keyCode !== 9) return
+    if (e.keyCode !== 9) return null
     e.preventDefault()
     var selection = this.state.pageIndex
       , pages = Object.keys(this.props.pages)
@@ -66,7 +64,7 @@ var KeyboardPopup = React.createClass({
 
   renderRow: function (action, bindings) {
     var text = bindings.text || bindings.normal || bindings.visual || bindings.insert
-    if (!text) return
+    if (!text) return null
     return <tr key={action}>
       <td className="KeyboardPopup_bindings">
         {

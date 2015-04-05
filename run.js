@@ -2,20 +2,15 @@
  * bootstrap the app into document.body
  */
 
-var React = require('react')
-var treed = require('treed')
+const React = require('react')
 
-var files = require('./app/files')
-
-// var App = require('./app')
-
-window.run_require = require
+window.runRequire = require
 window.React = React
 
 // configuration things
-var format = require('itreed/lib/plugin/format')
+const format = require('itreed/lib/plugin/format')
 
-var formatters = [
+const formatters = [
   require('itreed/formatters/live'),
   require('itreed/formatters/live-button'),
   require('itreed/formatters/react'),
@@ -38,8 +33,7 @@ formatters.map(plugin => {
 })
 
 window.onload = function () {
-  // React.renderComponent(App({}), document.body)
-  var router = require('./app/router')
+  const router = require('./app/router')
 
   require('react-router').run(router, function (Handler) {
     React.render(<Handler/>, document.body)

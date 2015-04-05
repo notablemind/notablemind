@@ -1,10 +1,12 @@
 
+import classnames from 'classnames'
+
 var React = require('react')
   , PT = React.PropTypes
 
 var Modal = React.createClass({
   render: function () {
-    return this.transferPropsTo(<div className='Modal-container'>
+    return <div className={classnames('Modal-container', this.props.className)} {...this.props}>
       <div className='Modal_back' onClick={this.props.onClose}/>
       <div className='Modal_popup'>
         <div className='Modal_title'>{this.props.title}</div>
@@ -13,7 +15,7 @@ var Modal = React.createClass({
           {this.props.children}
         </div>
       </div>
-    </div>)
+    </div>
   }
 })
 

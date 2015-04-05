@@ -102,7 +102,9 @@ var DocPage = React.createClass({
 
   updateFile: function (update, done) {
     var id = this.getParams().id
-    files.update(id, update, done)
+    files.update(id, update, file => {
+      this.setState({file}, done)
+    })
   },
 
   updatePlugin(id, values) {
@@ -168,6 +170,7 @@ var DocPage = React.createClass({
       require('treed/plugins/lists'),
       require('treed/plugins/rebase'),
       require('../../treed-plugins/custom-css'),
+      require('../../treed-plugins/scriptures'),
     ]
 
     files.find(id, file =>
@@ -204,6 +207,7 @@ var DocPage = React.createClass({
         file={file}
         treed={treed}
         onFileUpdate={this.onFileUpdate}
+        updateFile={this.updateFile}
 
         changeTitle={this._changeTitle}
         onClose={!this.props.noHome && (() => this.transitionTo('browse'))}

@@ -5,20 +5,7 @@ var React = require('react')
 
 function r(){
   for (var a = ''; a.length < 5; a += 'abcdefg'[parseInt(Math.random() * 7)]);
-  return a;
-}
-
-function cloneShallow(s) {
-  var o = {}
-  for (var a in s) {
-    o[a] = s[a]
-  }
-  return o
-}
-
-function r(){
-  for (var a = ''; a.length < 5; a += 'abcdefg'[parseInt(Math.random() * 7)]);
-  return a;
+  return a
 }
 
 function cloneShallow(s) {
@@ -52,10 +39,9 @@ var SplitManager = React.createClass({
           }
         }
       }
-      var config = config
-      var last = pos.pop()
-      var line = pos.reduce(function (config, i) {
-        return config[i].value = cloneShallow(config[i].value)
+      const last = pos.pop()
+      const line = pos.reduce(function (cvalue, i) {
+        return cvalue[i].value = cloneShallow(cvalue[i].value)
       }, config.value)
       line[last] = {
         leaf: false,
@@ -77,15 +63,14 @@ var SplitManager = React.createClass({
         removed = config.value[pos[0]].value
         config = config.value[pos[0] === 'first' ? 'second' : 'first']
       } else {
-        let leaf = false
         config = cloneShallow(config)
         var last = pos.pop()
           , sec = pos.pop()
-        var line = pos.reduce(function (config, i) {
-          return config[i].value = cloneShallow(config[i].value)
+        var line = pos.reduce(function (cvalue, i) {
+          return cvalue[i].value = cloneShallow(cvalue[i].value)
         }, config.value)
         removed = line[sec].value[last].value
-        line[sec] = line[sec].value[last == 'first' ? 'second' : 'first']
+        line[sec] = line[sec].value[last === 'first' ? 'second' : 'first']
       }
       return {removed, config}
     }
@@ -93,7 +78,7 @@ var SplitManager = React.createClass({
 
   getDefaultProps: function () {
     return {
-      getNew: function (old) {return r()}
+      getNew: function () {return r()}
     }
   },
 
@@ -124,7 +109,7 @@ var SplitManager = React.createClass({
     cprops.onSplit = this.split
     cprops.onRemove = this.remove
     cprops.onChangeRatio = this.changeRatio
-    return <Splitter 
+    return <Splitter
       config={this.props.config}
       comp={this.props.comp}
       onChangeRatio={this.changeRatio}

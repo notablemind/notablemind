@@ -2,7 +2,6 @@
 var React = require('react/addons')
   , cx = React.addons.classSet
   , kernels = require('../kernels')
-  , KeysMixin = require('../keys-mixin')
 
 var repls = Object.keys(kernels)
 

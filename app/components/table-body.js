@@ -1,17 +1,9 @@
 
-var React = require('react/addons')
-  , ensureInView = require('treed/util/ensure-in-view')
-  , cx = React.addons.classSet
+import React from 'react'
+
+var ensureInView = require('treed/util/ensure-in-view')
   , PT = React.PropTypes
   , KeysMixin = require('../keys-mixin')
-
-function arEq(a, b) {
-  if (a.length !== b.length) return false
-  for (var i=0; i<a.length; i++) {
-    if (a[i] !== b[i]) return false
-  }
-  return true
-}
 
 var TableBody = React.createClass({
   propTypes: {
@@ -44,16 +36,16 @@ var TableBody = React.createClass({
     if (this.props.extraKeys) {
       var k = {}
       for (var name in this.props.extraKeys) {
-        k[name] = this._extraKeys.bind(null, this.props.extraKeys[name])
+        k[name] = this._onExtraKey.bind(null, this.props.extraKeys[name])
       }
-      this._extra_keys = this.props.keys.add(k)
+      this._extraKeys = this.props.keys.add(k)
     }
   },
 
   componentWillUnmount: function () {
-    if (this._extra_keys) {
-      this.props.keys.remove(this._extra_keys)
-      delete this._extra_keys
+    if (this._extraKeys) {
+      this.props.keys.remove(this._extraKeys)
+      delete this._extraKeys
     }
   },
 
@@ -64,16 +56,16 @@ var TableBody = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    if (this._extra_keys && nextProps.keys) {
-      nextProps.keys.remove(this._extra_keys)
-      delete this._extra_keys
+    if (this._extraKeys && nextProps.keys) {
+      nextProps.keys.remove(this._extraKeys)
+      delete this._extraKeys
     }
     if (nextProps.extraKeys) {
       var k = {}
       for (var name in nextProps.extraKeys) {
-        k[name] = this._extraKeys.bind(null, nextProps.extraKeys[name])
+        k[name] = this._onExtraKey.bind(null, nextProps.extraKeys[name])
       }
-      this._extra_keys = nextProps.keys.add(k)
+      this._extraKeys = nextProps.keys.add(k)
     }
     if (this.state.selected >= nextProps.items.length) {
       if (nextProps.items.length === 0) {
@@ -90,7 +82,7 @@ var TableBody = React.createClass({
     }
   },
 
-  _extraKeys: function (fn) {
+  _onExtraKey: function (fn) {
     fn(this.props.items[this.state.selected])
   },
 
