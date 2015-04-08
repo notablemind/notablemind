@@ -1,35 +1,32 @@
 // Everything prefixed with an @ will be replaced
-import {treedFromFile, initFormatters, Ticker} from '../utils'
+import {initFormatters, Ticker} from '../utils'
 
 const ticks = new Ticker()
+window.ticks = ticks
 
 import React from 'react/addons'
 ticks.add('load:react')
-
-@ExtraImports
-import @ComponentName from '../../app/components/@ComponentPath'
-ticks.add('load:component')
-
-@ExtraSetup
+import MemPL from 'treed/pl/mem'
 
 const pl = new MemPL()
 
-@Setup
-@MakeEl
+window.run = run
 
-Setup(function () {
-  const el = MakeEl.apply(null, arguments)
+function run(setup, makeEl) {
+  setup(function () {
+    const el = makeEl.apply(null, arguments)
 
-  React.addons.Perf.start()
-  ticks.add('setup')
+    React.addons.Perf.start()
+    ticks.add('setup')
 
-  React.render(el, document.body, (err) => {
-    ticks.add('render')
+    React.render(el, document.body, (err) => {
+      ticks.add('render')
 
-    ticks.show()
-    React.addons.Perf.stop()
-    //React.addons.Perf.getLastMeasurements()
+      ticks.show()
+      React.addons.Perf.stop()
+      //React.addons.Perf.getLastMeasurements()
+    })
+
   })
-
-})
+}
 

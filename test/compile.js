@@ -15,10 +15,6 @@ function compile(infile, outfile, watch) {
   })
 
   b.external(external)
-  b.transform(transer(
-    file => file.indexOf('.cfg.js') !== -1,
-    transmutify
-  ))
   b.transform('babelify', {experimental: true})
   b.transform('envify')
   b.add(infile)
@@ -80,36 +76,11 @@ function transer(check, trans) {
   }
 }
 
-function transmutify(txt) {
-  const config = txt.split(/^\b/mg).reduce((obj, part) => {
-    const lines = part.trim().split('\n').map(m => m.trim()).filter(m => m)
-    let name, val
-    if (lines.length === 1) {
-      const parts = lines[0].split(':')
-      name = parts[0]
-      val = parts.slice(1).join(':').trim()
-    } else {
-      if (lines[0].slice(-1) === ':') {
-        name = lines[0].slice(0, -1)
-        val = lines.slice(1).join('\n')
-      } else {
-        name = lines[0].split('(')[0]
-        val = 'function ' + lines[0] + '{\n' + lines.slice(1).join('\n') + '\n}'
-      }
-    }
-    obj[name] = val
-    return obj
-  }, {})
-  // console.log(txt, config)
-
-  const TPL = fs.readFileSync('./components/tpl.js')
-    .toString('utf8')
-
-  return transmute(TPL, config)
-}
-
 compile(
-  './components/doc-viewer.cfg.js',
+  [
+    './components/tpl.js',
+    './components/doc-viewer.js',
+  ],
   './build/components/doc-viewer.js',
   true)
 

@@ -13,3 +13,4 @@ www/baked.js
 /site
 /www/baked-vendor.js
 /.ipynb_checkpoints
+/test/build

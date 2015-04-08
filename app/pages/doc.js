@@ -170,7 +170,7 @@ var DocPage = React.createClass({
       require('treed/plugins/lists'),
       require('treed/plugins/rebase'),
       require('../../treed-plugins/custom-css'),
-      require('../../treed-plugins/scriptures'),
+      require('../../../scriptures/plugin'),
     ]
 
     files.find(id, file =>
