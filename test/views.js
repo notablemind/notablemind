@@ -3,6 +3,7 @@ import React from 'react'
 import fs from 'fs'
 
 const components = fs.readdirSync(__dirname + '/components')
+  .filter(name => name.match(/\.js$/) && name !== 'tpl.js')
   .map(name => name.slice(0, -('.js'.length)))
 
 function tpl(text, vbls) {

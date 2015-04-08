@@ -24,6 +24,6 @@ app.use('/vendor',
 
 http.createServer(app)
   .listen(process.env.PORT || 3000, () => {
-    console.log('ready')
+    console.log('ready', process.env.PORT || 3000)
   })
 

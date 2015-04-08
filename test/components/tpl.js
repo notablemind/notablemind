@@ -1,4 +1,3 @@
-// Everything prefixed with an @ will be replaced
 import {initFormatters, Ticker} from '../utils'
 
 const ticks = new Ticker()
@@ -6,9 +5,6 @@ window.ticks = ticks
 
 import React from 'react/addons'
 ticks.add('load:react')
-import MemPL from 'treed/pl/mem'
-
-const pl = new MemPL()
 
 window.run = run
 

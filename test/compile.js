@@ -49,33 +49,6 @@ function compile(infile, outfile, watch) {
   })
 }
 
-function transmute(tpl, config) {
-  return tpl.replace(/@[A-Za-z]+/g, name => {
-    name = name.slice(1)
-    let res = config[name]
-    if (!res) {
-      throw new Error('Unknown variable: ' + name)
-    }
-    return res
-  })
-}
-
-function transer(check, trans) {
-  return function (file) {
-    if (!check(file)) return through()
-    let buf = ''
-    return through(write, end)
-
-    function write(txt) {
-      buf += txt
-    }
-    function end() {
-      this.queue(trans(buf))
-      this.queue(null)
-    }
-  }
-}
-
 compile(
   [
     './components/tpl.js',
@@ -85,13 +58,4 @@ compile(
   true)
 
 compile('./viewer/index.js', './build/viewer.js', true)
-
-/*
-compile({
-  id: 'hello.js',
-  file: 'hello.js',
-  source: 'console.log("hello")',
-  entry: true,
-}, './tst.js')
-*/
 

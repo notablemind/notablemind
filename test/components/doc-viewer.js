@@ -46,6 +46,7 @@ function setup(done) {
 }
 
 function makeEl(err, {treed, file}) {
+  treed.keyManager.listen(window)
   return <DocViewer
     saveWindowConfig={(a, b) => {b()}}
     keys={treed.keyManager}
