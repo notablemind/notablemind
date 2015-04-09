@@ -4,7 +4,7 @@ import run from './server'
 import {exec} from 'child_process'
 
 run(8192, server => {
-  exec(`slimerjs ${__dirname}/phantom.js`, (err, stdout, stderr) => {
+  exec(`slimerjs --debug=true ${__dirname}/phantom.js`, (err, stdout, stderr) => {
     if (err) {
       console.log(`Phantom test failed: ${err.code} ${err.signal}`)
       console.log(stdout, stderr)

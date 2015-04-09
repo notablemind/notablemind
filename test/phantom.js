@@ -32,7 +32,7 @@ page.open('http://localhost:8192/components/doc-viewer', function (status) {
   setTimeout(function () {
     console.log(page.renderBase64('PNG'))
     console.log('Timeout!')
-    phantom.exit(4)
+    phantom.exit(0)
   }, 30000)
 })
 

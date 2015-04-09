@@ -7,6 +7,7 @@ globs:
 	which babel-node || npm install -g babel
 	which browserify || npm install -g browserify
 	which lessc || npm install -g less
+	which slimerjs || npm install -g slimerjs
 
 test: globs node_modules vendor www/vendor.js css test/build/components/doc-viewer.js
 	babel-node test/test.js
