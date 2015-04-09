@@ -179,7 +179,7 @@ var DocPage = React.createClass({
         if (config && config.kernel) {
           // repl
           let cc = file.plugins && file.plugins.itreed
-          plugins.unshift(require('itreed/lib/plugin')(config, cc))
+          plugins.unshift(require('itreed')(config, cc))
         }
 
         var treed = new Treed({plugins: plugins})

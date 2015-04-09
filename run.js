@@ -8,7 +8,7 @@ window.runRequire = require
 window.React = React
 
 // configuration things
-const format = require('itreed/lib/plugin/format')
+const format = require('itreed/lib/format')
 
 const formatters = [
   require('itreed/formatters/live'),

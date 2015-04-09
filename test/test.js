@@ -4,7 +4,7 @@ import run from './server'
 import {spawn} from 'child_process'
 
 run(8192, server => {
-  const proc = spawn('slimerjs', ['--debug=true', `${__dirname}/phantom.js`])
+  const proc = spawn('slimerjs', [`${__dirname}/phantom.js`])
   let stdout = ''
   let stderr = ''
 
@@ -20,7 +20,7 @@ run(8192, server => {
       process.exit(code)
     }
     console.log('Tests passed')
-    const last = stdout.trim().split('\n').slice(-2)[0]
+    const last = stdout.trim().split('\n').slice(-1)[0]
     let data
     try {
       data = JSON.parse(last)
@@ -42,18 +42,5 @@ run(8192, server => {
       process.exit(0)
     })
   })
-
-  /*
-  proc.on('close', (err, stdout, stderr) => {
-    if (err) {
-      console.log(`Phantom test failed: ${err.code} ${err.signal}`)
-      console.log(stdout, stderr)
-      process.exit(err.code || 5)
-    }
-    console.log('Tests Passed')
-    console.log(stdout)
-    console.log(stderr)
-  })
-  */
 })
 

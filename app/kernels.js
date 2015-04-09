@@ -1,9 +1,11 @@
 
-var Gorilla = require('itreed/lib/kernels/gorilla')
-  , IPython = require('itreed/lib/kernels/ipython')
-  , IJS = require('itreed/lib/kernels/js')
+var Gorilla = require('itreed/plugins/itreed-gorilla')
+  , IPython = require('itreed/plugins/itreed-jupyter')
+  , IJS = require('itreed/plugins/itreed-js')
+/*
   , Rust = require('itreed/lib/kernels/rust')
   , Go = require('itreed/lib/kernels/go')
+*/
 
 module.exports = {
   null: {
@@ -37,6 +39,7 @@ module.exports = {
     title: 'Javascript',
     kernel: IJS,
   },
+  /*
   'rust': {
     type: 'rust',
     language: 'rust',
@@ -51,5 +54,6 @@ module.exports = {
     title: 'Go',
     kernel: Go,
   }
+  */
 }
 

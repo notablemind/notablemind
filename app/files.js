@@ -169,7 +169,7 @@ function init(file, pl, defaultData, done) {
   ]
   if (config && config.kernel) {
     // repl
-    plugins.unshift(require('itreed/lib/plugin')(config))
+    plugins.unshift(require('itreed')(config))
   }
 
   var storeOptions = {

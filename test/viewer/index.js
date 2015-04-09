@@ -11,7 +11,7 @@ ticks.add('load:treed')
 import DocViewer from '../../app/components/doc-viewer'
 ticks.add('load:component')
 
-var IJS = require('itreed/lib/kernels/js')
+var IJS = require('itreed/plugins/itreed-js')
 ticks.add('load:ijs')
 var itreed = require('itreed')
 ticks.add('load:itreed')
