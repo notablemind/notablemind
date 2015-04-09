@@ -32,7 +32,7 @@ page.open('http://localhost:8192/components/doc-viewer', function (status) {
     console.log('Timeout!')
     phantom.exit(4)
 
-  }, 30000)
+  }, 300000)
 })
 
 
