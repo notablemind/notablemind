@@ -4,7 +4,9 @@ include ./common.mk
 all: node_modules vendor vendorlib js css
 
 globs:
-	npm install -g babel-node browserify less
+	which babel-node || npm install -g babel
+	which browserify || npm install -g browserify
+	which lessc || npm install -g less
 
 test: globs all
 	babel-node test/once.js
