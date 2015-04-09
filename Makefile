@@ -8,12 +8,12 @@ globs:
 	which browserify || npm install -g browserify
 	which lessc || npm install -g less
 
-test: globs all
+test: globs node_modules vendor www/vendor.js css
 	babel-node test/once.js
 	babel-node test/test.js
 
 node_modules:
-	npm install
+	npm install || npm install
 
 # old stuff
 
@@ -29,8 +29,10 @@ watch-view:
 disk-bundle:
 	env ${ENVBLS} browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} --full-paths -d run.js -o disk.js
 
-js:
+www/build.js:
 	env ${ENVBLS} browserify `echo ${MODS} | sed -e 's/ / -x /g'` ${ARGS} -d run.js -o www/build.js
+
+js: www/build.js
 
 watch:
 	env ${ENVBLS} watchify `echo ${MODS} | sed -e 's/ / -x /g'` -v ${ARGS} -d run.js -o www/build.js
@@ -38,7 +40,9 @@ watch:
 css:
 	lessc --source-map --source-map-basepath=www/ run.less www/build.css
 
-vendorlib:
+vendorlib: www/vendor.js
+
+www/vendor.js:
 	browserify `echo ${MODS} | sed -e 's/ / -r /g'` -o www/vendor.js
 
 
