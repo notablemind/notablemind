@@ -10,7 +10,7 @@ function Ticker() {
     if (!window.performance) {
       return
     }
-    console.log('Tick', name, window.performance.now())
+    console.log(`Tick ${name} ${window.performance.now()}`)
     this.ticks.push({
       name: name,
       time: window.performance.now(),
