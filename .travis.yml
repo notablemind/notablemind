@@ -1,4 +1,5 @@
-script: babel-node test/test.js
+language: node_js
+script: npm test
 env:
   - SLIMERJSLAUNCHER=$(which firefox) DISPLAY=:99.0 PATH=$TRAVIS_BUILD_DIR/slimerjs:$PATH
 addons:
