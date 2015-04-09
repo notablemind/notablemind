@@ -12,6 +12,7 @@ page.onError = function (msg, trace) {
 }
 
 page.onCallback = function (data) {
+  page.render('screenshot.png')
   console.log(JSON.stringify(data))
   phantom.exit(0)
 }
@@ -21,8 +22,7 @@ page.open('http://localhost:8192/components/doc-viewer', function (status) {
   // page.render('screenshot.png')
   page.evaluate(function () {
     window.afterRun = function (err, ticks, perf) {
-      console.log('err', err)
-      console.log('res', ticks)
+      if (err) console.log('err', err)
       window.callPhantom({err: err, ticks: ticks})//, perf: perf})
     }
     console.log(document.title)
@@ -30,9 +30,9 @@ page.open('http://localhost:8192/components/doc-viewer', function (status) {
   })
   setTimeout(function () {
     console.log('Timeout!')
+    page.render('screenshot.png')
     phantom.exit(4)
-
-  }, 300000)
+  }, 30000)
 })
 
 
