@@ -4,13 +4,16 @@ include ./common.mk
 all: node_modules vendor vendorlib js css
 
 globs:
-	which babel-node || npm install -g babel
+	which babel-node || npm install -g babel@4.7.3
+	babel --version
 	which browserify || npm install -g browserify
+	browserify --version
 	which lessc || npm install -g less
+	lessc --version
 	which slimerjs || npm install -g slimerjs
+	slimerjs --version
 
 test: globs node_modules vendor www/vendor.js css test/build/components/doc-viewer.js
-	babel-node test/node.js
 	babel-node test/test.js
 
 test/build/components/doc-viewer.js:
