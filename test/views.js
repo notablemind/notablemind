@@ -49,6 +49,8 @@ export default {
       TITLE: 'Component: ' + cname,
       SCRIPTS: scripts([
         '/app/vendor.js',
+        '/app/vendor/d3.js',
+        '/app/vendor/vega.js',
         `/build/components/${cname}.js`,
       ])
     }))
