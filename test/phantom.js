@@ -12,7 +12,7 @@ page.onError = function (msg, trace) {
 }
 
 page.onCallback = function (data) {
-  page.render('screenshot.png')
+  console.log(page.renderBase64('PNG'))
   console.log(JSON.stringify(data))
   phantom.exit(0)
 }
@@ -30,7 +30,7 @@ page.open('http://localhost:8192/components/doc-viewer', function (status) {
   })
   setTimeout(function () {
     console.log('Timeout!')
-    page.render('screenshot.png')
+    console.log(page.renderBase64('PNG'))
     phantom.exit(4)
   }, 30000)
 })
