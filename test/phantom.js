@@ -12,7 +12,8 @@ page.onError = function (msg, trace) {
 }
 
 page.onCallback = function (data) {
-  console.log(page.renderBase64('PNG'))
+  // console.log(page.renderBase64('PNG'))
+  page.render('screenshot.png')
   console.log(JSON.stringify(data))
   phantom.exit(0)
 }
@@ -29,8 +30,8 @@ page.open('http://localhost:8192/components/doc-viewer', function (status) {
     console.log(document.body.innerHTML)
   })
   setTimeout(function () {
-    console.log('Timeout!')
     console.log(page.renderBase64('PNG'))
+    console.log('Timeout!')
     phantom.exit(4)
   }, 30000)
 })
