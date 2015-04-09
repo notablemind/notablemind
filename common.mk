@@ -1,7 +1,7 @@
 
 ARGS=-t [ babelify --experimental ] -t envify
 
-MODS=' react react/addons less/lib/less-browser majax marked async ansi-to-html eventemitter3 highlight.js \
+MODS=' react react/addons less/lib/less majax marked async ansi-to-html eventemitter3 highlight.js \
 babel \
 codemirror \
 codemirror/mode/javascript/javascript \

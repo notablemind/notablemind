@@ -8,9 +8,11 @@ globs:
 	which browserify || npm install -g browserify
 	which lessc || npm install -g less
 
-test: globs node_modules vendor www/vendor.js css
-	babel-node test/once.js
+test: globs node_modules vendor www/vendor.js css test/build/components/doc-viewer.js
 	babel-node test/test.js
+
+test/build/components/doc-viewer.js:
+	babel-node test/once.js
 
 node_modules:
 	npm install || npm install
