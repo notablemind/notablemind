@@ -81,9 +81,10 @@ function treedFromFile(Treed, data, plugins, pl, done) {
       done(null, {treed, file})
     })
   }).catch(err => {
-    console.log('failed to initialize store: ' + rr.message)
+    console.log('failed to initialize store: ' + err.message)
+    console.log(err.stack)
     setTimeout(_ => {
-      done(err)
+      done(err, {})
     })
   })
 }

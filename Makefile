@@ -10,6 +10,7 @@ globs:
 	which slimerjs || npm install -g slimerjs
 
 test: globs node_modules vendor www/vendor.js css test/build/components/doc-viewer.js
+	babel-node test/node.js
 	babel-node test/test.js
 
 test/build/components/doc-viewer.js:
