@@ -76,10 +76,12 @@ function treedFromFile(Treed, data, plugins, pl, done) {
 
   const treed = new Treed({plugins})
   treed.initStore(data.root, {pl}).then(store => {
+    console.log('store initialized')
     setTimeout(_ => {
       done(null, {treed, file})
     })
   }).catch(err => {
+    console.log('failed to initialize store: ' + rr.message)
     setTimeout(_ => {
       done(err)
     })

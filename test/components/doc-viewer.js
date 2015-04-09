@@ -43,6 +43,7 @@ var plugins = [
 ticks.add('load:plugins')
 
 function setup(done) {
+  console.log('treed from file')
   treedFromFile(Treed, fixture, plugins, pl, done)
 }
 
@@ -54,6 +55,8 @@ function makeEl(err, {treed, file}) {
     treed={treed}
     file={file}/>
 }
+
+console.log('hasrun:' + window.run)
 
 window.run && window.run(setup, makeEl)
 

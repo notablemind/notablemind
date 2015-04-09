@@ -21,6 +21,7 @@ function run(setup, makeEl) {
   }
   setup(function (err) {
     if (err) {
+      return done(err)
     }
     const el = makeEl.apply(null, arguments)
 
