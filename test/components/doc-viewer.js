@@ -1,4 +1,6 @@
 
+const ticks = window.ticks || {add: () => {}}
+
 import React from 'react/addons'
 import {treedFromFile} from '../utils'
 
@@ -40,7 +42,6 @@ var plugins = [
 
 ticks.add('load:plugins')
 
-
 function setup(done) {
   treedFromFile(Treed, fixture, plugins, pl, done)
 }
@@ -54,5 +55,7 @@ function makeEl(err, {treed, file}) {
     file={file}/>
 }
 
-run(setup, makeEl)
+window.run && window.run(setup, makeEl)
+
+export {setup, makeEl}
 

@@ -21,7 +21,7 @@ export default {
   index(req, res, next) {
     if (req.url !== '/' && req.url !== '/index.html') return next()
 
-    const TPL = fs.readFileSync('./body.tpl.html').toString('utf8')
+    const TPL = fs.readFileSync(__dirname + '/body.tpl.html').toString('utf8')
     res.end(tpl(TPL, {
       TITLE: 'All Examples',
       BODY: React.renderToString(<div>
@@ -44,7 +44,7 @@ export default {
       console.log('unknown component', cname)
       return next()
     }
-    const TPL = fs.readFileSync('./body.tpl.html').toString('utf8')
+    const TPL = fs.readFileSync(__dirname + '/body.tpl.html').toString('utf8')
     res.end(tpl(TPL, {
       TITLE: 'Component: ' + cname,
       SCRIPTS: scripts([
@@ -56,8 +56,8 @@ export default {
   },
 
   docs(req, res, next) {
-    const TPL = fs.readFileSync('./body.tpl.html').toString('utf8')
-    const fixes = fs.readdirSync('./viewer').filter(name => name.match(/\.nm$/))
+    const TPL = fs.readFileSync(__dirname + '/body.tpl.html').toString('utf8')
+    const fixes = fs.readdirSync(__dirname + '/viewer').filter(name => name.match(/\.nm$/))
     if (req.url === '/') {
       return res.end(tpl(TPL, {
         TITLE: 'Load Documents',
@@ -74,7 +74,7 @@ export default {
     if (fixes.indexOf(name) === -1) return next()
     res.end(tpl(TPL, {
       TITLE: 'Document: ' + name,
-      TOPJS: 'window.FIXTURE = ' + fs.readFileSync('./viewer/' + name).toString().replace(/</g, '\\u003C'),
+      TOPJS: 'window.FIXTURE = ' + fs.readFileSync(__dirname + '/viewer/' + name).toString().replace(/</g, '\\u003C'),
       SCRIPTS: scripts([
         '/app/vendor.js',
         '/build/viewer.js',

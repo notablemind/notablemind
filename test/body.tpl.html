@@ -3,18 +3,18 @@
 <head>
 <title>{TITLE}</title>
 <meta charset="utf8">
-<script> var firstDOM = performance.now() </script>
+<script> var firstDOM = window.performance && window.performance.now() </script>
 <link rel="stylesheet" href="/app/build.css">
 {STYLES}
 <script>
-var afterStyle = performance.now()
+var afterStyle = window.performance && window.performance.now()
 {TOPJS}</script>
 </head>
 <body>
     <h1>{TITLE}</h1>
-    <section id="main">
+    <div id="main">
         {BODY}
-    </section>
+    </div>
     {SCRIPTS}
 </body>
 </html>

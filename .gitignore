@@ -14,3 +14,4 @@ www/baked.js
 /www/baked-vendor.js
 /.ipynb_checkpoints
 /test/build
+/app/components/fix

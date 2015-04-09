@@ -3,6 +3,13 @@ include ./common.mk
 
 all: node_modules vendor vendorlib js css
 
+globs:
+	npm install -g babel-node browserify less
+
+test: globs all
+	babel-node test/once.js
+	babel-node test/test.js
+
 node_modules:
 	npm install
 

@@ -6,7 +6,7 @@ import watchify from 'watchify'
 import external from '../external'
 import through from 'through'
 
-function compile(infile, outfile, watch) {
+export default function compile(infile, outfile, watch) {
 
   const b = browserify({
     cache: {},
@@ -26,7 +26,7 @@ function compile(infile, outfile, watch) {
     w.on('update', () => {
       console.log(infile, 'updating')
       w.bundle((err, buf) => {
-        console.log(infile, 'done updating')
+        console.log(infile, 'done updating', new Date().toTimeString())
         fs.writeFileSync(outfile, buf)
       })
     })
@@ -48,14 +48,4 @@ function compile(infile, outfile, watch) {
     fs.writeFileSync(outfile, buf)
   })
 }
-
-compile(
-  [
-    './components/tpl.js',
-    './components/doc-viewer.js',
-  ],
-  './build/components/doc-viewer.js',
-  true)
-
-compile('./viewer/index.js', './build/viewer.js', true)
 

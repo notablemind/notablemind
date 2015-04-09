@@ -3,18 +3,27 @@ export {Ticker, initFormatters, treedFromFile}
 
 function Ticker() {
   this.ticks = []
+  if (window.performance && !window.performance.memory) {
+    window.performance.memory = {usedJSHeapSize: -1}
+  }
   this.add = function (name) {
+    if (!window.performance) {
+      return
+    }
     this.ticks.push({
       name: name,
-      time: performance.now(),
-      usedMem: performance.memory.usedJSHeapSize,
-      totalMem: performance.memory.totalJSHeapSize,
+      time: window.performance.now(),
+      usedMem: window.performance.memory.usedJSHeapSize,
+      totalMem: window.performance.memory.totalJSHeapSize,
     })
   }
   this.show = function () {
     for (let i=1; i<this.ticks.length; i++) {
       console.log(this.ticks[i].name, this.ticks[i].time - this.ticks[i-1].time)
     }
+  }
+  this.dump = function () {
+    return this.ticks
   }
   if (window.firstDOM) {
     this.ticks.push({
@@ -66,7 +75,13 @@ function treedFromFile(Treed, data, plugins, pl, done) {
 
   const treed = new Treed({plugins})
   treed.initStore(data.root, {pl}).then(store => {
-    done(null, {treed, file})
+    setTimeout(_ => {
+      done(null, {treed, file})
+    })
+  }).catch(err => {
+    setTimeout(_ => {
+      done(err)
+    })
   })
 }
 

@@ -9,7 +9,19 @@ ticks.add('load:react')
 window.run = run
 
 function run(setup, makeEl) {
-  setup(function () {
+  function done(err, ticks, perf) {
+    if (window.afterRun) {
+      return window.afterRun.apply(this, arguments)
+    }
+    if (err) {
+      console.error('Error:', err)
+      throw err
+    }
+    console.log(ticks, perf)
+  }
+  setup(function (err) {
+    if (err) {
+    }
     const el = makeEl.apply(null, arguments)
 
     React.addons.Perf.start()
@@ -20,7 +32,11 @@ function run(setup, makeEl) {
 
       ticks.show()
       React.addons.Perf.stop()
-      //React.addons.Perf.getLastMeasurements()
+      done(
+        err,
+        ticks.dump(),
+        React.addons.Perf.getLastMeasurements()
+      )
     })
 
   })
