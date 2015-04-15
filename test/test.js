@@ -19,7 +19,6 @@ run(8192, server => {
       console.log('Slimer died: ' + code)
       process.exit(code)
     }
-    console.log('Tests passed')
     const last = stdout.trim().split('\n').slice(-1)[0]
     let data
     try {
@@ -29,6 +28,7 @@ run(8192, server => {
       console.log(last)
       process.exit(12)
     }
+    console.log('Tests passed')
     const totalTime = data.ticks.reduce((s, tick) => {
       return s + tick.time
     }, 0)

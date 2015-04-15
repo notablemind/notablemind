@@ -4,7 +4,7 @@ include ./common.mk
 all: node_modules vendor vendorlib js css
 
 globs:
-	which babel-node || npm install -g babel@4.7.3
+	which babel-node || npm install -g babel
 	babel --version
 	which browserify || npm install -g browserify
 	browserify --version

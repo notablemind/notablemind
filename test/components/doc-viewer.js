@@ -12,11 +12,13 @@ ticks.add('load:fixture')
 import Treed from 'treed/classy'
 ticks.add('load:treed')
 
-var IJS = require('itreed/plugins/itreed-js')
-ticks.add('load:ijs')
 var itreed = require('itreed')
 initFormatters()
 ticks.add('load:itreed')
+
+itreed.register(require('itreed/plugins/itreed-js'))
+itreed.register(require('itreed/plugins/itreed-jupyter'))
+ticks.add('load:ijs')
 
 import MemPL from 'treed/pl/mem'
 
@@ -33,21 +35,11 @@ var plugins = [
   require('treed/plugins/rebase'),
   require('../../treed-plugins/custom-css'),
   itreed({
-    type: 'ijs',
-    language: 'javascript',
-    remote: false,
-    title: 'Javascript',
-    kernel: IJS,
+    js: {
+      server: {}
+    }
   }),
 ]
-
-const pluginConfig = {
-  itreed: {
-    servers: {
-      js: {}
-    },
-  },
-}
 
 ticks.add('load:plugins')
 

@@ -28,7 +28,10 @@ function run(setup, makeEl) {
     React.addons.Perf.start()
     ticks.add('setup')
 
-    React.render(el, document.body, (err) => {
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+
+    React.render(el, div, (err) => {
       ticks.add('render')
 
       ticks.show()
