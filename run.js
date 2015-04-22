@@ -32,6 +32,25 @@ formatters.map(plugin => {
   }
 })
 
+import itreed from 'itreed'
+import JS from 'itreed/plugins/itreed-js'
+import JUP from 'itreed/plugins/itreed-jupyter'
+
+import clojureScript from 'itreed/plugins/itreed-js/variants/clojurescript'
+import babel from 'itreed/plugins/itreed-js/variants/babel'
+import babelnode from 'itreed/plugins/itreed-jupyter/variants/babel'
+import cljsnode from 'itreed/plugins/itreed-jupyter/variants/clojurescript'
+import hy from 'itreed/plugins/itreed-jupyter/variants/hy'
+
+itreed.register(JS)
+itreed.registerVariant(babel)
+itreed.registerVariant(clojureScript)
+
+itreed.register(JUP)
+itreed.registerVariant(hy)
+itreed.registerVariant(babelnode)
+itreed.registerVariant(cljsnode)
+
 window.onload = function () {
   const router = require('./app/router')
 

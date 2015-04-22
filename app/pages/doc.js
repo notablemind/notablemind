@@ -175,17 +175,28 @@ var DocPage = React.createClass({
 
     files.find(id, file =>
       files.get(id, pl => {
-        var config = kernelConfig[file.repl]
-        if (config && config.kernel) {
-          // repl
-          let cc = file.plugins && file.plugins.itreed
-          plugins.unshift(require('itreed')(config, cc))
+
+        let config
+        if (file.plugins && file.plugins.itreed && !file.plugins.itreed.hosts) {
+          config = file.plugins.itreed
+        } else if (file.repl) {
+          let oldK = kernelConfig[file.repl]
+          if (oldK && oldK.kernel) {
+            let name = {
+              ijs: 'js',
+              ipython: 'jupyter',
+            }[file.repl]
+            config = {[name]: {server:{host: 'localhost:8888'}}}
+          }
+        }
+        if (config) {
+          plugins.unshift(require('itreed')(config))
         }
 
         var treed = new Treed({plugins: plugins})
         treed.initStore({content: file.title, children: []}, {pl}).then(store => {
           this._onLoad(treed, file)
-        }).catch(err => this._onError(err))
+        })// .catch(err => this._onError(err))
       })
     )
   },
