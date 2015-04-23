@@ -1,0 +1,33 @@
+.DocHeader {
+    display: none;
+}
+
+.App_pane_top {
+    display: none;
+}
+
+.App_pane:first-child .App_pane_scroll {
+    padding: 0;
+    overflow: visible;
+}
+
+span.treed_body_rendered {
+    min-height: 10px;
+}
+
+.TreeItem_head {
+    padding: 0;
+}
+
+.TreeItem_body {
+    outline: none!important;
+}
+
+.TreeItem_children {
+    padding-left: 5px;
+    border-left: 10px solid #ccc;
+}
+
+.Toaster {
+    display: none;
+}
