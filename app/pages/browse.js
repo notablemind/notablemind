@@ -24,6 +24,10 @@ var BrowsePage = React.createClass({
     }
   },
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   componentWillMount: function () {
     var kh = keys({})
     this.setState({
@@ -64,7 +68,7 @@ var BrowsePage = React.createClass({
         if (err) {
           return this._onError(err)
         }
-        this.transitionTo('doc', {id: file.id})
+        this.context.router.transitionTo('doc', {id: file.id})
       })
     )
   },

@@ -116,8 +116,7 @@ var DocPage = React.createClass({
       plugin[name] = values[name]
     }
     this.state.file.plugins[id] = plugin
-    // TODO arghhh mutable
-    this.updateFile({plugins: this.state.file.plugins})
+    this.updateFile({plugins: this.state.file.plugins}, this.reload.bind(this))
   },
 
   getPluginConfig(id) {
@@ -156,6 +155,11 @@ var DocPage = React.createClass({
     })
   },
 
+  reload: function () {
+    this.state.treed.store.teardown()
+    this.loadFile()
+  },
+
   loadFile: function () {
     this.setState({error: null, loading: true})
     var id = this.getParams().id
@@ -186,7 +190,18 @@ var DocPage = React.createClass({
               ijs: 'js',
               ipython: 'jupyter',
             }[file.repl]
-            config = {[name]: {server:{host: 'localhost:8888'}}}
+            config = {[name]: {
+              server:{
+                host: 'localhost:8888'
+              },
+              kernels: {
+                python2: {
+                  variants: {
+                    default: true,
+                  }
+                }
+              }
+            }}
           }
         }
         if (config) {
@@ -219,6 +234,7 @@ var DocPage = React.createClass({
         treed={treed}
         onFileUpdate={this.onFileUpdate}
         updateFile={this.updateFile}
+        updatePlugin={this.updatePlugin}
 
         changeTitle={this._changeTitle}
         onClose={!this.props.noHome && (() => this.transitionTo('browse'))}

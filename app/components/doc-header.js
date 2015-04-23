@@ -1,5 +1,8 @@
 
+import {Form, FormSection, Radio, Panes} from '../../../form'
+import Config from '../../../itreed/config'
 import DocConfig from './doc-config'
+import itreed from 'itreed'
 
 var React = require('react')
   , PT = React.PropTypes
@@ -54,6 +57,50 @@ var DocHeader = React.createClass({
     })
   },
 
+  onConfig(plugin) {
+    const config = this.props.file.plugins && this.props.file.plugins.itreed || {
+      jupyter: {
+        server:{
+          host: 'localhost:8888'
+        },
+        kernels: {
+          python2: {
+            variants: {
+              default: true,
+            }
+          }
+        }
+      }
+    }
+    Modal.show({
+      title: 'iTreed Config',
+      initialState: {},
+      body() {
+        return <Form
+          onSubmit={value => this.props.onClose(null, value)}
+          initialData={config}>
+          <Config
+            variants={itreed.availableVariants}
+            plugins={itreed.availablePlugins} name='*'/>
+          <button type='submit'>
+            Submit
+          </button>
+        </Form>
+      },
+      done: (err, newConfig) => {
+        if (err || !newConfig) return console.error('Aborted config', err, newConfig)
+        console.log('Rerender on config')
+        
+        this.props.updatePlugin('itreed', newConfig)
+        /*
+        config = newConfig
+        treed.store.teardown()
+        treed = makeFull(config, changeConfig)
+        */
+      }
+    })
+  },
+
   render: function () {
     var headStore = this.props.treed.store.headerView()
     return <div className='DocHeader'>
@@ -72,7 +119,7 @@ var DocHeader = React.createClass({
       </span>*/}
       <Dupload store={this.props.treed.store}/>
       {this.props.treed.options.plugins.map(plugin =>
-        plugin.view && plugin.view.global && plugin.view.global(headStore)
+        plugin.view && plugin.view.global && plugin.view.global(headStore, this.onConfig.bind(this, plugin.id))
       )}
       {!this.props.noSave && <Saver
         onFileUpdate={this.props.onFileUpdate}

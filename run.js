@@ -40,6 +40,7 @@ import clojureScript from 'itreed/plugins/itreed-js/variants/clojurescript'
 import babel from 'itreed/plugins/itreed-js/variants/babel'
 import babelnode from 'itreed/plugins/itreed-jupyter/variants/babel'
 import cljsnode from 'itreed/plugins/itreed-jupyter/variants/clojurescript'
+import clojure from 'itreed/plugins/itreed-jupyter/variants/clojure'
 import hy from 'itreed/plugins/itreed-jupyter/variants/hy'
 
 itreed.register(JS)
@@ -50,6 +51,7 @@ itreed.register(JUP)
 itreed.registerVariant(hy)
 itreed.registerVariant(babelnode)
 itreed.registerVariant(cljsnode)
+itreed.registerVariant(clojure)
 
 window.onload = function () {
   const router = require('./app/router')

@@ -37,8 +37,8 @@
     "majax": "git+https://github.com/jaredly/majaX.js",
     "marked": "~0.3.2",
     "moment": "~2.8.3",
-    "react": "^0.12.2",
-    "react-router": "^0.12.4",
+    "react": "^0.13.2",
+    "react-router": "^0.13.2",
     "serve-static": "^1.9.2",
     "treed": "git+https://github.com/jaredly/treed",
     "watchify": "^3.1.0"
