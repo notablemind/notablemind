@@ -2,6 +2,8 @@
  * bootstrap the app into document.body
  */
 
+import RCSS from 'rcss'
+
 const React = require('react')
 
 window.runRequire = require
@@ -60,4 +62,6 @@ window.onload = function () {
     React.render(<Handler/>, document.body)
   });
 }
+
+RCSS.injectAll()
 
