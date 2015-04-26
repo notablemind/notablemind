@@ -57,11 +57,11 @@ itreed.registerVariant(clojure)
 
 window.onload = function () {
   const router = require('./app/router')
+  RCSS.injectAll()
 
   require('react-router').run(router, function (Handler) {
     React.render(<Handler/>, document.body)
   });
 }
 
-RCSS.injectAll()
 
