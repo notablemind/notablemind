@@ -107,9 +107,10 @@ vendor: www/vendor/d3.js www/vendor/vega.js www/vendor/font-awesome-4.3.0
 www/vendor/font-awesome-4.3.0:
 	mkdir -p www/vendor
 	cd www/vendor && \
-	  wget http://fontawesome.io/assets/font-awesome-4.3.0.zip &&\
-	  unzip font-awesome-4.3.0.zip &&\
-	  rm font-awesome-4.3.0.zip
+	  wget https://github.com/FortAwesome/Font-Awesome/archive/v4.3.0.zip && \
+	  unzip v4.3.0.zip &&\
+	  rm v4.3.0.zip &&\
+	  mv Font-Awesome-4.3.0 font-awesome-4.3.0
 
 www/vendor/d3.js:
 	mkdir -p www/vendor

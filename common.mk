@@ -1,5 +1,5 @@
 
-ARGS=-t [ babelify --stage 0 ] -t envify
+ARGS=-t [ babelify ] -t envify
 
 MODS=' react react/addons less/lib/less majax marked async ansi-to-html eventemitter3 highlight.js \
 babel \
