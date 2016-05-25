@@ -27,6 +27,11 @@ module.exports = {
     },
   },
 
+  node: {
+    fs: 'empty',
+    net: 'empty',
+  },
+
   module: {
     loaders: [{
       test: /\.json$/,
@@ -37,8 +42,8 @@ module.exports = {
       loader: 'babel',
       include: [
         path.join(__dirname, 'src'),
-        path.join(__dirname, '../itreed'),
-        path.join(__dirname, '../treed'),
+        path.join(__dirname, 'itreed'),
+        path.join(__dirname, 'treed'),
       ],
       /*query: {
         env: {
