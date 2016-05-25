@@ -225,7 +225,7 @@ function itreedConfig(repl) {
   const configs = {
     js: {
       kernels: {
-        default: {
+        js: {
           variants: {
             default: true,
           },
