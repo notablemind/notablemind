@@ -2,6 +2,7 @@ import {treedFromFile, initFormatters, Ticker} from '../utils'
 
 const ticks = new Ticker()
 
+import {render} from 'react-dom'
 import React from 'react/addons'
 ticks.add('load:react')
 
@@ -51,7 +52,7 @@ treedFromFile(Treed, FIXTURE, plugins, pl, (err, {treed, file}) => {
   React.addons.Perf.start()
   ticks.add('treedFromFile')
 
-  React.render(el, document.body, (err) => {
+  render(el, document.body, (err) => {
     ticks.add('render')
 
     ticks.show()

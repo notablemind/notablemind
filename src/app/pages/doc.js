@@ -174,7 +174,7 @@ var DocPage = React.createClass({
       require('treed/plugins/lists'),
       require('treed/plugins/rebase'),
       require('../../treed-plugins/custom-css'),
-      require('../../../scriptures/plugin'),
+      // require('../../../scriptures/plugin'),
     ]
 
     files.find(id, file =>
@@ -190,25 +190,44 @@ var DocPage = React.createClass({
               ijs: 'js',
               ipython: 'jupyter',
             }[file.repl]
-            config = {[name]: {
-              server:{
-                host: 'localhost:8888'
+            const configs = {
+              js: {
+                kernels: {
+                  default: {
+                    variants: {
+                      default: true,
+                    },
+                  },
+                },
               },
-              kernels: {
-                python2: {
-                  variants: {
-                    default: true,
+              jupyter: {
+                server: {
+                  host: 'localhost:8888'
+                },
+                kernels: {
+                  python2: {
+                    variants: {
+                      default: true,
+                    }
                   }
                 }
               }
-            }}
+            }
+            config = {[name]: configs[name]}
           }
         }
         if (config) {
+          console.log('using itreed', config)
           plugins.unshift(require('itreed')(config))
+        } else {
+          console.log('not using itreed');
         }
+        console.log('init treed', file.plugins, file);
 
-        var treed = new Treed({plugins: plugins})
+        var treed = new Treed({
+          plugins: plugins,
+          pluginConfig: file.plugins,
+        })
         treed.initStore({content: file.title, children: []}, {pl}).then(store => {
           this._onLoad(treed, file)
         })// .catch(err => this._onError(err))

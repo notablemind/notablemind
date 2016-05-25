@@ -1,6 +1,6 @@
 
 var React = require('react/addons')
-  , cx = React.addons.classSet
+  , cx = require('classnames')
   , kernels = require('../kernels')
 
 var repls = Object.keys(kernels)
@@ -14,7 +14,7 @@ var NewFile = React.createClass({
   },
 
   componentDidMount: function () {
-    var inp = this.refs.input.getDOMNode()
+    var inp = this.refs.input
     inp.focus()
     inp.selectionStart = 0
     inp.selectionEnd = inp.value.length
@@ -62,6 +62,7 @@ var NewFile = React.createClass({
       {repls.map(key =>
         <li
             onClick={this._setRepl.bind(null, key)}
+            key={key}
             className={cx({
               'NewFile_repl': true,
               'NewFile_repl-selected': key === this.state.repl,
@@ -78,7 +79,7 @@ var NewFile = React.createClass({
 
   componentDidUpdate: function (prevProps) {
     if (!this.props.open || prevProps.open) return
-    var node = this.refs.input.getDOMNode()
+    var node = this.refs.input
     node.focus()
     node.selectionStart = 0
     node.selectionEnd = node.value.length

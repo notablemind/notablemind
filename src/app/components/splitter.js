@@ -1,14 +1,14 @@
 
 var React = require('react/addons')
-  , cx = React.addons.classSet
+  , cx = require('classnames')
   , PT = React.PropTypes
 
 var Splitter = React.createClass({
   propTypes: {
     onChangeRatio: PT.func,
     config: PT.object,
-    pos: PT.object,
-    comp: PT.element,
+    pos: PT.array,
+    comp: PT.func,
     cprops: PT.object,
   },
 
@@ -23,7 +23,7 @@ var Splitter = React.createClass({
     this.setState({moving: true})
   },
   _mouseMove: function (e) {
-    var full = this.getDOMNode().getBoundingClientRect()
+    var full = this._node.getBoundingClientRect()
       , span
       , perc
     if (this.props.config.value.orient === 'horiz') {
@@ -47,7 +47,7 @@ var Splitter = React.createClass({
       this.setState({moving: false}))
   },
   componentDidUpdate: function (prevProps, prevState) {
-    var doc = this.getDOMNode().ownerDocument
+    var doc = this._node.ownerDocument
     if (prevState.moving && !this.state.moving) {
       doc.removeEventListener('mousemove', this._mouseMove)
       doc.removeEventListener('mouseup', this._mouseUp)
@@ -95,7 +95,7 @@ var Splitter = React.createClass({
         </div>
       ]
     }
-    return <div className={cx({
+    return <div ref={n => this._node = n} className={cx({
       'Splitter': true,
       'Splitter-moving': this.state.moving,
     }) + ' Splitter-' + config.value.orient}>

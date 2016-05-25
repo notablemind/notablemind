@@ -1,6 +1,6 @@
 
 var React = require('react/addons')
-  , cx = React.addons.classSet
+  , cx = require('classnames')
   , sources = require('../sources')
   , KeysMixin = require('../keys-mixin')
 

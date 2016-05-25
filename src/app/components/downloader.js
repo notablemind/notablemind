@@ -1,7 +1,7 @@
 
 var React = require('react/addons')
   , PT = React.PropTypes
-  , cx = React.addons.classSet
+  , cx = require('classnames')
   , Modal = require('../modal')
   , FormatPicker = require('./format-picker')
   , convert = require('../convert')
@@ -23,7 +23,7 @@ var Downloader = React.createClass({
   },
 
   componentDidMount: function () {
-    var inp = this.refs.input.getDOMNode()
+    var inp = this.refs.input
     inp.focus()
     inp.selectionStart = 0
     inp.selectionEnd = inp.value.length

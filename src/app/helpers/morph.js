@@ -1,8 +1,10 @@
 
+import {findDOMNode} from 'react-dom'
+
 var Morph = {
   componentWillUpdate: function () {
     // console.log('will')
-    var node = this.getDOMNode()
+    var node = findDOMNode(this)
     this._width = node.style.width
     this._height = node.style.height
     var st = window.getComputedStyle(node)
@@ -10,7 +12,7 @@ var Morph = {
     node.style.width = st.width
   },
   componentDidUpdate: function () {
-    var node = this.getDOMNode()
+    var node = findDOMNode(this)
     var bef = window.getComputedStyle(node)
       , height = bef.height
       , width = bef.width

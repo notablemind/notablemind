@@ -168,8 +168,11 @@ function init(file, pl, defaultData, done) {
     require('../treed-plugins/custom-css'),
   ]
   if (config && config.kernel) {
+    console.log('Using a repl!', config);
     // repl
     plugins.unshift(require('itreed')(config))
+  } else {
+    console.log('not a repl', config)
   }
 
   var storeOptions = {
@@ -214,6 +217,37 @@ function getFile(id, isNew, done) {
   done(pl)
 }
 
+function itreedConfig(repl) {
+  let name = {
+    ijs: 'js',
+    ipython: 'jupyter',
+  }[repl]
+  const configs = {
+    js: {
+      kernels: {
+        default: {
+          variants: {
+            default: true,
+          },
+        },
+      },
+    },
+    jupyter: {
+      server: {
+        host: 'localhost:8888'
+      },
+      kernels: {
+        python2: {
+          variants: {
+            default: true,
+          }
+        }
+      }
+    }
+  }
+  return {[name]: configs[name]};
+}
+
 /**
  * Takes a title, and a repl type
  */
@@ -228,6 +262,9 @@ function newFile(title, repl, done) {
     opened: Date.now(),
     title: title,
     repl: repl
+  }
+  if (repl) {
+    file.plugins.itreed = itreedConfig(repl);
   }
   listFiles(files =>
     saveFiles(files.concat([file]), () =>

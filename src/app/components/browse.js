@@ -2,7 +2,7 @@
 var React = require('react')
   , Tabular = require('./tabular')
   // , Dumper = require('./dumper')
-  , cx = React.addons.classSet
+  , cx = require('classnames')
   , PT = React.PropTypes
   , kernels = require('../kernels')
   , files = require('../files')

@@ -1,5 +1,6 @@
 /* @flow */
 
+import {render} from 'react-dom'
 var React = require('react')
   , Modal = require('./modal')
 
@@ -17,7 +18,7 @@ function showModal(title, initialState, body, done) {
     node.parentNode.removeChild(node)
     done.apply(null, arguments)
   }
-  React.render(React.createElement(Modal, {
+  render(React.createElement(Modal, {
     initialState: initialState,
     onClose: onClose, 
     title: title, 

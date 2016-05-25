@@ -51,7 +51,7 @@ var TableBody = React.createClass({
 
   componentDidUpdate: function (prevProps, prevState) {
     if (this.state.selected !== prevState.selected) {
-      this.refs.selected && ensureInView(this.refs.selected.getDOMNode())
+      this.refs.selected && ensureInView(this.refs.selected)
     }
   },
 

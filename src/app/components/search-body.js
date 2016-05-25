@@ -40,13 +40,13 @@ export default React.createClass({
 
   componentDidMount: function () {
     if (!this.refs || !this.refs.selected) return;
-    var node = this.refs.selected.getDOMNode();
+    var node = this.refs.selected;
     node.offsetParent.scrollTop = node.offsetParent.scrollHeight
   },
 
   componentDidUpdate: function (prevProps, prevState) {
     if (!this.refs || !this.refs.selected) return;
-    var node = this.refs.selected.getDOMNode();
+    var node = this.refs.selected
     if (prevState.selected !== this.state.selected) {
       ensureInView(node);
     } else {

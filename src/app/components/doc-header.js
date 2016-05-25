@@ -118,9 +118,9 @@ var DocHeader = React.createClass({
         {this.props.file.title}
       </span>*/}
       <Dupload store={this.props.treed.store}/>
-      {this.props.treed.options.plugins.map(plugin =>
+      {/*this.props.treed.options.plugins.map(plugin =>
         plugin.view && plugin.view.global && plugin.view.global(headStore, this.onConfig.bind(this, plugin.id))
-      )}
+      )*/}
       {!this.props.noSave && <Saver
         onFileUpdate={this.props.onFileUpdate}
         store={this.props.treed.store}

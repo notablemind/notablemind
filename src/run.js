@@ -2,11 +2,12 @@
  * bootstrap the app into document.body
  */
 
+import {render} from 'react-dom'
 import RCSS from 'rcss'
 
 const React = require('react')
 
-window.runRequire = require
+//window.runRequire = require
 window.React = React
 
 // configuration things
@@ -58,9 +59,12 @@ itreed.registerVariant(clojure)
 window.onload = function () {
   const router = require('./app/router')
   RCSS.injectAll()
+  const container = document.createElement('div')
+  container.id = 'container'
+  document.body.appendChild(container)
 
   require('react-router').run(router, function (Handler) {
-    React.render(<Handler/>, document.body)
+    render(<Handler/>, container)
   });
 }
 

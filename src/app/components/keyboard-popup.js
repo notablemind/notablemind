@@ -55,7 +55,7 @@ var KeyboardPopup = React.createClass({
   },
 
   _resize: function () {
-    var node = this.refs.body.getDOMNode()
+    var node = this.refs.body
     node.style.width = node.scrollWidth + 'px';
     for (var i=0; i<10 && node.scrollWidth > node.offsetWidth; i++) {
       node.style.width = node.scrollWidth + 'px';

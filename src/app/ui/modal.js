@@ -1,4 +1,5 @@
 
+import {render} from 'react-dom'
 var React = require('react')
   , PT = React.PropTypes
 
@@ -97,7 +98,7 @@ Modal.show = function (config) {
     config.done.apply(null, arguments)
   }
 
-  React.render(
+  render(
     <Modal
       initialState={config.initialState || {}}
       title={config.title || 'Modal'}

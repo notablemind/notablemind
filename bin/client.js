@@ -2,6 +2,7 @@
  * bootstrap the app into document.body
  */
 
+import {render} from 'react-dom'
 var React = require('react')
 var treed = require('treed')
 
@@ -41,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
   BakedDoc.load(window.NM_BAKED_DATA, (err, doc) => {
     if (err) return done(err)
 
-    React.render(doc, document.body.firstElementChild)
+    render(doc, document.body.firstElementChild)
   })
 })
 

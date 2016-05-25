@@ -45,8 +45,8 @@ var Tabular = React.createClass({
 
   resizeHead: function () {
     // equalize the header sizes
-    var table = this.refs.table.getDOMNode()
-    var head = this.refs.head.getDOMNode()
+    var table = this.refs.table
+    var head = this.refs.head
       , ths = head.getElementsByTagName('th')
     ;[].map.call(table.getElementsByTagName('th'), (th, i) => {
       var cs = window.getComputedStyle(th)

@@ -19,7 +19,7 @@ var SearchPopper = React.createClass({
   },
 
   componentDidMount: function () {
-    this.refs.input.getDOMNode().focus()
+    this.refs.input.focus()
   },
 
   onChange: function (e) {

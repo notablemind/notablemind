@@ -3,6 +3,7 @@ import {initFormatters, Ticker} from '../utils'
 const ticks = new Ticker()
 window.ticks = ticks
 
+import {render} from 'react-dom'
 import React from 'react/addons'
 ticks.add('load:react')
 
@@ -31,7 +32,7 @@ function run(setup, makeEl) {
     const div = document.createElement('div')
     document.body.appendChild(div)
 
-    React.render(el, div, (err) => {
+    render(el, div, (err) => {
       ticks.add('render')
 
       ticks.show()
