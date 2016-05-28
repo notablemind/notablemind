@@ -6,7 +6,8 @@
   "scripts": {
     "test": "make test",
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -54,6 +55,7 @@
     "body-parser": "^1.12.2",
     "compression": "^1.4.3",
     "connect": "^3.3.5",
+    "electron-prebuilt": "^1.2.0",
     "eventemitter2": "^0.4.13",
     "json-loader": "^0.5.4",
     "lodash": "^2.4.1",

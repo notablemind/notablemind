@@ -1,6 +1,6 @@
 
-var Router = require('react-router');
-var { Route, DefaultRoute, RouteHandler, Link } = Router;
+import React from 'react'
+import { Route, DefaultRoute, RouteHandler, Link } from 'react-router'
 
 var BrowsePage = require('./pages/browse')
   , DocPage = require('./pages/doc')

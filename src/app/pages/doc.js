@@ -1,3 +1,5 @@
+import config from '../../config'
+
 var React = require('react')
   , {Navigation, State} = require('react-router')
 
@@ -163,19 +165,7 @@ var DocPage = React.createClass({
   loadFile: function () {
     this.setState({error: null, loading: true})
     var id = this.getParams().id
-
-    var plugins = [
-      require('treed/plugins/undo'),
-      require('treed/plugins/todo'),
-      require('treed/plugins/image'),
-      require('treed/plugins/types'),
-      require('treed/plugins/collapse'),
-      require('treed/plugins/clipboard'),
-      require('treed/plugins/lists'),
-      require('treed/plugins/rebase'),
-      require('../../treed-plugins/custom-css'),
-      // require('../../../scriptures/plugin'),
-    ]
+    const plugins = config.plugins.slice()
 
     files.find(id, file =>
       files.get(id, pl => {
