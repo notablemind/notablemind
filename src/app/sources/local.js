@@ -7,7 +7,6 @@ module.exports = {
   select: function (done) {
     var inp = document.createElement('input')
     inp.type = 'file'
-    inp.click()
     inp.addEventListener('change', function () {
       if (!inp.files.length) return
       let reader = new FileReader()
@@ -16,6 +15,7 @@ module.exports = {
       }
       reader.readAsText(inp.files[0])
     })
+    inp.click()
   },
 }
 

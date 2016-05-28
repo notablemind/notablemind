@@ -50,7 +50,7 @@ var DocHeader = React.createClass({
       renderBody(state, set, aaaa) {
         return <DocConfig file={state} change={set}/>
       },
-      done(err, file) {
+      done: (err, file) => {
         this.props.updateFile(file)
         // ummmmaybe reload document here? b/c we now need to get deps
       },

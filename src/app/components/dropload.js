@@ -42,7 +42,7 @@ var Dropload = React.createClass({
   },
 
   _onDragEnd: function (e) {
-    if (e.target.className.indexOf('Dropload') !== -1) {
+    if (e.target.className.indexOf('Dropload') === -1) {
       this.setState({dropping: false})
     }
   },

@@ -13,6 +13,9 @@ globs:
 	which slimerjs || npm install -g slimerjs
 	slimerjs --version
 
+babel-vendor:
+	browserify babelme.js -o www/vendor/babel.js -s babelme
+
 test: globs node_modules vendor www/vendor.js css test/build/components/doc-viewer.js
 	babel-node test/test.js
 
