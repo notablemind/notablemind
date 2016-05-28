@@ -47,7 +47,7 @@ itreed.registerVariant(babelnode)
 itreed.registerVariant(cljsnode)
 itreed.registerVariant(clojure)
 
-var plugins = [
+const plugins = [
   require('treed/plugins/undo'),
   require('treed/plugins/todo'),
   require('treed/plugins/image'),
@@ -57,8 +57,12 @@ var plugins = [
   require('treed/plugins/lists'),
   require('treed/plugins/rebase'),
   require('./treed-plugins/custom-css'),
-  // require('../../../scriptures/plugin'),
+  // require('./treed-plugins/scriptures'),
 ]
+
+if (ELECTRON) {
+  plugins.push(require('./treed-plugins/local-attach/'));
+}
 
 const config = {
   plugins,

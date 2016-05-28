@@ -7,6 +7,8 @@
     "test": "make test",
     "build": "webpack",
     "watch": "webpack --watch",
+    "ebuild": "webpack --config webpack.electron.js",
+    "ewatch": "webpack --config webpack.electron.js --watch",
     "start": "electron ."
   },
   "repository": {
@@ -38,7 +40,9 @@
     "less": "^2.3.1",
     "majax": "git+https://github.com/jaredly/majaX.js",
     "marked": "~0.3.2",
+    "mime": "^1.3.4",
     "moment": "~2.8.3",
+    "open": "0.0.5",
     "rcss": "^0.1.5",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",

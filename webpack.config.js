@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({ELECTRON: false}),
   ],
 
   resolve: {
@@ -25,11 +26,6 @@ module.exports = {
       itreed: path.join(__dirname, 'itreed'),
       treed: path.join(__dirname, 'treed'),
     },
-  },
-
-  node: {
-    fs: 'empty',
-    net: 'empty',
   },
 
   module: {
