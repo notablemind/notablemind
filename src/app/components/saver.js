@@ -1,7 +1,7 @@
 
 var React = require('react')
   , PT = React.PropTypes
-  , sources = require('../sources')
+  , sources = require('../../config/sources')
   , DropDown = require('./dropdown')
   , sync = require('../sync')
   , files = require('../files')

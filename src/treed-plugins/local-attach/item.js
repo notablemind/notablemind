@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-export default ({iconsrc, title, collapsible, collapsed, onCollapse, onDblClick}) => (
+export default ({iconsrc, title, subtitle, collapsible, collapsed, onCollapse, onDblClick}) => (
   <div
     style={styles.container}
     onDoubleClick={onDblClick}
@@ -15,15 +15,20 @@ export default ({iconsrc, title, collapsible, collapsed, onCollapse, onDblClick}
       ...styles.icon,
       backgroundImage: 'url(' + iconsrc + ')',
     }} />
+    <div style={styles.titles}>
     <div style={{
       ...styles.title,
       ...(title[0] === '.' ? styles.hiddenTitle : {})
     }}>{title}</div>
+    {subtitle && <div style={styles.subTitle}>{subtitle}</div>}
+    </div>
   </div>
 )
 
 const styles = {
   container: {
+    WebkitUserSelect: 'none',
+    userSelect: 'none',
     display: 'flex',
     flexDirection: 'row',
     cursor: 'pointer',
@@ -49,12 +54,20 @@ const styles = {
     boxShadow: '0 0 3px #555',
   },
   title: {
-    fontSize: 12,
+    fontSize: 16,
     color: '#666',
   },
   hiddenTitle: {
-    fontSize: 10,
+    fontSize: 12,
     fontStyle: 'italic',
+    color: '#aaa',
+  },
+  titles: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  subTitle: {
+    fontSize: 10,
     color: '#aaa',
   },
 }

@@ -1,7 +1,7 @@
 
 var React = require('react')
   , PT = React.PropTypes
-  , SOURCES = require('./sources')
+  , SOURCES = require('../config/sources')
 
 var SourceSelector = React.createClass({
   propTypes: {

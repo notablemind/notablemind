@@ -37,7 +37,7 @@ function firstStep(CONFIG, rand, done) {
   var created = window.open(url, 'Github Auth', 'width=400,height=400')
   waitForWindow(created, function (err) {
     if (err) return done(err)
-    done(null, created, params(created.location.search.slice(1)))
+    done(null, created, params(created.location.toString().split('?')[1]))
   })
 }
 
@@ -74,7 +74,7 @@ function waitForWindow(window, initial, step, done) {
       return true
     }
     try {
-      var m = window.location.search;
+      var m = window.location.query;
     } catch (e) {
       return false
     }

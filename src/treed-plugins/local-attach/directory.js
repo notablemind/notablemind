@@ -64,19 +64,12 @@ export default class Directory extends React.Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return <div style={styles.container}>
-        Loading...
-      </div>
-    }
-    let name = this.props.path
-    if (!this.props.isRoot) {
-      name = path.basename(name);
-    }
+    let name = path.basename(this.props.path);
     return <div style={styles.container}>
       <Item
         iconsrc={'./icons/folder.png'}
-        title={name}
+        title={this.state.loading ? 'loading...' : name}
+        subtitle={this.props.isRoot && path.dirname(this.props.path)}
         collapsible={this.state.children.length > 0}
         collapsed={this.state.collapsed}
         onCollapse={collapsed => {

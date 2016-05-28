@@ -2,6 +2,7 @@
 import React from 'react'
 import mime from 'mime'
 import open from 'open'
+import path from 'path'
 
 import getFileIcon from './get-file-icon'
 import {getFileType} from './get-file-type'
@@ -79,6 +80,7 @@ class LocalAttach extends React.Component {
     }
     if (this.state.type === 'directory') {
       return <Directory
+        isRoot={true}
         path={this.props.node.localFilePath}
         onPath={path => {
           console.log('onPath', path);
@@ -89,7 +91,9 @@ class LocalAttach extends React.Component {
     return (
       <Item
         iconsrc={getFileIcon(this.state.type, this.props.node.localFilePath)}
-        title={this.props.node.localFilePath}
+        subtitle={path.dirname(this.props.node.localFilePath)}
+        onDblClick={() => open(this.props.node.localFilePath)}
+        title={path.basename(this.props.node.localFilePath)}
       />
     )
   }

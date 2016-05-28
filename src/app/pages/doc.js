@@ -1,4 +1,4 @@
-import config from '../../config'
+import defaultPlugins from '../../config/plugins'
 
 var React = require('react')
   , {Navigation, State} = require('react-router')
@@ -165,7 +165,7 @@ var DocPage = React.createClass({
   loadFile: function () {
     this.setState({error: null, loading: true})
     var id = this.getParams().id
-    const plugins = config.plugins.slice()
+    const plugins = defaultPlugins.slice()
 
     files.find(id, file =>
       files.get(id, pl => {

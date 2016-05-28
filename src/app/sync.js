@@ -1,5 +1,5 @@
 
-var SOURCES = require('./sources')
+var SOURCES = require('../config/sources')
   , treesToMap = require('treed/util/trees-to-map')
   , localFiles = require('./files')
   , deepEqual = require('deep-equal')
