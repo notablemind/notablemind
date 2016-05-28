@@ -7,11 +7,21 @@ import RCSS from 'rcss'
 
 const React = require('react')
 
-//window.runRequire = require
 window.React = React
 
+import itreed from 'itreed'
+import JS from 'itreed/plugins/itreed-js/index.js'
+import JUP from 'itreed/plugins/itreed-jupyter'
+
+import clojureScript from 'itreed/plugins/itreed-js/variants/clojurescript'
+import babel from 'itreed/plugins/itreed-js/variants/babel'
+import babelnode from 'itreed/plugins/itreed-jupyter/variants/babel'
+import cljsnode from 'itreed/plugins/itreed-jupyter/variants/clojurescript'
+import clojure from 'itreed/plugins/itreed-jupyter/variants/clojure'
+import hy from 'itreed/plugins/itreed-jupyter/variants/hy'
+
 // configuration things
-const format = require('itreed/lib/format')
+const format = itreed.format
 
 const formatters = [
   require('itreed/formatters/live'),
@@ -35,17 +45,6 @@ formatters.map(plugin => {
   }
 })
 
-import itreed from 'itreed'
-import JS from 'itreed/plugins/itreed-js'
-import JUP from 'itreed/plugins/itreed-jupyter'
-
-import clojureScript from 'itreed/plugins/itreed-js/variants/clojurescript'
-import babel from 'itreed/plugins/itreed-js/variants/babel'
-import babelnode from 'itreed/plugins/itreed-jupyter/variants/babel'
-import cljsnode from 'itreed/plugins/itreed-jupyter/variants/clojurescript'
-import clojure from 'itreed/plugins/itreed-jupyter/variants/clojure'
-import hy from 'itreed/plugins/itreed-jupyter/variants/hy'
-
 itreed.register(JS)
 itreed.registerVariant(babel)
 itreed.registerVariant(clojureScript)
@@ -55,6 +54,8 @@ itreed.registerVariant(hy)
 itreed.registerVariant(babelnode)
 itreed.registerVariant(cljsnode)
 itreed.registerVariant(clojure)
+
+window.aaa = [formatters, format]
 
 window.onload = function () {
   const router = require('./app/router')
