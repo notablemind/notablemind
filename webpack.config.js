@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = {
   // devtool: 'eval',
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: [
     // 'webpack-hot-middleware/client',
     './src/run',
