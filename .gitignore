@@ -16,3 +16,4 @@ www/baked.js
 /test/build
 /app/components/fix
 /screenshot.png
+electron/secrets.js
