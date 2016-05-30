@@ -1,4 +1,4 @@
-var IxPL = require('treed/pl/firebase')
+var IxPL = require('treed/pl/ixdb')
   , QueuePL = require('treed/pl/queuedb')
   , treed = require('treed')
   , kernelConfig = require('./kernels')
