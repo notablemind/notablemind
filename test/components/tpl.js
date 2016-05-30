@@ -4,7 +4,7 @@ const ticks = new Ticker()
 window.ticks = ticks
 
 import {render} from 'react-dom'
-import React from 'react/addons'
+import React from 'react'
 ticks.add('load:react')
 
 window.run = run

@@ -8,7 +8,7 @@ global.window = {
   addEventListener: () => {}
 }
 
-import React from 'react/addons'
+import React from 'react'
 import {treedFromFile} from './utils'
 
 import DocViewer from '../app/components/doc-viewer'

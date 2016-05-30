@@ -36,6 +36,6 @@ ipcMain.on('google-login', (event) => {
   console.log('ipc google login');
   google((err, result) => {
     console.log('res', err, result);
-    event.sender.send('google-token', result.id_token);
+    event.sender.send('google-token', result);
   })
 });

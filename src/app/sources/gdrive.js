@@ -1,7 +1,9 @@
 
+const {ipcRenderer} = require('electron')
 var ajax = require('./ajax')
   , googleAuthModal = require('./google-auth-modal')
   , loadGDriveModal = require('./load-gdrive-modal')
+
 
 module.exports = {
   title: 'Google Drive',
@@ -17,7 +19,7 @@ module.exports = {
         done(null, contents, getConfigFromFile(file))
       })
     })
-    done(new Error('import from gdrive not yet supported'))
+    // done(new Error('import from gdrive not yet supported'))
   },
 
   head: function (config, done) {
@@ -53,7 +55,6 @@ module.exports = {
       uploadFile(title, text, (file) => done(null, getConfigFromFile(file), new Date(file.modifiedDate).getTime()))
     })
   },
-
 }
 
 var CONFIG = {
@@ -62,6 +63,21 @@ var CONFIG = {
 }
 
 function authorize(done) {
+  const token = gapi.auth.getToken()
+  if (token && (+token.expires_at * 1000) > Date.now()) return done(null)
+
+  ipcRenderer.on('google-token', (event, result) => {
+    console.log('google token', result)
+    gapi.auth.setToken({
+      access_token: result.access_token,
+      expires_at: Date.now() / 1000 + parseInt(result.expires_in),
+    });
+    done(null)
+  });
+  ipcRenderer.send('google-login')
+}
+
+function authorize_(done) {
   // TODO save something to localstorage so we don't always do this RTT
   var token = gapi.auth.getToken()
   if (token && (+token.expires_at * 1000) > Date.now()) return done(null)

@@ -7,6 +7,8 @@ var React = require('react')
   , Morph = require('../helpers/morph')
   , readFile = require('./read-file')
 
+import {StyleSheet, css} from 'aphrodite'
+
 var BrowseHeader = React.createClass({
   mixins: [KeysMixin, Morph],
 
@@ -50,9 +52,9 @@ var BrowseHeader = React.createClass({
         return console.warn('failed to import file', err) // TODO UI?
       }
       if (source) {
-        this.props.fileslib.update(file.id, {source: source}, (err) => {
-          if (err) {
-            return console.warn('failed to update', err) // TODO UI?
+        this.props.fileslib.update(file.id, {source: source}, () => {
+          if (false) {
+            return console.warn('failed to update') // TODO UI?
           }
           this.props.onUpdated()
         })
@@ -108,19 +110,26 @@ var BrowseHeader = React.createClass({
         <div
           key={1}
           onClick={this._onNewOpen.bind(null, 'new', true)}
-          className='NewFile NewFile-closed'>Create</div>,
-        <h1 key={2} className='Browse_title'>Notablemind</h1>,
+          className={css(styles.newFile, styles.newFileClosed)}
+        >
+          Create
+        </div>,
+        <h1 key={2} className={css(styles.browseTitle)}>Notablemind</h1>,
         <div
           key={3}
           onClick={this._onNewOpen.bind(null, 'import')}
-          className='Importer Importer-closed'>Import</div>
+          className={css(styles.importer, styles.importerClosed)}
+        >
+          Import
+        </div>
       ]
     }
 
-    return <div className='BrowseHeader'>
-      <div className={
-        'BrowseHeader_opener' + (this.state.open ? ' BrowseHeader_opener-open' : '')
-      }>
+    return <div className={css(styles.browseHeader)}>
+      <div className={css(
+        styles.opener,
+        this.state.open && styles.open
+      )}>
         {opener}
       </div>
       <Dropload
@@ -130,6 +139,64 @@ var BrowseHeader = React.createClass({
         'Import Error: ' + this.state.importError}
     </div>
   }
+})
+
+const button = {
+  padding: 10,
+  textAlign: 'center',
+  fontSize: 20,
+  fontWeight: 'bold',
+  cursor: 'pointer',
+  border: '1px solid white',
+  transition: 'border-color .2s ease, color .2s ease',
+
+  flex: 1,
+  marginBottom: 10,
+  margin: '0 20px 5px',
+  color: '#aaa',
+  borderColor: '#eee',
+
+  ':hover': {
+    borderColor: '#777',
+    color: 'black',
+  }
+}
+
+const styles = StyleSheet.create({
+  browseHeader: {},
+
+  opener: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+
+  open: {
+    display: 'block',
+  },
+
+  newFile: {
+    position: 'relative',
+    padding: '0 20px',
+  },
+
+  newFileClosed: {
+    ...button,
+    padding: 10,
+  },
+
+  importer: {
+    position: 'relative',
+  },
+
+  importerClosed: {
+    ...button,
+  },
+
+  browseTitle: {
+    margin: '2px 45px 0',
+    textAlign: 'center',
+    color: '#4d4d4d',
+  },
 })
 
 module.exports = BrowseHeader

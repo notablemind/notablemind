@@ -1,7 +1,7 @@
 
 const ticks = window.ticks || {add: () => {}}
 
-import React from 'react/addons'
+import React from 'react'
 import {treedFromFile, initFormatters} from '../utils'
 
 import DocViewer from '../../app/components/doc-viewer'

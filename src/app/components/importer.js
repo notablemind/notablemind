@@ -1,5 +1,5 @@
 
-var React = require('react/addons')
+var React = require('react')
   , cx = require('classnames')
   , sources = require('../../config/sources')
   , KeysMixin = require('../keys-mixin')
@@ -7,7 +7,7 @@ var React = require('react/addons')
 var Importer = React.createClass({
   _importFrom: function (name) {
     sources[name].select((err, data, config) => {
-      if (err) return console.warn('failed to source')
+      if (err) return console.warn('failed to source', err)
       // syncable is false for local upload... maybe others will too
       let sourceConfig = sources[name].syncable !== false ? {config: config, type: name} : false
       this.props.onSourced(data, sourceConfig)

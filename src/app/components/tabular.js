@@ -1,5 +1,5 @@
 
-var React = require('react/addons')
+var React = require('react')
   , PT = React.PropTypes
   , KeysMixin = require('../keys-mixin')
   , TableBody = require('./table-body')

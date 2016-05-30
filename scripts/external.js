@@ -1,6 +1,6 @@
 
 export default `react
-react/addons
+react
 less
 majax
 marked
