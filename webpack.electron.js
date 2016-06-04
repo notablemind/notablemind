@@ -9,4 +9,6 @@ config.plugins = [
     new webpack.DefinePlugin({ELECTRON: true}),
 ]
 
+config.output.filename = 'electron.js'
+
 module.exports = config;

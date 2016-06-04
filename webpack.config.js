@@ -19,6 +19,7 @@ module.exports = {
     // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({ELECTRON: false}),
+    new webpack.IgnorePlugin(/electron/),
   ],
 
   resolve: {

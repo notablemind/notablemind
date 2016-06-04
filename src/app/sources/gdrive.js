@@ -1,5 +1,4 @@
 
-const {ipcRenderer} = require('electron')
 var ajax = require('./ajax')
   , googleAuthModal = require('./google-auth-modal')
   , loadGDriveModal = require('./load-gdrive-modal')
@@ -66,6 +65,7 @@ function authorize(done) {
   const token = gapi.auth.getToken()
   if (token && (+token.expires_at * 1000) > Date.now()) return done(null)
 
+    const {ipcRenderer} = require('electron')
   ipcRenderer.on('google-token', (event, result) => {
     console.log('google token', result)
     gapi.auth.setToken({

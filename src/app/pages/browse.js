@@ -1,10 +1,10 @@
-var React = require('react')
-  , Navigation = require('react-router').Navigation
-  , keys = require('treed/lib/keys')
-  , files = require('../files')
+import React from 'react'
+import {Navigation} from 'react-router'
+import keys from 'treed/lib/keys'
 
-  , Browse = require('../components/browse')
-  , BrowseHeader = require('../components/browse-header')
+import files from '../files'
+import Browse from '../components/browse'
+import BrowseHeader from '../components/browse-header'
 
 function strcmp(a, b) {
   if (a === b) return 0
@@ -88,6 +88,7 @@ var BrowsePage = React.createClass({
           fileslib={files}
           files={this.state.files} />
         : <span>Loading</span>}
+      <button>Configure</button>
     </div>
   },
 })

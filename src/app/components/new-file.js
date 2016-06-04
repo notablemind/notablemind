@@ -1,4 +1,6 @@
 
+import {StyleSheet, css} from 'aphrodite'
+
 var React = require('react')
   , cx = require('classnames')
   , kernels = require('../kernels')
@@ -86,23 +88,73 @@ var NewFile = React.createClass({
   },
 
   render: function () {
-    return <form className="NewFile" onSubmit={this._onSubmit}>
-      <button className='NewFile_cancel' onClick={this._onHide}>Cancel</button>
+    return <form className={css(styles.newFile)} onSubmit={this._onSubmit}>
+      <button className={css(styles.newFileCancel)} onClick={this._onHide}>Cancel</button>
       <div>
-        <h3 className="NewFile_head">New Document</h3>
+        <h3 className={css(styles.head)}>New Document</h3>
         <input
           type="text"
           ref="input"
           onKeyDown={this._onKeyDown}
-          className='NewFile_title'
+          className={css(styles.title)}
           value={this.state.title}
           onChange={this._onChange} />
-        <button className='NewFile_submit' onClick={this._onSubmit}>Create Document</button>
+        <button className={css(styles.submit)} onClick={this._onSubmit}>Create Document</button>
       </div>
       <span className='NewFile_ReplTitle'>Repl</span>
       {this.repls()}
     </form>
   },
 })
+
+const cancelButton = {
+  position: 'absolute',
+  top: 0,
+  right: 20,
+  fontSize: 16,
+  backgroundColor: 'white',
+  border: '1px solid #ccc',
+  padding: '5px 10px',
+  cursor: 'pointer',
+  color: '#aaa',
+  transition: 'color .2s ease, border-color .2s ease',
+
+  ':hover': {
+    borderColor: 'black',
+    color: 'black',
+  }
+}
+
+const styles = StyleSheet.create({
+  newFile: {
+    position: 'relative',
+    padding: '0 20px',
+  },
+
+  newFileCancel: {
+    ...cancelButton,
+  },
+
+  head: {
+    margin: 0,
+    display: 'none',
+  },
+
+  title: {
+    fontSize: 16,
+    padding: '5px 10px',
+    border: '1px solid #ccc',
+    width: 300,
+  },
+
+  submit: {
+    backgroundColor: 'white',
+    border: '1px solid #ccc',
+    padding: '5px 10px',
+    fontSize: 16,
+    marginLeft: 5,
+    cursor: 'pointer',
+  },
+});
 
 module.exports = NewFile

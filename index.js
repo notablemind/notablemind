@@ -9,7 +9,7 @@ let mainWindow
 function createWindow (port) {
   mainWindow = new BrowserWindow({width: 1200, height: 1000})
   //mainWindow.loadURL(`file://${__dirname}/www/index.html`)
-  mainWindow.loadURL(`http://localhost:${port}`)
+  mainWindow.loadURL(`http://localhost:${port}/electron.html`)
   mainWindow.on('closed', function () {
     mainWindow = null
   })
