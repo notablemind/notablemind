@@ -18,3 +18,4 @@ www/baked.js
 /screenshot.png
 electron/secrets.js
 www/electron.js
+src/secrets.js

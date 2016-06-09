@@ -1,4 +1,6 @@
 
+import secrets from '../../secrets'
+
 var ajax = require('./ajax')
   , googleAuthModal = require('./google-auth-modal')
   , loadGDriveModal = require('./load-gdrive-modal')
@@ -56,16 +58,18 @@ module.exports = {
   },
 }
 
+const authorize = ELECTRON ? authorizeElectron : authorizeWeb;
+
 var CONFIG = {
-  client_id: process.env.GDRIVE_CLIENT_ID,
+  client_id: secrets.google.clientId,
   scopes: 'https://www.googleapis.com/auth/drive',
 }
 
-function authorize(done) {
+function authorizeElectron(done) {
   const token = gapi.auth.getToken()
   if (token && (+token.expires_at * 1000) > Date.now()) return done(null)
 
-    const {ipcRenderer} = require('electron')
+  const {ipcRenderer} = require('electron')
   ipcRenderer.on('google-token', (event, result) => {
     console.log('google token', result)
     gapi.auth.setToken({
@@ -77,7 +81,7 @@ function authorize(done) {
   ipcRenderer.send('google-login')
 }
 
-function authorize_(done) {
+function authorizeWeb(done) {
   // TODO save something to localstorage so we don't always do this RTT
   var token = gapi.auth.getToken()
   if (token && (+token.expires_at * 1000) > Date.now()) return done(null)

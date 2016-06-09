@@ -1,6 +1,9 @@
 
 include ./common.mk
 
+pages:
+	rsync -r www/ pages
+
 babel-vendor:
 	browserify scripts/babelme.js -o www/vendor/babel.js -s babelme
 
