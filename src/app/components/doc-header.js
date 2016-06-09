@@ -1,4 +1,6 @@
 
+import {StyleSheet, css} from 'aphrodite'
+import classnames from 'classnames'
 import {Form, FormSection, Radio, Panes} from '../../../form'
 import Config from '../../../itreed/config'
 import DocConfig from './doc-config'
@@ -126,10 +128,22 @@ var DocHeader = React.createClass({
         store={this.props.treed.store}
         file={this.props.file}
         value={this.props.file.source}/>}
-      <i className='fa fa-gear' onClick={this._showConfig} style={{cursor: 'pointer'}}/>
+      {/*<i
+        className={classnames(
+          'fa fa-gear',
+          css(styles.gear)
+        )}
+        onClick={this._showConfig}
+        style={{cursor: 'pointer'}}
+      />*/}
     </div>
   }
 })
 
 module.exports = DocHeader
 
+const styles = StyleSheet.create({
+  gear: {
+    padding: 6,
+  },
+})

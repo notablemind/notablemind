@@ -4,7 +4,8 @@ include ./common.mk
 babel-vendor:
 	browserify scripts/babelme.js -o www/vendor/babel.js -s babelme
 
-
+css:
+	lessc --source-map --source-map-basepath=www/ src/run.less www/build.css
 # helpers
 
 start-ijulia:

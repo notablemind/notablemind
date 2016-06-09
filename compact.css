@@ -33,7 +33,7 @@ span.treed_body_rendered {}
 }
 
 .treed_body_rendered, .textarea-grow textarea, .textarea-grow .shadow {
-    min-height: 20px;
+    min-height: 24px;
     font-size: 10px;
 }
 
