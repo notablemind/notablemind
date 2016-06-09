@@ -1632,6 +1632,7 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   background-color: #f0f0f0;
   padding: 2px 5px;
   border-radius: 5px;
+  display: inline;
 }
 .treed_body-type-ipython {
   margin-bottom: 0;
@@ -1790,6 +1791,7 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
 }
 .treed_body_rendered code {
   background-color: #C4F7D2;
+  display: block;
   padding: 5px;
 }
 .TreeItem-ipython > .TreeItem_head > .TreeItem_body {
@@ -3172,7 +3174,7 @@ span.treed_body_rendered {}
 }
 
 .treed_body_rendered, .textarea-grow textarea, .textarea-grow .shadow {
-    min-height: 20px;
+    min-height: 24px;
     font-size: 10px;
 }
 
