@@ -105,20 +105,30 @@ var DocHeader = React.createClass({
 
   render: function () {
     var headStore = this.props.treed.store.headerView()
-    return <div className='DocHeader'>
-      <span className='DocHeader_name'>
-        <a target="_blank" href="http://notablemind.github.io">Notablemind</a>
-        <a target="_blank" href="http://github.com/notablemind/notablemind">
+    return <div className={css(styles.DocHeader)}>
+      <span className={css(styles.Name)}>
+        <a
+          className={css(styles.NameLink)}
+          target="_blank"
+          href="http://notablemind.github.io"
+        >
+          Notablemind
+        </a>
+        <a
+          className={css(styles.NameLink)}
+          target="_blank"
+          href="http://github.com/notablemind/notablemind"
+        >
           <i className='fa fa-github-alt'/>
         </a>
       </span>
       {!!this.props.onClose &&
-        <button className='DocHeader_home' onClick={this.props.onClose}>
+        <button
+          className={css(styles.DocHeader_home)}
+          onClick={this.props.onClose}
+        >
           Home
         </button>}
-      {/*<span className='DocHeader_title'>
-        {this.props.file.title}
-      </span>*/}
       <Dupload store={this.props.treed.store}/>
       {this.props.treed.options.plugins.map(plugin =>
         plugin.view && plugin.view.global && plugin.view.global(headStore, this.onConfig.bind(this, plugin.id))
@@ -146,4 +156,38 @@ const styles = StyleSheet.create({
   gear: {
     padding: 6,
   },
+
+  DocHeader: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 10,
+    position: 'relative',
+    flexShrink: 0,
+  },
+
+  Name: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    position: 'absolute',
+    left: 10,
+    top: 5,
+    textTransform: 'lowercase',
+    fontFamily: 'sans-serif',
+    color: '#ccc',
+    textDecoration: 'none',
+  },
+
+  NameLink: {
+    color: '#ccc',
+    textDecoration: 'none',
+    paddingRight: 10,
+  },
+
+  DocHeader_home: {
+    backgroundColor: 'white',
+    border: '1px solid #ccc',
+    marginRight: 20,
+    cursor: 'pointer',
+  },
+
 })

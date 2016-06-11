@@ -115,7 +115,7 @@ var Tabular = React.createClass({
 
   render: function () {
     var heads = Object.keys(this.props.headers)
-    return <div className='Tabular'>
+    return <div className='Tabular' style={{flex: 1}}>
       <table className='Tabular_header' ref='head'>
         <thead>
           <tr>

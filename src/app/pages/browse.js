@@ -1,6 +1,7 @@
 import React from 'react'
 import {Navigation} from 'react-router'
 import keys from 'treed/lib/keys'
+import {StyleSheet, css} from 'aphrodite'
 
 import files from '../files'
 import Browse from '../components/browse'
@@ -74,7 +75,7 @@ var BrowsePage = React.createClass({
   },
 
   render: function () {
-    return <div className='BrowsePage'>
+    return <div className={css(styles.BrowsePage)}>
       <BrowseHeader
         fileslib={files}
         keys={this.state.keys}
@@ -94,3 +95,18 @@ var BrowsePage = React.createClass({
 })
 
 module.exports = BrowsePage
+
+const styles = StyleSheet.create({
+  BrowsePage: {
+    maxWidth: 700,
+    margin: '25px auto 50px',
+    padding: '20px 0 0',
+    width: 700,
+    fontFamily: 'sans-serif',
+    flexDirection: 'column',
+    display: 'flex',
+    flex: 1,
+    boxShadow: '0px 0 20px #999',
+  },
+
+})

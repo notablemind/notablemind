@@ -1,26 +1,6 @@
 
 @import "tabular.less";
 
-.BrowsePage {
-  max-width: 700px;
-  margin: 25px auto 50px;
-  padding: 20px 0 0;
-  width: 700px;
-  font-family: sans-serif;
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-  box-shadow: 0px 0 20px #999;
-
-  .Tabular {
-    flex: 1;
-  }
-}
-
-.Browse {
-  display: flex;
-}
-
 .Browse_new_btn {
   padding: 10px;
   text-align: center;
@@ -60,112 +40,6 @@
   }
 }
 
-.BrowseHeader {
-  &_opener {
-    display: flex;
-    flex-direction: row;
-
-    div {
-    }
-
-    &-open {
-      display: block;
-    }
-  }
-}
-
-.Browse-loading {
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 0 15px #888;
-  margin: 200px auto;
-  box-shadow: none;
-}
-
-.Browse_title {
-  margin: 2px 45px 0;
-  text-align: center;
-  color: #4D4D4D;
-}
-
-.NewFile_head,
-.Browse_head {
-  text-align: center;
-  margin-top: 0;
-}
-
-.Browse_files {
-  padding: 0;
-  margin: 20px 0 0;
-  list-style: none;
-  overflow: auto;
-  flex: 1;
-}
-
-.Browse_file {
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-
-  &:hover {
-    background-color: #eee;
-  }
-}
-
-.Browse_nofiles {
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #999;
-}
-
-.Browse_source {
-  float: right;
-}
-
-.Browse_repl {
-  float: right;
-
-  &-null {
-    display: none;
-  }
-
-  /*
-  &-go {
-    &:before {
-      content: 'go';
-    }
-  }
-
-  &-rust {
-    &:before {
-      content: 'rust';
-    }
-  }
-
-  &-ipython {
-    &:before {
-      content: 'ipython';
-    }
-  }
-
-  &-gorilla {
-    &:before {
-      content: 'gorilla';
-    }
-  }
-
-  &-ijs {
-    &:before {
-      content: 'javascript';
-    }
-  }
-  */
-
-}
-
 .Browse_config_repls {
   padding: 0;
   margin: 10px 0;
@@ -186,36 +60,3 @@
     background-color: #eee;
   }
 }
-
-.Modal {
-  z-index: 10011;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 200px;
-  margin: -100px 0 0 -150px;
-  border: 1px solid #eee;
-  box-shadow: 0 0 10px black;
-  padding: 10px;
-  background: white;
-}
-
-.Browse_menu {
-  position: absolute;
-  cursor: pointer;
-  background-color: #fff;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  box-shadow: 0 0 5px black;
-
-  &_item {
-    padding: 7px 13px;
-
-    &:hover {
-      background-color: #eee;
-    }
-  }
-}
-
