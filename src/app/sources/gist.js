@@ -1,5 +1,7 @@
 /* @flow */
 
+import secrets from '../../secrets'
+
 var saveAsModal = require('./save-as-modal')
   , loadGistModal = require('./load-gist-modal')
   , ajax = require('./ajax')
@@ -91,7 +93,7 @@ var CONFIG = {
   authorize: 'https://github.com/login/oauth/authorize',
   proxy: 'https://auth-server.herokuapp.com/proxy',
   redirect_uri: parent.location.origin + '/connect.html',
-  client_id: process.env.GITHUB_CLIENT_ID,
+  client_id: secrets.github.clientId,
   api: 'https://api.github.com/gists/',
 }
 

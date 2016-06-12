@@ -24,6 +24,10 @@ var DocHeader = React.createClass({
     onClose: PT.func,
   },
 
+  getInitialState() {
+    return {largeSelected: false}
+  },
+
   getDefaultProps: function () {
     return {
       savingEnabled: false,
@@ -103,6 +107,15 @@ var DocHeader = React.createClass({
     })
   },
 
+  toggleLarge() {
+    if (this.state.largeSelected) {
+      document.body.classList.remove('large')
+    } else {
+      document.body.classList.add('large')
+    }
+    this.setState({largeSelected: !this.state.largeSelected})
+  },
+
   render: function () {
     var headStore = this.props.treed.store.headerView()
     return <div className={css(styles.DocHeader)}>
@@ -138,6 +151,13 @@ var DocHeader = React.createClass({
         store={this.props.treed.store}
         file={this.props.file}
         value={this.props.file.source}/>}
+      <button
+        onClick={() => this.toggleLarge()}
+        className={css(styles.largeButton,
+                       this.state.largeSelected && styles.largeSelected)}
+      >
+        Large
+      </button>
       {/*<i
         className={classnames(
           'fa fa-gear',

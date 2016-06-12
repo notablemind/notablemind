@@ -7,19 +7,21 @@ body {
     padding: 0;
 }
 
+.m_IPython.m_IPython-empty {
+    margin: 0;
+}
+
+.TreeItem-active > .TreeItem_head > .TreeItem_body {
+    outline: 2px solid #ccc;
+}
+
 span.treed_body_rendered {
     min-height: 24px;
     font-size: 10px;
 }
 
-span.treed_body_rendered {}
-
 .ITreedCodeEditor {
     font-size: 10px;
-}
-
-.m_IPython.m_IPython-empty {
-    margin: 0;
 }
 
 .m_IPython_time {
@@ -37,6 +39,12 @@ span.treed_body_rendered {}
     font-size: 10px;
 }
 
-.TreeItem-active > .TreeItem_head > .TreeItem_body {
-    outline: 2px solid #ccc;
+body.large span.treed_body_rendered,
+body.large .ITreedCodeEditor,
+body.large .TreeItem_body,
+body.large .treed_body_rendered,
+body.large .textarea-grow textarea,
+body.large .textarea-grow .shadow {
+    font-size: 20px;
+    line-height: 30px;
 }
