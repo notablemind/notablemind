@@ -15,11 +15,6 @@ body {
     outline: 2px solid #ccc;
 }
 
-span.treed_body_rendered {
-    min-height: 24px;
-    font-size: 10px;
-}
-
 .ITreedCodeEditor {
     font-size: 10px;
 }
@@ -34,9 +29,15 @@ span.treed_body_rendered {
     font-size: 10px;
 }
 
-.treed_body_rendered, .textarea-grow textarea, .textarea-grow .shadow {
+.treed_body_rendered,
+.textarea-grow textarea,
+.textarea-grow .shadow {
     min-height: 24px;
     font-size: 10px;
+}
+
+.TreeItem_head {
+    padding-bottom: 2px;
 }
 
 body.large span.treed_body_rendered,
@@ -47,4 +48,6 @@ body.large .textarea-grow textarea,
 body.large .textarea-grow .shadow {
     font-size: 20px;
     line-height: 30px;
+    min-height: 38px;
 }
+
