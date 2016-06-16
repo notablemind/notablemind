@@ -48,6 +48,7 @@ module.exports = {
         path.join(__dirname, 'src'),
         path.join(__dirname, 'itreed'),
         path.join(__dirname, 'treed'),
+        path.join(__dirname, 'form'),
       ],
     }],
   },
