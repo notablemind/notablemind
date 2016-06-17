@@ -135,10 +135,10 @@ module.exports = {
   node: {
     bodies: {
       localAttach: {
-        renderer() {
+        renderer(props, onFocus) {
           return <LocalAttach
-            {...this.props}
-            path={this.props.node.localFilePath}
+            {...props}
+            path={props.node.localFilePath}
           />
         },
         editor(props) {
