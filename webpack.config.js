@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'www'),
     filename: 'build.js',
-    publicPath: '/static/',
+    publicPath: '/',
   },
 
   plugins: [

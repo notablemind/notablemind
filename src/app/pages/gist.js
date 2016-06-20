@@ -1,3 +1,6 @@
+import defaultPlugins from '../../config/plugins'
+import defaultViewTypes from '../../config/view-types'
+
 var React = require('react')
   , {Navigation, State} = require('react-router')
 
@@ -106,6 +109,7 @@ var GistPage = React.createClass({
         store={store}
         plugins={plugins}
         query={this.getQuery()}
+        viewTypes={defaultViewTypes}
         saveWindowConfig={(config, done) => done()}
         keys={this.state.keys}/>
     </div>

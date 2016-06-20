@@ -12,25 +12,6 @@ import config from './config'
 
 window.React = React
 
-window.onload = function () {
-  RCSS.injectAll()
-  const container = document.createElement('div')
-  container.id = 'container'
-  document.body.appendChild(container)
-
-  run(router, function (Handler) {
-    render(<Handler/>, container)
-  });
-
-  /*
-  const user = firebase.auth().currentUser;
-  if (!user) {
-    redirect();
-  }
-  */
-
-}
-
 const popup = window.fblogin = () => {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -79,3 +60,23 @@ const redirect = () => {
   });
 }
 
+let container
+
+window.onload = function () {
+  RCSS.injectAll()
+  container = document.createElement('div')
+  container.id = 'container'
+  document.body.appendChild(container)
+
+  run(router, function (Handler) {
+    render(<Handler/>, container)
+  });
+
+  /*
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    redirect();
+  }
+  */
+
+}

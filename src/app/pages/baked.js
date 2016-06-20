@@ -1,3 +1,5 @@
+import defaultPlugins from '../../config/plugins'
+import defaultViewTypes from '../../config/view-types'
 
 var React = require('react')
   , PT = React.PropTypes
@@ -28,6 +30,7 @@ function init(data, done) {
     require('treed/plugins/rebase'),
     require('../../treed-plugins/custom-css'),
   ]
+  // TODO use defaultPlugins
 
   var config = kernelConfig[file.repl]
   if (config && config.kernel) {
@@ -140,6 +143,7 @@ var BakedDoc = React.createClass({
       <DocViewer
         file={file}
         treed={treed}
+        viewTypes={defaultViewTypes}
         saveWindowConfig={(_, done) => done && done()}
         keys={this.props.treed.keyManager}/>
     </div>

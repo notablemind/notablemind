@@ -92,7 +92,7 @@ var DocViewer = React.createClass({
     treed: PT.object,
     file: PT.object,
     keys: PT.object,
-    viewTypes: PT.object,
+    viewTypes: PT.object.isRequired,
     saveWindowConfig: PT.func,
   },
 
@@ -114,18 +114,6 @@ var DocViewer = React.createClass({
       windowConfig: windowConfig,
       windowMap: windowMap,
       searching: false,
-    }
-  },
-
-  getDefaultProps: function () {
-    return {
-      viewTypes: {
-        // pdf: require('treed/views/pdf'),
-        list: require('treed/views/list'),
-        mindmap: require('treed/views/mindmap'),
-        paper: require('treed/views/paper'),
-        focus: require('treed/views/focus'),
-      }
     }
   },
 

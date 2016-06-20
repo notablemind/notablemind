@@ -10,12 +10,14 @@ config.entry = [
   './src/run',
 ]
 config.plugins = [
-  new webpack.DefinePlugin({ELECTRON: true}),
+  new webpack.DefinePlugin({ELECTRON: false}),
   new webpack.HotModuleReplacementPlugin(),
+  new webpack.IgnorePlugin(/electron/),
 ]
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
+  contentBase: __dirname + '/www',
   hot: true,
   historyApiFallback: true
 }).listen(3000, 'localhost', function (err, result) {

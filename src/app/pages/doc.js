@@ -1,4 +1,5 @@
 import defaultPlugins from '../../config/plugins'
+import defaultViewTypes from '../../config/view-types'
 
 var React = require('react')
   , {Navigation, State} = require('react-router')
@@ -252,6 +253,7 @@ var DocPage = React.createClass({
         file={file}
         treed={treed}
         query={this.getQuery()}
+        viewTypes={defaultViewTypes}
         saveWindowConfig={this.saveWindowConfig}
         keys={this.state.treed.keyManager}/>
     </div>
