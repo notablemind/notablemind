@@ -3,6 +3,7 @@
 const format = itreed.format
 
 const formatters = [
+  require('itreed/formatters/blob'),
   require('itreed/formatters/live'),
   require('itreed/formatters/live-button'),
   require('itreed/formatters/react'),
