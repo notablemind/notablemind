@@ -64,6 +64,7 @@ var DocHeader = React.createClass({
   },
 
   onConfig(plugin) {
+    const kernels = (this.props.treed.store._globals.itreed || {kernels: {}}).kernels
     const config = this.props.file.plugins && this.props.file.plugins.itreed || {
       jupyter: {
         server:{
@@ -85,6 +86,15 @@ var DocHeader = React.createClass({
         return <Form
           onSubmit={value => this.props.onClose(null, value)}
           initialData={config}>
+          {Object.keys(kernels).map(key => (
+            <div key={key}>
+              {key}
+              <button
+                type="button"
+                onClick={() => kernels[key].restart(() => console.log('restarted'))}
+              >Restart</button>
+            </div>
+          ))}
           <Config
             variants={itreed.availableVariants}
             plugins={itreed.availablePlugins} name='*'/>
