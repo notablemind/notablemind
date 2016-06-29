@@ -91,8 +91,22 @@ var DocHeader = React.createClass({
               {key}
               <button
                 type="button"
-                onClick={() => kernels[key].restart(() => console.log('restarted'))}
+                onClick={() => {
+                  kernels[key].restart(() => {
+                    console.log('restarted')
+                    this.props.onClose(null)
+                  })
+                }}
               >Restart</button>
+              <button
+                type="button"
+                onClick={() => {
+                  kernels[key].interrupt(() => {
+                    console.log('interrupted')
+                    this.props.onClose(null)
+                  })
+                }}
+              >Interrupt</button>
             </div>
           ))}
           <Config
