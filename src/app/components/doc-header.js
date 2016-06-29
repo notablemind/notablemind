@@ -107,6 +107,15 @@ var DocHeader = React.createClass({
                   })
                 }}
               >Interrupt</button>
+              <button
+                type="button"
+                onClick={() => {
+                  kernels[key].shutdown(() => {
+                    console.log('sutdown')
+                    this.props.onClose(null)
+                  })
+                }}
+              >Shut Down</button>
             </div>
           ))}
           <Config
