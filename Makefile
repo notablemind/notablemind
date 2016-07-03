@@ -15,7 +15,7 @@ start-ijulia:
 	ipython notebook --NotebookApp.allow_origin='*' --profile=julia
 
 start-ipython:
-	jupyter notebook --NotebookApp.allow_origin='*' --Session.key=''
+	jupyter notebook --NotebookApp.allow_origin='*' --Session.key='' --no-browser
 
 serve:
 	cd www; python -mSimpleHTTPServer 6682

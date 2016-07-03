@@ -4,6 +4,7 @@ var ipython = require('./ipython')
 var python = require('./python')
 var js = require('./javascript')
 var markdown = require('./markdown')
+import * as html from './html'
 
 module.exports = {
   markdown: {
@@ -57,6 +58,12 @@ module.exports = {
     strFromTrees: parseGorilla.toStr,
     treeFromStr: parseGorilla.fromStr,
   },
+  html: {
+    ext: 'html',
+    mime: 'text/html',
+    strFromTrees: html.toStr,
+    treeFromStr: html.fromStr,
+  },
   formats: [
     ['notablemind', 'Notablemind (.nm)'],
     ['ipython', 'IPython (.ipynb)'],
@@ -64,6 +71,7 @@ module.exports = {
     ['python', 'Python (.py)'],
     ['javascript', 'Javascript (.js)'],
     ['markdown', 'Markdown (.md)'],
+    ['html', 'HTML'],
     // latex: 'Latex (.tx)',
   ],
   exts: {
@@ -73,6 +81,7 @@ module.exports = {
     'ipynb': 'ipython',
     'clj': 'gorilla',
     'js': 'javascript',
+    'html': 'html',
   },
   detect: function (filename) {
     var parts = filename.split('.')
