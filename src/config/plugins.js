@@ -2,6 +2,7 @@
 const plugins = [
   require('treed/plugins/undo'),
   require('treed/plugins/todo'),
+  require('treed/plugins/disable'),
   require('treed/plugins/image'),
   require('treed/plugins/types'),
   require('treed/plugins/collapse'),

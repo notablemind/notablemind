@@ -12,10 +12,11 @@ css:
 # helpers
 
 start-ijulia:
-	ipython notebook --NotebookApp.allow_origin='*' --profile=julia
+	cd .jupyter-env && ipython notebook --NotebookApp.allow_origin='*' --profile=julia
 
 start-ipython:
-	jupyter notebook --NotebookApp.allow_origin='*' --Session.key='' --no-browser
+	# jupyter notebook --NotebookApp.allow_origin='*' --Session.key='' --no-browser
+	cd .jupyter-env && ipython notebook --NotebookApp.allow_origin='*' --Session.key='' --no-browser
 
 serve:
 	cd www; python -mSimpleHTTPServer 6682
