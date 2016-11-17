@@ -19,7 +19,7 @@ function createWindow (port) {
   mainWindow.on('closed', function () {
     mainWindow = null
   })
-  BrowserWindow.addDevToolsExtension('/Users/jared/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.14.11_0')
+  // BrowserWindow.addDevToolsExtension('/Users/jared/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.14.11_0')
 }
 
 app.on('ready', () => makeServer(port => {

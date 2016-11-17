@@ -149,7 +149,7 @@ function uploadFile(title, fileData, done) {
     'mimeType': contentType
   };
 
-  var base64Data = btoa(fileData);
+  var base64Data = btoa(unescape(encodeURIComponent(fileData)));
   var multipartRequestBody =
       delimiter +
       'Content-Type: application/json\r\n\r\n' +

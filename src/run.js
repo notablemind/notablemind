@@ -12,6 +12,15 @@ import config from './config'
 
 window.React = React
 
+if (ELECTRON) {
+  document.addEventListener('click', e => {
+    if (e.target.href) {
+      e.preventDefault()
+      require('open')(e.target.href)
+    }
+  })
+}
+
 const popup = window.fblogin = () => {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
