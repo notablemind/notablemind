@@ -5,6 +5,7 @@ const viewTypes = {
   mindmap: require('treed/views/mindmap'),
   paper: require('treed/views/paper'),
   focus: require('treed/views/focus'),
+  tray: require('../treed-plugins/tray'),
   exhibit: require('itreed/exhibit').default,
 }
 
