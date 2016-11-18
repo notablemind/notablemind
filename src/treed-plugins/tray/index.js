@@ -42,11 +42,23 @@ class PDFEmbed extends Component {
   }
 }
 
+class WebEmbed extends Component {
+  render() {
+    return <div >
+      <input placeholder="paste stuff?" />
+      <webview
+        src={this.props.url}
+        className={css(styles.iframe, this.props.hidden && styles.iframeHidden)}
+      />
+    </div>
+  }
+}
+
 class Embed extends Component {
   constructor() {
     super()
     this.state = {
-      open: false,
+      open: true,
       loading: CAN_PDF,
       isPDF: false,
       gettingPDF: false,
@@ -89,10 +101,7 @@ class Embed extends Component {
       />
     }
 
-    return <webview
-      src={this.props.url}
-      className={css(styles.iframe, !this.state.open && styles.iframeHidden)}
-    />
+    return <WebEmbed hidden={!this.state.open} url={this.props.url} />
   }
 
   render() {
@@ -181,7 +190,7 @@ const styles = StyleSheet.create({
   iframe: {
     border: '1px solid #ccc',
     boxShadow: '0 0 5px #aaa',
-    height: 400,
+    height: 800,
   },
 
   iframeHidden: {

@@ -181,7 +181,7 @@ function updateFile(fileId, fileMetadata, fileData, callback) {
 
     var contentType = 'application/vnd.notablemind'
     // Updating the metadata is optional and you can instead use the value from drive.files.get.
-    var base64Data = btoa(fileData);
+    var base64Data = btoa(unescape(encodeURIComponent(fileData)));
     var multipartRequestBody =
         delimiter +
         'Content-Type: application/json\r\n\r\n' +
