@@ -9,6 +9,7 @@ const plugins = [
   require('treed/plugins/clipboard'),
   require('treed/plugins/lists'),
   require('treed/plugins/rebase'),
+  require('treed/plugins/tables'),
   require('../treed-plugins/custom-css'),
   // require('./treed-plugins/scriptures'),
 ]
