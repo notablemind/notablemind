@@ -1,5 +1,6 @@
 import defaultPlugins from '../../config/plugins'
 import defaultViewTypes from '../../config/view-types'
+import {convertToFile} from '../files'
 
 var React = require('react')
   , PT = React.PropTypes
@@ -15,32 +16,26 @@ var React = require('react')
 
 function init(data, done) {
   var pl = new MemPL()
+  const file = convertToFile(data)
+  /*
   var file = {
     title: data.title || 'Notablemind Doc',
     repl: data.repl,
   }
-  var plugins = [
-    require('treed/plugins/undo'),
-    require('treed/plugins/todo'),
-    require('treed/plugins/image'),
-    require('treed/plugins/types'),
-    require('treed/plugins/collapse'),
-    require('treed/plugins/clipboard'),
-    require('treed/plugins/lists'),
-    require('treed/plugins/rebase'),
-    require('../../treed-plugins/custom-css'),
-  ]
-  // TODO use defaultPlugins
+  */
+  const plugins = defaultPlugins.slice()
 
   var config = kernelConfig[file.repl]
   if (config && config.kernel) {
     // repl
-    plugins.unshift(require('itreed/lib/plugin')(config))
+    // NO REPL ATM
+    // plugins.unshift(require('itreed/lib/plugin')(config))
   }
 
   var treed = new Treed({plugins: plugins})
-  treed.initStore(data.root, {pl}).then(store => {
-    done(null, treed, file)
+  // console.log(Object.keys(data))
+  treed.initStore(file.root, {pl}).then(store => {
+    setTimeout(() => done(null, treed, file), 0)
   }).catch(err => done(err))
 
 }
@@ -115,7 +110,7 @@ var BakedDoc = React.createClass({
   _keyDown: function (e) {
     if (!this.props.treed) return
     if (this.props.treed.store.views[this.props.treed.store.activeView].mode !== 'insert' &&
-        ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
+        ['INPUT', 'TEXTAREA', 'WEBVIEW'].indexOf(e.target.nodeName) !== -1) {
       return
     }
     return this.props.treed.keyManager.keyDown(e)
@@ -132,14 +127,6 @@ var BakedDoc = React.createClass({
       , file = this.state.file
 
     return <div className='DocPage'>
-      <DocHeader
-        file={file}
-        treed={treed}
-        noSave={true}
-        onFileUpdate={file => this.setState({file})}
-
-        changeTitle={this._changeTitle}
-      />
       <DocViewer
         file={file}
         treed={treed}

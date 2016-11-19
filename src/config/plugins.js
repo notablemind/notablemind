@@ -11,6 +11,7 @@ const plugins = [
   require('treed/plugins/rebase'),
   require('treed/plugins/tables'),
   require('../treed-plugins/custom-css'),
+  require('../treed-plugins/child-count'),
   // require('./treed-plugins/scriptures'),
 ]
 

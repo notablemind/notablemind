@@ -6,6 +6,7 @@
   "scripts": {
     "test": "make test",
     "build": "webpack",
+    "baked": "webpack --config webpack.baked.js",
     "watch": "webpack --watch",
     "ebuild": "webpack --config webpack.electron.js",
     "ewatch": "webpack --config webpack.electron.js --watch",
@@ -38,6 +39,7 @@
     "eventemitter3": "~0.1.5",
     "highlight.js": "~8.2.0",
     "http-server": "^0.9.0",
+    "jsdom": "^9.8.3",
     "jstransform": "6.2.0",
     "katex": "git+https://github.com/jaredly/KateX.git",
     "less": "^2.3.1",
@@ -58,6 +60,7 @@
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
+    "babel-plugin-webpack-alias": "^2.1.2",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",

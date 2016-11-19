@@ -7,6 +7,27 @@ var React = require('react')
   , convert = require('../convert')
   , saveAs = require('../../lib/save-as')
 
+const electronSaveAs = (text, filename) => {
+  const fs = require('fs')
+  const path = require('path')
+  const HOME = process.env['HOME']
+  let dest = path.join(HOME, 'Downloads')
+  if (!fs.existsSync(dest)) {
+    dest = HOME
+  }
+  let full = path.join(dest, filename)
+  if (fs.existsSync(full)) {
+    let i = 0
+    let fullt = full + '-' + i
+    while (fs.existsSync(fullt)) {
+      i += 1
+      fullt = full + '-' + i
+    }
+    full = fullt
+  }
+  fs.writeFileSync(full, text)
+}
+
 var Downloader = React.createClass({
   propTypes: {
     nodeContents: PT.func.isRequired,
@@ -50,7 +71,11 @@ var Downloader = React.createClass({
       , mime = convert[format].mime
       , blob = new Blob([data], {type: mime})
       , url = URL.createObjectURL(blob)
-    saveAs(url, this.fileName())
+    if (ELECTRON) {
+      electronSaveAs(data, this.fileName())
+    } else {
+      saveAs(url, this.fileName())
+    }
     this.props.onClose()
   },
 

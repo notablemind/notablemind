@@ -32,6 +32,7 @@ module.exports = {
   // fill a new file with data.
   populateFile: populateFile,
   importRaw: importRaw,
+  convertToFile: convertToFile,
 
   dump: dump,
 
@@ -79,7 +80,7 @@ function updateFile(id, data, done) {
   })
 }
 
-function convertToFile(data) {
+function convertToFile(data, defaultTitle) {
   if (!Array.isArray(data)) {
     if (data.root && data.title) {
       return data
@@ -103,9 +104,9 @@ function convertToFile(data) {
     return false
   }
   return {
-    title: 'Imported...',
+    title: defaultTitle,
     root: {
-      content: 'Imported...',
+      content: defaultTitle,
       children: data,
     },
     repl: 'none',
@@ -128,7 +129,7 @@ function importRaw(data, done) {
 }
 
 function importOne(data, done) {
-  var fileData = convertToFile(data)
+  var fileData = convertToFile(data, 'Imported...')
   if (!fileData) {
     return done(new Error("Invalid file format"))
   }

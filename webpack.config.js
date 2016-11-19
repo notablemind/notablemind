@@ -3,9 +3,7 @@ var path = require('path');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    './src/run',
-  ],
+  entry: './src/run',
 
   output: {
     path: path.join(__dirname, 'www'),
@@ -45,6 +43,7 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel',
       include: [
+        path.join(__dirname, 'bin'),
         path.join(__dirname, 'src'),
         path.join(__dirname, 'itreed'),
         path.join(__dirname, 'treed'),

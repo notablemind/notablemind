@@ -84,7 +84,7 @@ var DocPage = React.createClass({
   _keyDown: function (e) {
     if (!this.state.treed) return
     if (this.state.treed.store.views[this.state.treed.store.activeView].mode !== 'insert' &&
-        ['INPUT', 'TEXTAREA'].indexOf(e.target.nodeName) !== -1) {
+        ['INPUT', 'TEXTAREA', 'WEBVIEW', 'IFRAME'].indexOf(e.target.nodeName) !== -1) {
       return
     }
     return this.state.treed.keyManager.keyDown(e)
@@ -150,6 +150,7 @@ var DocPage = React.createClass({
     })
 
     files.update(file.id, {opened: Date.now()}, file => {
+      // treed.store._globals.viewerMode = true
       this.setState({
         loading: false,
         treed,

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Listener from 'treed/listener'
 import {StyleSheet, css} from 'aphrodite'
-import PDF from 'react-pdf-js'
 
 const checkIsPDF = require('./checkIsPDF')
 const getPDFData = require('./getPDFData')
@@ -18,6 +17,7 @@ class PDFEmbed extends Component {
   }
 
   render() {
+    const PDF = require('react-pdf-js')
     return <div
       className={css(this.props.hidden && styles.iframeHidden)}
     >
