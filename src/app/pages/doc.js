@@ -144,6 +144,7 @@ var DocPage = React.createClass({
     window.docPage = this
     window.document.title = file.title
     this._listenToStore(treed.store)
+    console.log('loaded file', file)
 
     treed.keyManager.addKeys({
       'g q': () => this.transitionTo('browse'),

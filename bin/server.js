@@ -28,6 +28,7 @@ module.exports = function (data, relPath, done) {
         <title>${data[0].content} | Notablemind</title>
         <script src="${relPath}vendor/d3.js"></script>
         <script src="${relPath}vendor/vega.js"></script>
+        <script src="${relPath}vendor/babel.js"></script>
         <link rel="stylesheet" href="${relPath}build.css">
         <link rel="stylesheet" href="${relPath}baked.css">
         <link rel="stylesheet" href="${relPath}vendor/font-awesome-4.3.0/css/font-awesome.min.css">
@@ -38,7 +39,7 @@ module.exports = function (data, relPath, done) {
         </script>
         <script src="${relPath}baked.js"></script>
       </head>
-      <body class="large">
+      <body class="">
         <div id="main">
           ${html}
         </div>

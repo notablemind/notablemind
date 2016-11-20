@@ -17,6 +17,9 @@ var React = require('react')
 function init(data, done) {
   var pl = new MemPL()
   const file = convertToFile(data)
+  file.plugins = {
+    "itreed":{"js":{"server":true,"kernels":{"js":{"variants":{"default":true}}}}}
+  }
   /*
   var file = {
     title: data.title || 'Notablemind Doc',
@@ -29,12 +32,13 @@ function init(data, done) {
   if (config && config.kernel) {
     // repl
     // NO REPL ATM
-    // plugins.unshift(require('itreed/lib/plugin')(config))
   }
+  plugins.unshift(require('itreed')(file.plugins.itreed))
 
   var treed = new Treed({plugins: plugins})
   // console.log(Object.keys(data))
   treed.initStore(file.root, {pl}).then(store => {
+    treed.store._globals.viewerMode = true
     setTimeout(() => done(null, treed, file), 0)
   }).catch(err => done(err))
 
