@@ -1673,6 +1673,7 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   border: 1px solid transparent;
   position: relative;
   margin-bottom: 0;
+  min-width: 0;
 }
 .m_Collapser {
   display: block;
@@ -1985,23 +1986,6 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   cursor: pointer;
   padding: 10px 20px;
 }
-.BrowsePage {
-  max-width: 700px;
-  margin: 25px auto 50px;
-  padding: 20px 0 0;
-  width: 700px;
-  font-family: sans-serif;
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-  box-shadow: 0px 0 20px #999;
-}
-.BrowsePage .Tabular {
-  flex: 1;
-}
-.Browse {
-  display: flex;
-}
 .Browse_new_btn,
 .Importer-closed,
 .NewFile-closed {
@@ -2044,93 +2028,6 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   border-color: black;
   color: black;
 }
-.BrowseHeader_opener {
-  display: flex;
-  flex-direction: row;
-}
-.BrowseHeader_opener-open {
-  display: block;
-}
-.Browse-loading {
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 0 15px #888;
-  margin: 200px auto;
-  box-shadow: none;
-}
-.Browse_title {
-  margin: 2px 45px 0;
-  text-align: center;
-  color: #4D4D4D;
-}
-.NewFile_head,
-.Browse_head {
-  text-align: center;
-  margin-top: 0;
-}
-.Browse_files {
-  padding: 0;
-  margin: 20px 0 0;
-  list-style: none;
-  overflow: auto;
-  flex: 1;
-}
-.Browse_file {
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.Browse_file:hover {
-  background-color: #eee;
-}
-.Browse_nofiles {
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #999;
-}
-.Browse_source {
-  float: right;
-}
-.Browse_repl {
-  float: right;
-  /*
-  &-go {
-    &:before {
-      content: 'go';
-    }
-  }
-
-  &-rust {
-    &:before {
-      content: 'rust';
-    }
-  }
-
-  &-ipython {
-    &:before {
-      content: 'ipython';
-    }
-  }
-
-  &-gorilla {
-    &:before {
-      content: 'gorilla';
-    }
-  }
-
-  &-ijs {
-    &:before {
-      content: 'javascript';
-    }
-  }
-  */
-}
-.Browse_repl-null {
-  display: none;
-}
 .Browse_config_repls,
 .NewFile_repls {
   padding: 0;
@@ -2150,34 +2047,6 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
 }
 .Browse_config_repl:hover,
 .NewFile_repl:hover {
-  background-color: #eee;
-}
-.Modal {
-  z-index: 10011;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 200px;
-  margin: -100px 0 0 -150px;
-  border: 1px solid #eee;
-  box-shadow: 0 0 10px black;
-  padding: 10px;
-  background: white;
-}
-.Browse_menu {
-  position: absolute;
-  cursor: pointer;
-  background-color: #fff;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  box-shadow: 0 0 5px black;
-}
-.Browse_menu_item {
-  padding: 7px 13px;
-}
-.Browse_menu_item:hover {
   background-color: #eee;
 }
 .SearchPopper {
@@ -2775,94 +2644,6 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
 .Modal-download .Modal_body {
   text-align: center;
 }
-.DocHeader {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  position: relative;
-  flex-shrink: 0;
-}
-.DocHeader_name {
-  font-size: 17px;
-  font-weight: bold;
-  position: absolute;
-  left: 10px;
-  top: 5px;
-  text-transform: lowercase;
-  font-family: sans-serif;
-}
-.DocHeader_name,
-.DocHeader_name a {
-  color: #ccc;
-  text-decoration: none;
-}
-.DocHeader_name a {
-  padding-right: 10px;
-}
-.DocHeader_title {
-  display: inline-block;
-  padding: 5px;
-}
-.DocHeader_editTitle {
-  display: inline-block;
-  padding: 3px 5px;
-}
-.DocHeader_home {
-  background-color: white;
-  border: 1px solid #ccc;
-  margin-right: 20px;
-  cursor: pointer;
-}
-.DocHeader_pane {
-  background-color: white;
-  margin: 0;
-  border: none;
-  padding: 0 4px;
-  cursor: pointer;
-}
-.DocHeader_pane:hover {
-  background-color: #eee;
-}
-.DocHeader_pane:focus {
-  outline: none;
-}
-.icon-1pane {
-  width: 10px;
-  height: 15px;
-  display: inline-block;
-  border: 2px solid #ccc;
-  position: relative;
-  top: 1px;
-}
-.icon-2pane {
-  height: 15px;
-  display: inline-block;
-  border: 2px solid #ccc;
-}
-.icon-2pane:after {
-  width: 7px;
-  margin-left: 7px;
-  height: 15px;
-  display: inline-block;
-  border-left: 1px solid #ccc;
-  content: " ";
-}
-.icon-3pane {
-  height: 15px;
-  display: inline-block;
-  border: 2px solid #ccc;
-}
-.icon-3pane:before {
-  margin-left: 5px;
-}
-.icon-3pane:before,
-.icon-3pane:after {
-  width: 5px;
-  height: 15px;
-  display: inline-block;
-  border-left: 1px solid #ccc;
-  content: " ";
-}
 .TypeSwitcher {
   position: relative;
 }
@@ -3148,19 +2929,16 @@ body {
     padding: 0;
 }
 
-span.treed_body_rendered {
-    min-height: 24px;
-    font-size: 10px;
+.m_IPython.m_IPython-empty {
+    margin: 0;
 }
 
-span.treed_body_rendered {}
+.TreeItem-active > .TreeItem_head > .TreeItem_body {
+    outline: 2px solid #ccc;
+}
 
 .ITreedCodeEditor {
     font-size: 10px;
-}
-
-.m_IPython.m_IPython-empty {
-    margin: 0;
 }
 
 .m_IPython_time {
@@ -3173,13 +2951,27 @@ span.treed_body_rendered {}
     font-size: 10px;
 }
 
-.treed_body_rendered, .textarea-grow textarea, .textarea-grow .shadow {
+.treed_body_rendered,
+.textarea-grow textarea,
+.textarea-grow .shadow {
     min-height: 24px;
     font-size: 10px;
 }
 
-.TreeItem-active > .TreeItem_head > .TreeItem_body {
-    outline: 2px solid #ccc;
+.TreeItem_head {
+    padding-bottom: 2px;
 }
+
+body.large span.treed_body_rendered,
+body.large .ITreedCodeEditor,
+body.large .TreeItem_body,
+body.large .treed_body_rendered,
+body.large .textarea-grow textarea,
+body.large .textarea-grow .shadow {
+    font-size: 20px;
+    line-height: 30px;
+    min-height: 38px;
+}
+
 
 /*# sourceMappingURL=build.css.map */
