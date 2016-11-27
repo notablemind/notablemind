@@ -61,6 +61,7 @@ var SearchPopper = React.createClass({
           autoFocus={true}
           value={this.state.needle}
           placeholder="search"
+          onBlur={this.props.onClose}
           onKeyDown={this.onKeyDown}
           onChange={this.onChange}/>
       </div>

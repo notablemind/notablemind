@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Listener from 'treed/listener'
 import {StyleSheet, css} from 'aphrodite'
+import path from 'path'
 
 const checkIsPDF = require('./checkIsPDF')
 const getPDFData = require('./getPDFData')
@@ -17,7 +18,7 @@ class PDFEmbed extends Component {
   }
 
   render() {
-    const PDF = require('react-pdf-js')
+    const PDF = require('react-pdf-js').default
     return <div
       className={css(this.props.hidden && styles.iframeHidden)}
     >
@@ -34,6 +35,7 @@ class PDFEmbed extends Component {
       </button>
       <PDF
         ref={pdf => this._pdf = pdf}
+        scale={1.5}
         onDocumentComplete={pages => this.setState({pages})}
         onPageComplete={page => this.setState({page})}
         page={this.state.page}
@@ -42,12 +44,44 @@ class PDFEmbed extends Component {
   }
 }
 
+const showMenu = items => {
+  const {Menu, MenuItem} = require('electron').remote
+  const menu = new Menu()
+  items.forEach(item => menu.append(new MenuItem(item)))
+  menu.popup()
+}
+
 class WebEmbed extends Component {
+  componentDidMount() {
+    console.log('mounted')
+    this._wv.addEventListener('ipc-message', e => {
+      const data = e.channel
+      if (data.type === 'link meta click') {
+        this.props.addURL(data.href)
+      } else if (data.type === 'link click') {
+        require('open')(data.href)
+      } else if (data.type === 'image') {
+        showMenu([{
+          label: 'Copy image source',
+        }])
+      }
+      console.log('message', e)
+    })
+  }
+
   render() {
     return <div >
       <input placeholder="paste stuff?" />
       <webview
+        ref={w => this._wv = w}
+        // TODO fix this absolute reference
+        preload={'file:///Users/jared/clone/notablemind/src/treed-plugins/tray/preload.js'}
         src={this.props.url}
+        onContextMenu={e => {
+          console.log('Context menu request!')
+          console.log(e)
+          console.log(e.target)
+        }}
         className={css(styles.iframe, this.props.hidden && styles.iframeHidden)}
       />
     </div>
@@ -101,7 +135,9 @@ class Embed extends Component {
       />
     }
 
-    return <WebEmbed hidden={!this.state.open} url={this.props.url} />
+    return <WebEmbed
+      addURL={this.props.addURL}
+      hidden={!this.state.open} url={this.props.url} />
   }
 
   render() {
@@ -132,8 +168,12 @@ module.exports = class Tray extends Component {
       if (!e.metaKey || !e.target.href) return
       e.preventDefault()
       e.stopPropagation()
-      this.setState({items: [...this.state.items, {url: e.target.href}]})
+      this.addURL(e.target.href)
     }, true)
+  }
+
+  addURL = (url) => {
+    this.setState({items: [...this.state.items, {url}]})
   }
 
   onRemove = item => {
@@ -151,6 +191,7 @@ module.exports = class Tray extends Component {
         item.url ?
           <Embed
             key={item.url}
+            addURL={this.addURL}
             onRemove={() => this.onRemove(item)}
             url={item.url}
           /> :

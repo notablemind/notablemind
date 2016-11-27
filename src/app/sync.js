@@ -111,11 +111,11 @@ function merge_and_commit(file, store, content, updated_at, done) {
     // my addition or their deletion
     if (!nodes[id]) {
       var pid = db.nodes[id].parent
-      while (!nodes[pid] && pid) {
+      while (!nodes[pid] && pid && db.nodes[pid]) {
         pid = db.nodes[pid].parent
       }
-      if (!pid) return console.warn('failed to find a common ancestor...')
-      if (nodes[pid].modified > db.nodes[pid].modified) {
+      if (!pid || !db.nodes[pid]) return console.warn('failed to find a common ancestor...')
+      if (nodes[pid] && db.nodes[pid] && nodes[pid].modified > db.nodes[pid].modified) {
         // was deleted remotely
         db.remove(id)
       } else {

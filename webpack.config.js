@@ -24,6 +24,10 @@ module.exports = {
     },
   },
 
+  node: {
+    __dirname: false,
+  },
+
   module: {
     // Disable handling of unknown requires
     unknownContextRegExp: /$^/,
