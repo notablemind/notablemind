@@ -13,6 +13,7 @@ const plugins = [
   require('treed/plugins/tags'),
   require('../treed-plugins/custom-css'),
   require('../treed-plugins/child-count'),
+  require('../treed-plugins/source'),
   // require('./treed-plugins/scriptures'),
 ]
 
