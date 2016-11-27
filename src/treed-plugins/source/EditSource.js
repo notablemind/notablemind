@@ -3,15 +3,9 @@ const {css, StyleSheet} = require('aphrodite')
 
 const getTitle = require('./getTitle')
 
-const dateFromURL = url => {
-  let parts = url.match(/\d{4}-\d{1,2}-\d{1,2}/)
-  if (parts) {
-    return parts[0]
-  }
-  parts = url.match(/\d{4}\/\d{1,2}\/\d{1,2}/)
-  if (parts) {
-    return parts[0].replace('/', '-')
-  }
+const getURL = text => {
+  const match = text.match(/https?:\/\/\S+/i)
+  return match ? match[0] : ''
 }
 
 module.exports = class EditSource extends React.Component {
@@ -22,7 +16,7 @@ module.exports = class EditSource extends React.Component {
       url: '',
       who: '',
       what: '',
-      when: '' + new Date().getFullYear(),
+      when: '',
     }
   }
 
@@ -49,17 +43,19 @@ module.exports = class EditSource extends React.Component {
     console.log('fetching')
     e.preventDefault()
     e.stopPropagation()
-    const url = e.target.value
+    const url = e.target.value || getURL(this.props.content)
+    if (!url) return
     this.setState({
       loading: true,
       url,
     })
-    getTitle(url, (err, title) => {
-      console.log('fetched', err, title)
+    getTitle(url, (err, data) => {
+      data = data || {}
+      console.log('fetched', err, data)
       this.setState({
         loading: false,
-        when: dateFromURL(url) || this.state.when, // TODO when from HTML
-        what: title || this.state.what // TODO titleFromURL
+        when: data.date || this.state.when, // TODO when from HTML
+        what: data.title || this.state.what // TODO titleFromURL
       })
     })
   }
@@ -117,19 +113,19 @@ const styles = StyleSheet.create({
   },
 
   url: {
-    width: 40,
+    width: 150,
   },
 
   what: {
-    width: 80,
+    width: 150,
   },
 
   who: {
-    width: 40,
+    width: 100,
   },
 
   when: {
-    width: 40,
+    width: 50,
   },
 
   input: {

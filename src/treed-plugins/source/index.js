@@ -17,8 +17,15 @@ module.exports = {
     'sourcing mode': {
       normal: 'shift+4',
       insert: 'alt+shift+4',
-    }
+    },
+    'copy source': {
+      normal: 'y s',
+    },
+    'paste source': {
+      normal: 's p',
+    },
   },
+
   node: {
 
     storeAttrs: function (store, props) {
@@ -45,6 +52,7 @@ module.exports = {
         }
         return <EditSource
           source={node.source}
+          content={node.content}
           onDone={(source) => {
             const hasContent = source.who || source.url || source.what || source.when
             actions.setSource(node.id, hasContent ? source : null)
@@ -64,6 +72,19 @@ module.exports = {
         this.view.mode = 'sourcing'
         this.changed(this.events.modeChanged())
         this.changed(this.events.nodeViewChanged(id))
+      },
+
+      copySource(id) {
+        if (!arguments.length) id = this.view.active
+        this.globals.copiedSource = {...this.db.nodes[id].source}
+        console.log('copied', this.globals)
+      },
+
+      pasteSource(id) {
+        if (!arguments.length) id = this.view.active
+        if (this.globals.copiedSource) {
+          this.set(id, 'source', {...this.globals.copiedSource})
+        }
       },
 
       setSource(id, source) {

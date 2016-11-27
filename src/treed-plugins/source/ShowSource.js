@@ -8,6 +8,11 @@ const shortURL = url => {
   return match ? match[1] : cutoff(url, 50)
 }
 
+const getYear = when => {
+  const match = when.match(/\d{4}/)
+  return match ? <span className={css(styles.year)}>{match[0]}</span> : null
+}
+
 const innards = ({url, what, when, who}, big) => {
   if (url && what) {
     return <div className={css(styles.container, big && styles.big)}>
@@ -17,6 +22,7 @@ const innards = ({url, what, when, who}, big) => {
       <a className={css(styles.secondary)} href={url}>
         {shortURL(url)}
       </a>
+      {when ? getYear(when) : null}
       {link}
     </div>
   }
@@ -48,7 +54,7 @@ module.exports = ({source, isActive, isEmpty}) => (
       innards(source) :
       (isEmpty ?
        innards(source, true) :
-        <div className={css(styles.container, styles.placeholder)}>{link}</div>)
+        <div className={css(styles.container, styles.placeholder)}>{link} {source.when && getYear(source.when)}</div>)
     )
 )
 
@@ -57,14 +63,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     position: 'absolute',
-    right: -10,
-    bottom: -5,
+    right: -5,
+    bottom: -10,
     zIndex: 2000,
     fontSize: 8,
     backgroundColor: 'white',
-    padding: '1px 2px',
+    padding: '0px 3px',
     boxShadow: '0 0 2px #ccc',
     borderRadius: 2,
+    // opacity: .5,
   },
 
   big: {
@@ -72,16 +79,27 @@ const styles = StyleSheet.create({
     boxShadow: 'none',
     backgroundColor: 'transparent',
     bottom: 5,
-    right: 20,
+    right: 'none',
+    left: 10,
+    opacity: 1,
   },
 
   link: {
-    marginLeft: 10,
+    marginLeft: 5,
+  },
+
+  year: {
+    marginLeft: 5,
+    fontStyle: 'italic',
   },
 
   placeholder: {
     backgroundColor: 'transparent',
     boxShadow: 'none',
+    right: 'none',
+    left: '100%',
+    bottom: 5,
+    // marginLeft: 10,
   },
 
   secondary: {
