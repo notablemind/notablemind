@@ -13,17 +13,20 @@ const eqObj = (a, b) => {
 }
 
 module.exports = {
+  title: 'Sources',
   keys: {
     'sourcing mode': {
       normal: 'shift+4',
       insert: 'alt+shift+4',
     },
+    /*
     'copy source': {
       normal: 'y s',
     },
     'paste source': {
       normal: 's p',
     },
+    */
   },
 
   node: {
