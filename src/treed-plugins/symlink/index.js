@@ -1,8 +1,5 @@
-
-const React = require('react')
-const {css, StyleSheet} = require('aphrodite')
 var uuid = require('treed/lib/uuid')
-const DefaultRenderer = require('treed/views/body/default-renderer')
+const Symlink = require('./Symlink')
 
 const makeSymlinkTree = (nodes, root) => {
   if (!nodes[root]) return
@@ -10,6 +7,7 @@ const makeSymlinkTree = (nodes, root) => {
   return {
     type: 'symlink',
     content,
+    collapsed: nodes[root].collapsed,
     children: (nodes[root].children || []).map(id => makeSymlinkTree(nodes, id)).filter(x => !!x),
   }
 }
@@ -42,24 +40,7 @@ module.exports = {
   node: {
     bodies: {
       symlink: {
-        renderer(props, onFocus) {
-          const real = props.store.actions.db.nodes[props.node.content]
-          if (real.type === 'symlink') return <div>Nested symlinks are *not* allowed</div>
-
-          const bodies = props.bodies[real.type] || props.bodies.default
-          if (bodies && bodies.renderer) {
-            return bodies.renderer.call(this, {...props, node: real}, onFocus)
-          }
-          // TODO render a "link" or something over this
-          return <DefaultRenderer onClick={onFocus} content={real.content} />
-          /*
-          return <div
-            onClick={() => props.store.actions.jumpToSymlink(props.node.id)}
-            className={css(styles.symlink)}>
-            {real ? real.content : '<broken link>'}
-          </div>
-          */
-        },
+        Component: Symlink,
       },
     },
   },
@@ -91,7 +72,7 @@ module.exports = {
 
       symlinkTreeToClipboard(id) {
         if (!arguments.length) id = this.view.active
-        this.globals.clipboard = [makeSymlinkTree(this.db, id)]
+        this.globals.clipboard = [makeSymlinkTree(this.db.nodes, id)]
       },
 
       jumpToSymlink(id) {
@@ -104,11 +85,3 @@ module.exports = {
     },
   },
 }
-
-const styles = StyleSheet.create({
-  symlink: {
-    color: '#4bbaff',
-    // fontStyle: 'italic',
-    padding: '5px 7px 3px',
-  },
-})
