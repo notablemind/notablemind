@@ -238,6 +238,24 @@
 .ImageBase:hover .ImageBase_close {
   opacity: 1;
 }
+.ShowTags {
+  position: absolute;
+  right: 0;
+}
+.ShowTags-icon {
+  position: absolute;
+  left: 100%;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s ease;
+  top: 0;
+}
+.ShowTags-icon:after {
+  content: 'tags';
+}
+.TreeItem-active > .TreeItem_head .ShowTags-icon {
+  opacity: 1;
+}
 .Mindmap {
   width: 1200px;
   height: 800px;
@@ -478,6 +496,7 @@
   font-family: sans-serif;
   background-color: white;
   position: fixed;
+  z-index: 10000000;
 }
 .ContextMenu_item {
   position: relative;
@@ -2253,14 +2272,14 @@ Docco style used in http://jashkenas.github.com/docco/ converted by Simon Madine
   font-family: 'Monda';
   font-style: normal;
   font-weight: 400;
-  src: local('Monda Regular'), local('Monda-Regular'), url(vendor/Monda-Regular.ttf);
+  src: local('Monda Regular'), local('Monda-Regular'), url(vnd/Monda-Regular.ttf);
 }
 /* latin */
 @font-face {
   font-family: 'Monda';
   font-style: bold;
   font-weight: 700;
-  src: local('Monda Bold'), local('Monda-Bold'), url(vendor/Monda-Bold.ttf);
+  src: local('Monda Bold'), local('Monda-Bold'), url(vnd/Monda-Bold.ttf);
 }
 #container {
   position: absolute;
